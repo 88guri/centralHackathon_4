@@ -25,6 +25,13 @@
             }
         }
 
+        function pauseTimer() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
         function sendElapsedTime() {
             fetch("{% url 'homee' %}", {
                 method: 'POST',
@@ -43,21 +50,28 @@
                 timerStarted = true; // 타이머 시작 플래그 설정
                 startTimer();
             });
-            document.getElementById("stop").addEventListener("click", stopTimer);
+            document.getElementById("stop").addEventListener("click", function() {
+                timerStarted = false; // 타이머 중지 플래그 설정
+                stopTimer();
+            });
         };
 
         window.onfocus = function() {
-            startTimer();
+            if (timerStarted) {
+                startTimer();
+            }
         };
 
         window.onblur = function() {
-            stopTimer();
+            if (timerStarted) {
+                pauseTimer();
+            }
         };
 
         function resetAtMidnight() {
             let now = new Date();
             let resetTime = new Date(now);
-            resetTime.setHours(0, 14, 0, 0);
+            resetTime.setHours(1, 3, 0, 0);
 
             if (now > resetTime) {
                 resetTime.setDate(resetTime.getDate() + 1);
@@ -65,9 +79,9 @@
 
             let timeUntilReset = resetTime.getTime() - now.getTime();
             setTimeout(() => {
+                sendElapsedTime(); // 경험치 반영 후 타이머 초기화
                 elapsedTime = 0;
                 document.getElementById("timer").innerText = "0 seconds";
-                sendElapsedTime(); // 서버에 타이머 초기화 요청
                 resetAtMidnight();
             }, timeUntilReset);
         }

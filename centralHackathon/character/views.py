@@ -14,10 +14,22 @@ def home_page(request):
     now = datetime.now(KST)
 
     # 자정에 초기화
-    if now.hour == 0 and now.minute == 14:
-        character.experience = 0
+    if now.hour == 1 and now.minute == 3:
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            elapsed_time = int(data.get('elapsed_time', 0))
+
+        # 경험치 계산 및 업데이트
+            experience_to_add = (elapsed_time // 10) * 200
+            character.add_experience(experience_to_add)
+            character.save()
+
+            return JsonResponse({'experience': character.experience})  # Send experience back to update immediately
+        
         character.last_elapsed_time = 0
         character.save()
+
+        return render(request, 'homee.html', {'character': character})
 
     if request.method == 'POST':
         data = json.loads(request.body)
