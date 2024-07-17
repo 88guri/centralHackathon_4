@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <script>
+        let timer;
+        let elapsedTime = {{ character.last_elapsed_time }};
+        let timerStarted = false;
+
+        function startTimer() {
+            if (!timerStarted) return; // 타이머가 시작된 적이 없으면 return
+            if (!timer) {
+                timer = setInterval(() => {
+                    elapsedTime += 1;
+                    document.getElementById("timer").innerText = elapsedTime + " seconds";
+                }, 1000);
+            }
+        }
+
+        function stopTimer() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+                sendElapsedTime();
+            }
+        }
+
+        function sendElapsedTime() {
+            fetch("{% url 'homee' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({elapsed_time: elapsedTime})
+            }).then(response => response.json()).then(data => {
+                document.getElementById("experience").innerText = "Experience: " + data.experience;
+            });
+        }
+
+        window.onload = function() {
+            document.getElementById("start").addEventListener("click", function() {
+                timerStarted = true; // 타이머 시작 플래그 설정
+                startTimer();
+            });
+            document.getElementById("stop").addEventListener("click", stopTimer);
+        };
+
+        window.onfocus = function() {
+            startTimer();
+        };
+
+        window.onblur = function() {
+            stopTimer();
+        };
+
+        // Function to reset the timer at midnight Korea time
+        function resetAtMidnight() {
+            let now = new Date();
+            let midnight = new Date(now);
+            midnight.setHours(24, 0, 0, 0); // Set to midnight
+
+            let timeUntilMidnight = midnight.getTime() - now.getTime();
+            setTimeout(() => {
+                elapsedTime = 0;
+                document.getElementById("timer").innerText = "0 seconds";
+                resetAtMidnight(); // Schedule the next reset
+            }, timeUntilMidnight);
+        }
+
+        resetAtMidnight();
+    </script>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}!</h1>
+    <h2>Character: {{ character.name }}</h2>
+    <h3>Level: {{ character.level }}</h3>
+    <h3 id="experience">Experience: {{ character.experience }}</h3>
+    <h3>Stage: {{ character.stage }}</h3>
+    <div id="timer">{{ character.last_elapsed_time }} seconds</div>
+    <button id="start">Start Timer</button>
+    <button id="stop">Stop Timer</button>
+</body>
+</html>
