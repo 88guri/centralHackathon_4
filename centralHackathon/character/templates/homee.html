@@ -54,18 +54,22 @@
             stopTimer();
         };
 
-        // Function to reset the timer at midnight Korea time
         function resetAtMidnight() {
             let now = new Date();
-            let midnight = new Date(now);
-            midnight.setHours(24, 0, 0, 0); // Set to midnight
+            let resetTime = new Date(now);
+            resetTime.setHours(0, 14, 0, 0);
 
-            let timeUntilMidnight = midnight.getTime() - now.getTime();
+            if (now > resetTime) {
+                resetTime.setDate(resetTime.getDate() + 1);
+            }
+
+            let timeUntilReset = resetTime.getTime() - now.getTime();
             setTimeout(() => {
                 elapsedTime = 0;
                 document.getElementById("timer").innerText = "0 seconds";
-                resetAtMidnight(); // Schedule the next reset
-            }, timeUntilMidnight);
+                sendElapsedTime(); // 서버에 타이머 초기화 요청
+                resetAtMidnight();
+            }, timeUntilReset);
         }
 
         resetAtMidnight();
