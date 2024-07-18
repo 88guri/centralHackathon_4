@@ -5,10 +5,11 @@
     <script>
         let timer;
         let elapsedTime = {{ character.last_elapsed_time }};
-        let timerStarted = false;
+        let timerStarted = false; // 타이머 시작 여부
 
+        // 타이머 시작 함수
         function startTimer() {
-            if (!timerStarted) return; // 타이머가 시작된 적이 없으면 return
+            if (!timerStarted) return; // 타이머가 시작된 적이 없다면 return
             if (!timer) {
                 timer = setInterval(() => {
                     elapsedTime += 1;
@@ -17,14 +18,16 @@
             }
         }
 
+        // 타이머 정지 함수
         function stopTimer() {
             if (timer) {
                 clearInterval(timer);
                 timer = null;
-                sendElapsedTime();
+                sendElapsedTime(); // 경과 시간을 서버로 전송
             }
         }
 
+        // 타이머 일시 정지 함수
         function pauseTimer() {
             if (timer) {
                 clearInterval(timer);
@@ -32,6 +35,7 @@
             }
         }
 
+        // 경과 시간 서버 전송 함수
         function sendElapsedTime() {
             fetch("{% url 'homee' %}", {
                 method: 'POST',
@@ -45,39 +49,44 @@
             });
         }
 
+        // 이벤트 리스너
         window.onload = function() {
             document.getElementById("start").addEventListener("click", function() {
                 timerStarted = true; // 타이머 시작 플래그 설정
                 startTimer();
             });
             document.getElementById("stop").addEventListener("click", function() {
-                timerStarted = false; // 타이머 중지 플래그 설정
+                timerStarted = false; // 타이머 정지 플래그 설정
                 stopTimer();
             });
         };
 
+        // 페이지 포커스 시 타이머 재개
         window.onfocus = function() {
             if (timerStarted) {
                 startTimer();
             }
         };
 
+        // 페이지 포커스 벗어날 시 타이머 일시 정지
         window.onblur = function() {
             if (timerStarted) {
                 pauseTimer();
             }
         };
 
+        // 타이머 자정 초기화 함수
         function resetAtMidnight() {
             let now = new Date();
             let resetTime = new Date(now);
-            resetTime.setHours(1, 3, 0, 0);
+            resetTime.setHours(1, 12, 0, 0);
 
             if (now > resetTime) {
                 resetTime.setDate(resetTime.getDate() + 1);
             }
 
             let timeUntilReset = resetTime.getTime() - now.getTime();
+
             setTimeout(() => {
                 sendElapsedTime(); // 경험치 반영 후 타이머 초기화
                 elapsedTime = 0;
