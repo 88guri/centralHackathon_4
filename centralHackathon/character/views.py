@@ -14,8 +14,8 @@ def home_page(request):
     KST = pytz.timezone('Asia/Seoul')
     now = datetime.now(KST)
 
-    # 자정 초기화
-    if now.hour == 1 and now.minute == 12:
+    # 자정 초기화 (테스트를 위해 임시로 자정 설정 X)
+    if now.hour == 17 and now.minute == 33:
         if character.last_elapsed_time > 0:
             experience_to_add = ((elapsed_time - character.last_elapsed_time) // 10) * 200
             character.add_experience(experience_to_add)

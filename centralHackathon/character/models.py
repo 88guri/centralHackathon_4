@@ -11,13 +11,13 @@ class Character(models.Model):
 
     def add_experience(self, amount):
         self.experience += amount
-        while self.experience >= 2000:
-            self.experience -= 2000
+        while self.experience >= 1000:
+            self.experience -= 1000
             self.level_up()
 
     def level_up(self):
         self.level += 1
-        if self.level % 25 == 0:
+        if self.level % 8 == 0:
             self.evolve()
 
     def evolve(self):
