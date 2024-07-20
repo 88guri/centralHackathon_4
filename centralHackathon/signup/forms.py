@@ -1,54 +1,56 @@
 from django import forms
 from .models import CustomUser
 from django.core.exceptions import ValidationError
-from django.contrib.auth import authenticate, login
-from django.shortcuts import redirect, render
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+import random
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate
 
 User = CustomUser
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='Username') 
+    email = forms.EmailField(label='Email')  
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
 
     def clean(self):
         cleaned_data = super().clean()
-        username = cleaned_data.get('username')  
+        email = cleaned_data.get('email')  
         password = cleaned_data.get('password')
 
-        if username and password:
-            user = authenticate(username=username, password=password)  
+        if email and password:
+            user = authenticate(email=email, password=password)
             if user is None:
-                raise forms.ValidationError('Invalid username or password.')
-        
+                raise forms.ValidationError('Invalid email or password.')
+
         return cleaned_data
 
-class SignUpForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-    password_confirm = forms.CharField(label='비밀번호 확인', widget=forms.PasswordInput())
+class SignUpForm(UserCreationForm):
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput())
+    password2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput())
 
     class Meta:
-        model = User
-        fields = ('id', 'name', 'birthday', 'password', 'password_confirm', 'phone_number')
-        widgets = {
-            'password': forms.PasswordInput(),
-            'password_confirm': forms.PasswordInput(),
-        }
+        model = CustomUser
+        fields = ('email', 'name', 'birthday', 'phone_number', 'password1', 'password2')
 
     def clean(self):
         cleaned_data = super().clean()
-        password = cleaned_data.get('password')
-        password_confirm = cleaned_data.get('password_confirm')
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
 
-        if password and password_confirm and password != password_confirm:
+        if password1 and password2 and password1 != password2:
             raise forms.ValidationError("비밀번호가 일치하지 않습니다.")
+
+        return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.set_password(self.cleaned_data['password'])
+        user.set_password(self.cleaned_data['password1'])
         if commit:
             user.save()
         return user
- 
+
 def login_page(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)  
