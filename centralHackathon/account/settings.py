@@ -33,6 +33,7 @@ AUTH_USER_MODEL = 'signup.CustomUser'
 
 INSTALLED_APPS = [
     'signup',
+    'character',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

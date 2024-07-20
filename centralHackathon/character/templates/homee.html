@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <script>
+        let timer;
+        let elapsedTime = {{ character.last_elapsed_time }};
+        let timerStarted = false; // 타이머 시작 여부
+
+        // 타이머 시작 함수
+        function startTimer() {
+            if (!timerStarted) return; // 타이머가 시작된 적이 없다면 return
+            if (!timer) {
+                timer = setInterval(() => {
+                    elapsedTime += 1;
+                    document.getElementById("timer").innerText = elapsedTime + " seconds";
+                }, 1000);
+            }
+        }
+
+        // 타이머 정지 함수
+        function stopTimer() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+                sendElapsedTime(); // 경과 시간을 서버로 전송
+            }
+        }
+
+        // 타이머 일시 정지 함수
+        function pauseTimer() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        // 경과 시간 서버 전송 함수
+        function sendElapsedTime() {
+            fetch("{% url 'homee' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({elapsed_time: elapsedTime})
+            }).then(response => response.json()).then(data => {
+                document.getElementById("experience").innerText = "Experience: " + data.experience;
+            });
+        }
+
+        // 이벤트 리스너
+        window.onload = function() {
+            document.getElementById("start").addEventListener("click", function() {
+                timerStarted = true; // 타이머 시작 플래그 설정
+                startTimer();
+            });
+            document.getElementById("stop").addEventListener("click", function() {
+                timerStarted = false; // 타이머 정지 플래그 설정
+                stopTimer();
+            });
+        };
+
+        // 페이지 포커스 시 타이머 재개
+        window.onfocus = function() {
+            if (timerStarted) {
+                startTimer();
+            }
+        };
+
+        // 페이지 포커스 벗어날 시 타이머 일시 정지
+        window.onblur = function() {
+            if (timerStarted) {
+                pauseTimer();
+            }
+        };
+
+        // 타이머 자정 초기화 함수
+        function resetAtMidnight() {
+            let now = new Date();
+            let resetTime = new Date(now);
+            resetTime.setHours(17, 33, 0, 0); // 테스트를 위해 임시로 자정 설정 X
+
+            if (now > resetTime) {
+                resetTime.setDate(resetTime.getDate() + 1);
+            }
+
+            let timeUntilReset = resetTime.getTime() - now.getTime();
+
+            setTimeout(() => {
+                sendElapsedTime(); // 경험치 반영 후 타이머 초기화
+                elapsedTime = 0;
+                document.getElementById("timer").innerText = "0 seconds";
+                resetAtMidnight();
+            }, timeUntilReset);
+        }
+
+        resetAtMidnight();
+    </script>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}!</h1>
+    <h2>Character: {{ character.name }}</h2>
+    <h3>Level: {{ character.level }}</h3>
+    <h3 id="experience">Experience: {{ character.experience }}</h3>
+    <h3>Stage: {{ character.stage }}</h3>
+    <div id="timer">{{ character.last_elapsed_time }} seconds</div>
+    <button id="start">Start Timer</button>
+    <button id="stop">Stop Timer</button>
+</body>
+</html>
