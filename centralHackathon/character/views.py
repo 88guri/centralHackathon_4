@@ -1,13 +1,31 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import Character
+from .forms import CharacterForm
 from datetime import datetime
 import json, pytz
 
 @login_required
+def create_character(request):
+    if request.method == 'POST':
+        form = CharacterForm(request.POST)
+        if form.is_valid():
+            character = form.save(commit=False)
+            character.user = request.user
+            character.save()
+            return redirect('timer_page')
+    else:
+        form = CharacterForm()
+    return render(request, 'create_character.html', {'form': form})
+
+
+@login_required
 def timer_page(request):
-    character, created = Character.objects.get_or_create(user=request.user, defaults={'name': request.user.name})
+    try:
+        character = Character.objects.get(user=request.user)
+    except Character.DoesNotExist:
+        return redirect('create_character')
     
     # 한국 표준 시간 설정
     KST = pytz.timezone('Asia/Seoul')

@@ -37,7 +37,7 @@
 
         // 경과 시간 서버 전송 함수
         function sendElapsedTime() {
-            fetch("{% url 'timer' %}", {
+            fetch("{% url 'timer_page' %}", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
