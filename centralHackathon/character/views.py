@@ -6,7 +6,7 @@ from datetime import datetime
 import json, pytz
 
 @login_required
-def home_page(request):
+def timer_page(request):
     character, created = Character.objects.get_or_create(user=request.user, defaults={'name': request.user.name})
     
     # 한국 표준 시간 설정
@@ -42,4 +42,4 @@ def home_page(request):
 
         return JsonResponse({'experience': character.experience})
 
-    return render(request, 'homee.html', {'character': character})
+    return render(request, 'timer.html', {'character': character})
