@@ -8,7 +8,7 @@ from datetime import datetime
 
 @login_required
 def home_page(request):
-    character, created = Character.objects.get_or_create(user=request.user, defaults={'name': request.user.username})
+    character, created = Character.objects.get_or_create(user=request.user, defaults={'name': request.user.name})
     
     # 한국 표준 시간 설정
     KST = pytz.timezone('Asia/Seoul')
