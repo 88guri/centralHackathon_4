@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import home_page
+from .views import timer_page
 
 urlpatterns = [
-    path('homee/', home_page, name='homee'),
+    path('timer/', timer_page, name='timer'),
 ]

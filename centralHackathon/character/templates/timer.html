@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Timer</title>
     <script>
         let timer;
         let elapsedTime = {{ character.last_elapsed_time }};
@@ -37,7 +37,7 @@
 
         // 경과 시간 서버 전송 함수
         function sendElapsedTime() {
-            fetch("{% url 'homee' %}", {
+            fetch("{% url 'timer' %}", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
