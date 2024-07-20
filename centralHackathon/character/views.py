@@ -14,10 +14,11 @@ def home_page(request):
     now = datetime.now(KST)
 
     # 자정 초기화 (테스트를 위해 임시로 자정 설정 X)
-    if now.hour == 17 and now.minute == 51 and now.second == 0:
+    if now.hour == 18 and now.minute == 6 and now.second == 0:
         data = json.loads(request.body)
         elapsed_time = int(data.get('elapsed_time', 0))
 
+        # 경험치 계산 및 업데이트
         if character.last_elapsed_time > 0:
             experience_to_add = ((elapsed_time - character.last_elapsed_time) // 10) * 200
         else:
