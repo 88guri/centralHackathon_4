@@ -1,5 +1,6 @@
 from django.db import models
 from signup.models import CustomUser
+from datetime import date
 
 class Character(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -23,3 +24,8 @@ class Character(models.Model):
     def evolve(self):
         if self.stage < 3:
             self.stage += 1
+
+class TimerLog(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    date = models.DateField(default=date.today)
+    elapsed_time = models.IntegerField(default=0)
