@@ -31,7 +31,7 @@ def timer_page(request):
     now = datetime.now(KST)
 
     # 자정 초기화 (테스트를 위해 임시로 자정 설정 X)
-    if now.hour == 19 and now.minute == 22 and now.second == 0:
+    if now.hour == 23 and now.minute == 59 and now.second == 0:
         data = json.loads(request.body)
         elapsed_time = int(data.get('elapsed_time', 0))
 
