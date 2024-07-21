@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detailed History</title>
+</head>
+<body>
+    <h1>Detailed Timer History</h1>
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Elapsed Time</th>
+        </tr>
+        {% for date, time in logs.items %}
+        <tr>
+            <td>{{ date|date:"m-d" }}</td>
+            <td>{{ time.hours }}시간 {{ time.minutes }}분 {{ time.seconds }}초</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

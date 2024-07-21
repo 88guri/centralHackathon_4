@@ -100,3 +100,28 @@ def history_page(request):
         'consecutive_days': consecutive_days,
         'logs': logs,
     })
+
+@login_required
+def detailed_history(request):
+    # 한국 표준 시간 설정
+    KST = pytz.timezone('Asia/Seoul')
+    now = datetime.now(KST).date()
+
+    # 최근 4일의 날짜
+    dates = [now - timedelta(days=i) for i in range(4)]
+
+    # 각 날짜에 해당하는 타이머 로그
+    logs = {}
+    for date in dates:
+        timer_log = TimerLog.objects.filter(user=request.user, date=date).first()
+        elapsed_time = timer_log.elapsed_time if timer_log else 0
+        hours = elapsed_time // 3600
+        minutes = (elapsed_time % 3600) // 60
+        seconds = elapsed_time % 60
+        logs[date] = {'hours': hours, 'minutes': minutes, 'seconds': seconds}
+
+    context = {
+        'logs': logs
+    }
+
+    return render(request, 'detailed_history.html', context)
