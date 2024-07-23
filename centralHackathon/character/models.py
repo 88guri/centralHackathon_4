@@ -1,6 +1,8 @@
+# models.py
 from django.db import models
 from signup.models import CustomUser
 from datetime import date
+from django.utils import timezone
 
 class Character(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -9,6 +11,7 @@ class Character(models.Model):
     experience = models.IntegerField(default=0)
     stage = models.IntegerField(default=1)  # 총 3단계
     last_elapsed_time = models.IntegerField(default=0)  # 마지막 타이머 시간
+    last_activity = models.DateTimeField(default=timezone.now) # 마지막 활동 시간을 추적 
 
     def add_experience(self, amount):
         self.experience += amount
@@ -24,6 +27,9 @@ class Character(models.Model):
     def evolve(self):
         if self.stage < 3:
             self.stage += 1
+
+    def __str__(self): 
+        return f"{self.user.username}'s Character" 
 
 class TimerLog(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>광고 시청</title>
+</head>
+<body>
+    <h1>캐릭터를 복구하려면 광고를 시청해주세요</h1>
+    <p>광고를 시청해 주셔서 감사합니다. 캐릭터가 돌아올거에요!</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">시청 완료</button>
+    </form>
+</body>
+</html>

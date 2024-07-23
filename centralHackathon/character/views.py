@@ -1,10 +1,19 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.utils import timezone
 from .models import Character, TimerLog
 from .forms import CharacterForm
 from datetime import datetime, timedelta
 import json, pytz
+
+# 사용자 비활성화 확인하는거!
+def check_inactivity(character): 
+    now = timezone.now() 
+    if character.last_activity:
+        if now - character.last_activity > timedelta(days=3): 
+            return True 
+    return False 
 
 @login_required
 def create_character(request):
@@ -26,6 +35,9 @@ def timer_page(request):
     except Character.DoesNotExist:
         return redirect('create_character')
     
+    if check_inactivity(character):  
+        return redirect('character_missing') 
+
     # 한국 표준 시간 설정
     KST = pytz.timezone('Asia/Seoul')
     now = datetime.now(KST)
@@ -48,6 +60,7 @@ def timer_page(request):
 
         character.add_experience(experience_to_add)
         character.last_elapsed_time = 0
+        character.last_activity = now  # 마지막 활동 시간 갱신 
         character.save()
 
         return JsonResponse({'experience': character.experience, 'elapsed_time': character.last_elapsed_time})
@@ -65,11 +78,33 @@ def timer_page(request):
         experience_to_add = ((elapsed_time - character.last_elapsed_time) // 10) * 200
         character.add_experience(experience_to_add)
         character.last_elapsed_time = elapsed_time  # 마지막 타이머 시간 저장
+        character.last_activity = now  # 마지막 활동 시간 갱신 
         character.save()
 
         return JsonResponse({'experience': character.experience})
 
+    # 마지막 활동 시간 갱신 
+    character.last_activity = now 
+    character.save() 
+
     return render(request, 'timer.html', {'character': character})
+
+@login_required
+def character_missing(request): 
+    if request.method == 'POST': 
+        # 광고 시청, 캐릭터 복구
+        return redirect('watch_ad') 
+    return render(request, 'character_missing.html') 
+
+@login_required
+def watch_ad(request): 
+    if request.method == 'POST': 
+        # 광고 시청 완료 후 캐릭터 복구
+        character = Character.objects.get(user=request.user) 
+        character.last_activity = timezone.now()  # 캐릭터 복구할 때  활동 시간 갱신 
+        character.save() 
+        return redirect('timer_page') 
+    return render(request, 'watch_ad.html') 
 
 @login_required
 def history_page(request):
