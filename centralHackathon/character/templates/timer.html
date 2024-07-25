@@ -7,13 +7,28 @@
         let elapsedTime = {{ character.last_elapsed_time }};
         let timerStarted = false; // 타이머 시작 여부
 
+        // 시간을 시간, 분, 초 단위로 포맷하는 함수
+        function formatElapsedTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+
+            if (hours > 0) {
+                return `${hours}시간, ${minutes}분, ${secs}초`;
+            } else if (minutes > 0) {
+                return `${minutes}분, ${secs}초`;
+            } else {
+                return `${secs}초`;
+            }
+        }
+
         // 타이머 시작 함수
         function startTimer() {
             if (!timerStarted) return; // 타이머가 시작된 적이 없다면 return
             if (!timer) {
                 timer = setInterval(() => {
                     elapsedTime += 1;
-                    document.getElementById("timer").innerText = elapsedTime + " seconds";
+                    document.getElementById("timer").innerText = formatElapsedTime(elapsedTime);
                 }, 1000);
             }
         }
@@ -59,6 +74,8 @@
                 timerStarted = false; // 타이머 정지 플래그 설정
                 stopTimer();
             });
+
+            document.getElementById("timer").innerText = formatElapsedTime(elapsedTime);
         };
 
         // 페이지 포커스 시 타이머 재개
