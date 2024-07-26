@@ -25,8 +25,6 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     list_number = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)
-    birthday = models.CharField(max_length=8)
-    phone_number = models.CharField(max_length=13)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

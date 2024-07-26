@@ -32,7 +32,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'name', 'birthday', 'phone_number', 'password1', 'password2')
+        fields = ('email', 'name', 'password1', 'password2')
 
     def clean(self):
         cleaned_data = super().clean()

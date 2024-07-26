@@ -6,13 +6,12 @@
     <title>Main</title>
 </head>
 <body>
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">로그인</button>
-    </form>
-    <br>
-    <br>
-    <a href="{% url 'join' %}"><button type="button">회원가입</button></a>
+
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">로그인</button>
+</form>
+
 </body>
 </html>

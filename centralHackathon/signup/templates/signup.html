@@ -10,16 +10,16 @@
     <form id="signup-form" method="POST" action="{% url 'signup' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="email" id="emailField" name="id" placeholder="이메일 입력" required>
-        <button type="button" id="send-verification">본인인증 요청</button>
+        <button type="button" id="send-verification">인증번호 요청</button>
         <input type="text" name="verification_code" id="verification_code" placeholder="인증 번호 입력" required>
         <button type="button" id="verify-code">인증번호 확인</button>
-        <input type="submit" value="회원가입">
+        <input type="submit" value="회원가입" id="submit-btn" disabled>
     </form>
 
     <script>
         document.getElementById('send-verification').addEventListener('click', function() {
-            const email = document.getElementById('emailField').value;
+            const email = document.querySelector('input[name="email"]').value;
+            
             fetch('{% url "send_verification_email" %}', {
                 method: 'POST',
                 headers: {
@@ -37,7 +37,8 @@
         });
 
         document.getElementById('verify-code').addEventListener('click', function() {
-            const verification_code = document.getElementById('verification_code').value;
+            const verificationCode = document.getElementById('verification_code').value;
+            
             fetch('{% url "verify_code" %}', {
                 method: 'POST',
                 headers: {
@@ -45,18 +46,25 @@
                     'X-CSRFToken': '{{ csrf_token }}'
                 },
                 body: new URLSearchParams({
-                    'verification_code': verification_code
+                    'verification_code': verificationCode
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.message) {
                     alert(data.message);
-                    document.getElementById('signup-form').submit();
+                    document.getElementById('submit-btn').disabled = false; // 인증 성공 시 회원가입 버튼 활성화
                 } else {
                     alert(data.error);
                 }
             });
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            if (document.getElementById('submit-btn').disabled) {
+                event.preventDefault(); // 인증이 완료되지 않은 경우 폼 제출 방지
+                alert('인증이 완료되지 않았습니다.');
+            }
         });
     </script>
 </body>
