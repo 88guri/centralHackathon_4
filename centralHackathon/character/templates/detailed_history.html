@@ -13,7 +13,13 @@
         {% for date, time in logs.items %}
         <tr>
             <td>{{ date|date:"m-d" }}</td>
-            <td>{{ time.hours }}시간 {{ time.minutes }}분 {{ time.seconds }}초</td>
+            <td>
+                {% if time.hours > 0 %}
+                    {{ time.hours }}시간 {{ time.minutes }}분 {{ time.seconds }}초
+                {% else %}
+                    {{ time.minutes }}분 {{ time.seconds }}초
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>
