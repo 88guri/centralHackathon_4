@@ -61,6 +61,8 @@
                 body: JSON.stringify({elapsed_time: elapsedTime})
             }).then(response => response.json()).then(data => {
                 document.getElementById("experience").innerText = "Experience: " + data.experience;
+                document.getElementById("level").innerText = "Level: " + data.level;
+                document.getElementById("stage").innerText = "Stage: " + data.stage;
             });
         }
 
@@ -96,7 +98,7 @@
         function resetAtMidnight() {
             let now = new Date();
             let resetTime = new Date(now);
-            resetTime.setHours(23, 59, 0, 0); // 테스트를 위해 임시로 자정 설정 X
+            resetTime.setHours(0, 0, 0, 0);
 
             if (now > resetTime) {
                 resetTime.setDate(resetTime.getDate() + 1);
@@ -118,9 +120,9 @@
 <body>
     <h1>Welcome, {{ user.username }}!</h1>
     <h2>Character: {{ character.name }}</h2>
-    <h3>Level: {{ character.level }}</h3>
+    <h3 id="level">Level: {{ character.level }}</h3>
     <h3 id="experience">Experience: {{ character.experience }}</h3>
-    <h3>Stage: {{ character.stage }}</h3>
+    <h3 id="stage">Stage: {{ character.stage }}</h3>
     <div id="timer">{{ character.last_elapsed_time }} seconds</div>
     <button id="start">Start Timer</button>
     <button id="stop">Stop Timer</button>

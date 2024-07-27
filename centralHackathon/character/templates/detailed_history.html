@@ -23,5 +23,10 @@
         </tr>
         {% endfor %}
     </table>
+    <h2>일일 평균</h2>
+    <p>{{ avg_hours }}시간 {{ avg_minutes }}분 {{ avg_seconds }}초</p>
+    
+    <h2>지난주 대비 집중 시간</h2>
+    <p>{{ percentage_change }}</p>
 </body>
 </html>

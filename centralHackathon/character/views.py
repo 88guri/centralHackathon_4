@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.utils import timezone
+from django.db.models import Sum
 from .models import Character, TimerLog
 from .forms import CharacterForm
 from datetime import datetime, timedelta
@@ -42,8 +43,8 @@ def timer_page(request):
     KST = pytz.timezone('Asia/Seoul')
     now = datetime.now(KST)
 
-    # 자정 초기화 (테스트를 위해 임시로 자정 설정 X)
-    if now.hour == 23 and now.minute == 59 and now.second == 0:
+    # 자정 초기화
+    if now.hour == 0 and now.minute == 0 and now.second == 0:
         data = json.loads(request.body)
         elapsed_time = int(data.get('elapsed_time', 0))
 
@@ -63,7 +64,12 @@ def timer_page(request):
         character.last_activity = now  # 마지막 활동 시간 갱신 
         character.save()
 
-        return JsonResponse({'experience': character.experience, 'elapsed_time': character.last_elapsed_time})
+        return JsonResponse({
+            'experience': character.experience, 
+            'elapsed_time': character.last_elapsed_time,
+            'level': character.level,
+            'stage': character.stage,
+        })
 
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -81,7 +87,11 @@ def timer_page(request):
         character.last_activity = now  # 마지막 활동 시간 갱신 
         character.save()
 
-        return JsonResponse({'experience': character.experience})
+        return JsonResponse({
+            'experience': character.experience,
+            'level': character.level,
+            'stage': character.stage,
+        })
 
     # 마지막 활동 시간 갱신 
     character.last_activity = now 
@@ -142,10 +152,8 @@ def detailed_history(request):
     KST = pytz.timezone('Asia/Seoul')
     now = datetime.now(KST).date()
 
-    # 최근 4일의 날짜
+    # 오늘 포함 지난 4일의 집중 시간 계산
     dates = [now - timedelta(days=i) for i in range(4)]
-
-    # 각 날짜에 해당하는 타이머 로그
     logs = {}
     for date in dates:
         timer_log = TimerLog.objects.filter(user=request.user, date=date).first()
@@ -155,8 +163,38 @@ def detailed_history(request):
         seconds = elapsed_time % 60
         logs[date] = {'hours': hours, 'minutes': minutes, 'seconds': seconds}
 
+    # 오늘 제외 지난 7일의 일일 평균 계산
+    last_7_days = [now - timedelta(days=i) for i in range(1, 8)]
+    total_time_last_7_days = sum(TimerLog.objects.filter(user=request.user, date=date).aggregate(total_time=Sum('elapsed_time'))['total_time'] or 0 for date in last_7_days)
+    average_time_last_7_days = total_time_last_7_days / 7 if total_time_last_7_days else 0
+
+    # 지난주 대비 집중 시간 계산
+    last_week_date = now - timedelta(days=7)
+    last_week_log = TimerLog.objects.filter(user=request.user, date=last_week_date).first()
+    last_week_time = last_week_log.elapsed_time if last_week_log else None
+
+    today_log = TimerLog.objects.filter(user=request.user, date=now).first()
+    today_time = today_log.elapsed_time if today_log else 0
+
+    if last_week_time is not None:
+        if last_week_time > 0:
+            percentage_change = ((today_time - last_week_time) / last_week_time) * 100
+        else:
+            percentage_change = 0 if today_time == 0 else 100
+        percentage_change_str = f"{percentage_change:.2f}%"
+    else:
+        percentage_change_str = "지난주의 데이터가 존재하지 않습니다."
+
+    avg_hours = int(average_time_last_7_days // 3600)
+    avg_minutes = int((average_time_last_7_days % 3600) // 60)
+    avg_seconds = int(average_time_last_7_days % 60)
+
     context = {
-        'logs': logs
+        'logs': logs,
+        'avg_hours': avg_hours,
+        'avg_minutes': avg_minutes,
+        'avg_seconds': avg_seconds,
+        'percentage_change': percentage_change_str
     }
 
     return render(request, 'detailed_history.html', context)
