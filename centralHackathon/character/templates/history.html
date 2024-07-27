@@ -17,6 +17,9 @@
             {% endif %}
         </p>
         <p>연속 집중 일수: {{ consecutive_days }}일</p>
+        <form action="{% url 'detailed_history' %}">
+            <button type="submit">분석 페이지</button>
+        </form>
     </div>
 </body>
 </html>
