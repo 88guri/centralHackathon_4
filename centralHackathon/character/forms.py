@@ -6,5 +6,5 @@ class CharacterForm(forms.ModelForm):
         model = Character
         fields = ['name']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter character name'}),
+            'name': forms.TextInput(attrs={'class': '', 'placeholder': '입력'}),
         }

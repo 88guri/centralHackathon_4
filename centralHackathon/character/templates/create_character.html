@@ -3,16 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Character</title>
+    <title>캐릭터 만들기</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/create_character.css' %}">
 </head>
 <body>
     <div class="container mt-5">
-        <h2>Create Character</h2>
+        <h1>디지털 디톡스를 함께할 캐릭터의</h1>
+        <h1>이름을 지어주세요!</h1>
+        <img src="{% static 'images/character.png' %}" alt="character" class="character">
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Create</button>
+            {{ form.name }}
+            <button type="submit" class="btn btn-primary" id="submit-button" style="display: none;">
+                <img src="{% static 'images/next.png' %}" alt="Next" class="next">
+            </button>
         </form>
     </div>
+    <script>
+        const input = document.querySelector('input[name="name"]');
+        const button = document.getElementById('submit-button');
+
+        input.addEventListener('input', function() {
+            if (input.value.trim().length > 0) {
+                button.style.display = 'block';
+            } else {
+                button.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>

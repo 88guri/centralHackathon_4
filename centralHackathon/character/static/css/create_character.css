@@ -1,0 +1,68 @@
+@font-face {
+    font-family: 'NeoDunggeunmo';
+    src: url('../fonts/neodgm_code.woff') format('woff');
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../images/namebackground.png') no-repeat center center;
+    background-size: contain;
+    font-family: 'NeoDunggeunmo', Arial, sans-serif;
+}
+
+.container {
+    text-align: center;
+    width: 300px;
+    position: relative;
+}
+
+h1 {
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.character {
+    width: 160px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+input[type="text"] {
+    background: url('../images/login.png') no-repeat center center;
+    background-size: contain;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'NeoDunggeunmo', Arial, sans-serif;
+    text-align: center;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+#submit-button {
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.next {
+    width: 50px;
+}
