@@ -3,13 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>홈페이지</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/Home.css' %}">
 </head>
 <body>
-    <a href="{% url 'main' %}"><button type="logout">logout</button></a>
-    <p><strong>user name:</strong> {{ user.name }}</p>
-    <p><strong>email:</strong> {{ user.id }}</p>
-    <p><strong>birthDay:</strong> {{ user.birthday }}</p>
-    <p><strong>phoneNum:</strong>{{user.phone_number}}</p>
+    <div class="container">
+        <div class="header">
+            <div class="level-info">
+                <span class="character-name">캐릭터 이름</span>
+                <div class="level-bar-container">
+                    <span class="level-text">LV. 1</span>
+                    <div class="progress-bar">
+                        <div class="progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="character-container">
+            <img src="{% static 'images/character.png' %}" alt="Character" class="character">
+        </div>
+        <div class="footer">
+            <div class="button">
+                <img src="{% static 'images/history.png' %}" alt="History Icon" class="icon history">
+                <span>히스토리</span>
+            </div>
+            <div class="button">
+                <img src="{% static 'images/timer.png' %}" alt="Timer Icon" class="icon timer">
+                <span>타이머</span>
+            </div>
+            <div class="button">
+                <img src="{% static 'images/dress.png' %}" alt="Dressroom Icon" class="icon dressroom">
+                <span>드레스룸</span>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
