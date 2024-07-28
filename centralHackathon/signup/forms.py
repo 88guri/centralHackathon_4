@@ -11,8 +11,8 @@ from django.contrib.auth import authenticate
 User = CustomUser
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label='Email')  
-    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': '이메일을 입력하세요.'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': '비밀번호를 입력하세요.'}))
 
     def clean(self):
         cleaned_data = super().clean()
