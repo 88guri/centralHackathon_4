@@ -1,0 +1,340 @@
+@font-face {
+    font-family: 'NeoDunggeunmo';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body{
+    padding: 0;
+    margin: 0;
+    font-family: 'NeoDunggeunmo';
+}
+button{
+  background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer
+
+}
+
+.container {
+    width: 430px;
+    height: 932px;
+    background-color: white;
+    margin: 0 auto;
+    position: relative;
+}
+
+.history-bal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 170px;
+}
+
+.char-bal {
+    position: relative;
+}
+
+.bal-text {
+    position: absolute;
+    top: 10px;
+    left: 34px;
+    font-weight: 100; 
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+}
+
+.bal-text > p:nth-child(1) {
+    margin: 0;
+    margin-top: 17px; 
+}
+
+.bal-text > p:nth-child(2) {
+    margin: 0;
+    margin-top: 6px;
+}
+/*bak-button*/
+.bak-button{
+    position: absolute;
+    top:40px;
+    left:20px;
+    z-index:900;
+  }
+/* 캐릭터 */
+.char {
+    position: relative;
+}
+
+.char-img {
+    width: 276px;
+    height: 259.4px;
+    position: relative; /* 상대적인 위치를 유지 */
+    z-index: 1; /* .shadow보다 높은 z-index 설정 */
+    object-fit: cover;
+}
+
+.shadow {
+    position: absolute;
+    bottom: -12px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    background-color: rgb(196, 196, 196);
+    border-radius: 50%;
+    width: 264.13px;
+    height: 36.28px;
+    z-index: 0; 
+}
+/* 버튼 */
+.time {
+    position: relative;
+    margin-top: 80px; /* 추가: 텍스트와 버튼 사이에 간격을 둠 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.time > p {
+    position: relative; /* position을 relative로 변경 */
+    z-index: 101; /* .btn의 z-index보다 높게 설정 */
+    margin: 0;
+}
+
+.btn {
+    width: 391px;
+    position: absolute;
+    z-index: 100;
+}
+
+.con-day{
+    position: relative;
+    margin-top: 70px; /* 추가: 텍스트와 버튼 사이에 간격을 둠 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.con-day > p {
+    position: relative; /* position을 relative로 변경 */
+    z-index: 101; /* .btn의 z-index보다 높게 설정 */
+    margin: 0;
+}
+.his-text{
+    margin: 0;
+    margin-top: 150px;
+    text-align: center;
+    font-weight: bold;
+}
+/*cloud*/
+.cloud-logo{
+    position: absolute;
+    bottom:50px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 67.05px;
+    height: 37.71px;
+  }
+.cloud-wrap {
+    position: absolute;
+    top: 0;
+    width: 430px;
+    height: 932px;
+    overflow: hidden;
+    z-index: 1; /* 모든 다른 요소들보다 낮게 설정 */
+}
+
+.cloud {
+    position: absolute;
+    object-fit: cover;
+    object-position: center;
+    width: 124.44px; /* 이미지 크기 조정 */
+    height: 70px;
+}
+
+.cloud:nth-child(1) {
+    top: 300px;
+    left: 322px;
+    z-index: 100;
+}
+.cloud:nth-child(2) {
+    top: 50px;
+    left: 345px;
+    width: 97px;
+    height: 54.56px;
+    z-index: 100;
+}
+.cloud:nth-child(3) {
+    top: 150px;
+    left: 0px;
+    width: 67.05px;
+    height: 37.71px;
+    z-index: 100;
+}
+.cloud:nth-child(4) {
+    width: 67.05px;
+    height: 37.71px;
+    top: 490px;
+    left: -15px;
+    z-index: 100;
+}
+
+/*history01*/
+.history01-bal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+}
+.char01-img{
+    width: 241.53px;
+    height: 227px;
+    position: relative; /* 상대적인 위치를 유지 */
+    z-index: 1; /* .shadow보다 높은 z-index 설정 */
+    object-fit: cover;
+}
+.his-average{
+    width: 400px;
+    height: 350px;
+    margin: 0 auto;
+    margin-top: 30px;
+    position: relative;
+}
+.ave {
+    position: absolute;
+    top: 0;
+    z-index: 50; /* z-index 낮춤 */
+}
+.ave-text{
+    position: relative;
+    z-index: 200;
+    font-size: 14px;
+    padding-top: 40px;
+    padding-left: 40px;
+}
+.ave-com{
+    display: flex;
+}
+.ave-time{
+    position: relative;
+    margin-left: 47px;
+    margin-top: 10px;
+    z-index: 200;
+    font-size: 25px;
+    font-weight: 200;
+}
+.compare{
+    display: flex;
+}
+.com-text{
+    position: absolute;
+    top:65px;
+    right:96px;
+    margin-left: 50px;
+    z-index: 200;
+}
+.com-time{
+    position: absolute;
+    top:66px;
+    right:70px;
+    margin-left: 10px;
+    z-index: 200;
+}
+.com-per{
+    position: absolute;
+    top:66px;
+    right:60px;
+    margin-left: 10px;
+    z-index: 200;
+}
+.com-up{
+    position: absolute;
+    top:67px;
+    right:40px;
+    z-index: 200;
+    transform: rotate(270deg);
+    width: 23px;
+    height: 34.82px;
+}
+.table {
+    position: absolute;
+    bottom:60px;
+    left:50px;
+    z-index: 150; /* z-index 높임 */
+}
+.graph-txt{
+    position: absolute;
+    bottom: 34px;
+    left: 22px;
+    z-index: 200;
+    display: flex;
+    font-size: 14px;
+    justify-content: space-around;
+}
+.graph-txt>p{
+    margin: 0 26px;
+}
+.graph-txt>p:nth-child(3){
+    margin-left:28px;
+   }
+.graph-txt>p:nth-child(4){
+ margin-left:36px;
+}
+/*toHistory02*/
+.toHistory02{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 90px;
+}
+.toHistory02 > p{
+    margin-top: 25px;
+}
+.toHisoty02-img{
+    width: 60px;
+    height: 60px;
+}
+
+/*01 cloud*/
+
+.cloud-wrap01 {
+    position: absolute;
+    top: 0;
+    width: 430px;
+    height: 932px;
+    overflow: hidden;
+    z-index: 1; /* 모든 다른 요소들보다 낮게 설정 */
+}
+.cloud01 {
+    position: absolute;
+    object-fit: cover;
+    object-position: center;
+    width: 124.44px; /* 이미지 크기 조정 */
+    height: 70px;
+}
+.cloud01:nth-child(1) {
+    top: 250px;
+    left: 338px;
+    z-index: 100;
+}
+.cloud01:nth-child(2) {
+    top: 50px;
+    left: 345px;
+    width: 97px;
+    height: 54.56px;
+    z-index: 100;
+}
+.cloud01:nth-child(3) {
+    top: 170px;
+    left: 0px;
+    width: 67.05px;
+    height: 37.71px;
+    z-index: 100;
+}
+.cloud01:nth-child(4) {
+    width: 67.05px;
+    height: 37.71px;
+    top: 380px;
+    left: -15px;
+    z-index: 100;
+}
+.toHisoty02-btn{
+    cursor: pointer;
+    z-index: 900;
+}

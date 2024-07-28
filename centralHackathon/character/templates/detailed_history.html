@@ -1,32 +1,125 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="{% static 'css/history.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History02</title>
     <title>Detailed History</title>
+    <script src="https://d3js.org/d3.v7.min.js" charset="utf-8"></script>
+
 </head>
 <body>
-    <h1>Detailed Timer History</h1>
-    <table border="1">
-        <tr>
-            <th>날짜</th>
-            <th>집중 시간</th>
-        </tr>
-        {% for date, time in logs.items %}
-        <tr>
-            <td>{{ date|date:"m-d" }}</td>
-            <td>
-                {% if time.hours > 0 %}
-                    {{ time.hours }}시간 {{ time.minutes }}분 {{ time.seconds }}초
+    <div class="container mt-5">
+        <button class="bak-button" type="button" onClick="history.go(-1)"><img src={% static 'img/back-btn.svg' %}> </button>
+        <div class="history01-bal">
+            <div class="char-bal">
+                <img class="balloon" src={% static 'img/balloon.svg' %}>
+                <div class="bal-text">
+                    <p>오늘 난 얼마나 집중했을까?</p>
+                    <p>"HUDY"가 알려드려요!</p>
+                </div>
+            </div>
+            <div class="char">
+                <img class="char01-img" src={% static 'img/main-char.svg' %}>  
+                <div class="shadow"></div>
+            </div>
+        </div>
+        <div class="his-average">
+            <p class="ave-text">일일 평균</p>
+            <div class="ave-com">
+                <p class="ave-time">
+                    {% if avg_hours > 0 %}
+                    {{ avg_hours }}시간
+                {% elif avg_minutes > 0 %}
+                    {{ avg_minutes }}분
                 {% else %}
-                    {{ time.minutes }}분 {{ time.seconds }}초
+                    {{ avg_seconds }}초
                 {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-    <h2>일일 평균</h2>
-    <p>{{ avg_hours }}시간 {{ avg_minutes }}분 {{ avg_seconds }}초</p>
+                </p>
+                
+                <div class="compare">
+                    {% if percentage_change != "지난주의 데이터가 존재하지 않습니다." %}
+                    <p class="com-text">지난주 대비 집중 시간</p>
+                    <p class="com-time">{{ percentage_change }}</p>
+                    <p class="com-per">%</p>
+                    <img class="com-up" src="{% static 'img/next-btn.svg' %}">  
+                    {% endif %}
+                </div>
+            </div>
+            
+            <svg id="myGraph" class="table"></svg>
+            <div class="graph-txt">
+                <p>3일전</p>
+                <p>그저께</p>
+                <p>어제</p>
+                <p>오늘</p>
+            </div>
+            <img class="ave" src={% static 'img/history-average.svg' %}>  
+        </div>
+        <div class="cloud-wrap01">
+            <img class="cloud01" src={% static 'img/cloud.svg' %}>  
+            <img class="cloud01" src={% static 'img/cloud.svg' %}>  
+            <img class="cloud01" src={% static 'img/cloud.svg' %}>  
+            <img class="cloud01" src={% static 'img/cloud.svg' %}>
+        </div>
+    </div>
+    <script>
+        console.log("Script execution started"); // 시작 부분에 로그 추가
     
-    <h2>지난주 대비 집중 시간</h2>
-    <p>{{ percentage_change }}</p>
+        var dataSet = [];
+        var i = 0;
+        var temTime=0;
+        {% for date, time in logs.items %}
+            temTime = ({{ time.hours }} * 3600 + {{ time.minutes }} * 60 + {{ time.seconds }});
+            if({{ time.hours }}>0){
+                temTime =temTime/360;
+            }
+            else if({{ time.minutes }}>0){
+                temTime =temTime/60;
+            }
+            dataSet.push(temTime);
+            i++;
+        {% endfor %}
+        console.log("DataSet:", dataSet); // 데이터셋 로그 추가
+        dataSet =[83,25,36, 18];
+        var svgHeight = 150; // SVG의 높이 설정
+        var barWidth = 30; // 각 막대의 너비 설정
+        var barSpacing = 60; // 각 막대 사이의 간격 설정
+    
+        var svgWidth = dataSet.length * (barWidth + barSpacing); // SVG의 너비 설정
+        var maxDataValue = d3.max(dataSet); // 데이터의 최대값 계산
+    
+        var yScale = d3.scaleLinear()
+            .domain([0, maxDataValue]) // 데이터 값 범위
+            .range([0, svgHeight]); // SVG 높이 범위
+    
+        var svg = d3.select("#myGraph")
+            .attr("width", svgWidth)
+            .attr("height", svgHeight);
+    
+        svg.selectAll("rect")
+            .data(dataSet)
+            .enter()
+            .append("rect")
+            .attr("x", function(d, i) {
+                return i * (barWidth + barSpacing);
+            })
+            .attr("y", function(d) {
+                return svgHeight - (d === 0 ? 0 : yScale(d)); // y 스케일 적용, 값이 0일 때 높이를 0으로 설정
+            })
+            .attr("width", barWidth)
+            .attr("height", function(d) {
+                return d === 0 ? 0 : yScale(d); // y 스케일 적용, 값이 0일 때 높이를 0으로 설정
+            })
+            .attr("fill", "#6CAADD") // 막대 색상 설정
+            .attr("rx", 15) // 막대 끝을 둥글게 설정
+            .attr("ry", 15);
+        console.log("Script execution finished"); // 종료 부분에 로그 추가
+    </script>
+    
+    
+    
 </body>
 </html>

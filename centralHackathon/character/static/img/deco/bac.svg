@@ -1,0 +1,47 @@
+<svg width="430" height="300" viewBox="0 0 430 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_f_0_1)">
+<ellipse cx="218" cy="150" rx="279" ry="90" fill="url(#paint0_radial_0_1)"/>
+</g>
+<circle cx="60" cy="112" r="3" fill="white" fill-opacity="0.6"/>
+<circle cx="106" cy="147" r="3" fill="white" fill-opacity="0.6"/>
+<circle cx="289" cy="151" r="3" fill="white" fill-opacity="0.6"/>
+<circle cx="374" cy="106" r="3" fill="white" fill-opacity="0.6"/>
+<circle cx="395" cy="151" r="3" fill="white" fill-opacity="0.6"/>
+<circle cx="401" cy="179" r="3" fill="white" fill-opacity="0.6"/>
+<circle cx="80" cy="93" r="3" fill="white" fill-opacity="0.6"/>
+<circle cx="33" cy="166" r="3" fill="white" fill-opacity="0.6"/>
+<circle cx="170" cy="145" r="3" fill="white" fill-opacity="0.6"/>
+<circle cx="226" cy="153" r="3" fill="white" fill-opacity="0.4"/>
+<circle cx="343" cy="73" r="3" fill="white" fill-opacity="0.4"/>
+<circle cx="27" cy="103" r="3" fill="white" fill-opacity="0.4"/>
+<circle cx="18" cy="179" r="3" fill="white" fill-opacity="0.4"/>
+<circle cx="412" cy="114" r="3" fill="white" fill-opacity="0.4"/>
+<line x1="43.6491" y1="134" x2="43.6491" y2="148.358" stroke="white" stroke-opacity="0.5" stroke-width="0.939797"/>
+<line x1="50.3579" y1="141.649" x2="35.9999" y2="141.649" stroke="white" stroke-opacity="0.5" stroke-width="0.939797"/>
+<line x1="134.649" y1="130" x2="134.649" y2="144.358" stroke="white" stroke-opacity="0.5" stroke-width="0.939797"/>
+<line x1="141.358" y1="137.649" x2="127" y2="137.649" stroke="white" stroke-opacity="0.5" stroke-width="0.939797"/>
+<line x1="33.6491" y1="182" x2="33.6491" y2="196.358" stroke="white" stroke-opacity="0.5" stroke-width="0.939797"/>
+<line x1="40.3579" y1="189.649" x2="25.9999" y2="189.649" stroke="white" stroke-opacity="0.5" stroke-width="0.939797"/>
+<line x1="364.649" y1="122" x2="364.649" y2="136.358" stroke="white" stroke-opacity="0.5" stroke-width="0.939797"/>
+<line x1="371.358" y1="129.649" x2="357" y2="129.649" stroke="white" stroke-opacity="0.5" stroke-width="0.939797"/>
+<line x1="18.6491" y1="115" x2="18.6491" y2="129.358" stroke="white" stroke-opacity="0.5" stroke-width="0.939797"/>
+<line x1="25.3579" y1="122.649" x2="10.9999" y2="122.649" stroke="white" stroke-opacity="0.5" stroke-width="0.939797"/>
+<defs>
+<filter id="filter0_f_0_1" x="-121" y="0" width="678" height="300" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="30" result="effect1_foregroundBlur_0_1"/>
+</filter>
+<radialGradient id="paint0_radial_0_1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(218 150) scale(279 90)">
+<stop offset="0.111111" stop-color="#BBE7FF"/>
+<stop offset="0.222222" stop-color="#B1E4FE"/>
+<stop offset="0.333333" stop-color="#A5DFFE"/>
+<stop offset="0.444444" stop-color="#9EDDFD"/>
+<stop offset="0.555556" stop-color="#8FD7FC"/>
+<stop offset="0.666667" stop-color="#83D3FC"/>
+<stop offset="0.777778" stop-color="#74CDFB"/>
+<stop offset="0.888889" stop-color="#69C9FB"/>
+<stop offset="1" stop-color="#5CC4FA"/>
+</radialGradient>
+</defs>
+</svg>

@@ -1,0 +1,124 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+button {
+    background: inherit;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    overflow: visible;
+    cursor: pointer;
+}
+
+/*bak-button*/
+.bak-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 900;
+}
+
+/*deco*/
+.deco-wrap {
+    width: 430px;
+    height: 932px;
+    background-color: white;
+    margin: 0 auto;
+    position: relative;
+}
+
+.char {
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.char01-img {
+    width: 261px;
+    height: 253.3px;
+    object-fit: contain; /* 이미지가 지정된 크기에 맞춰 조정되도록 설정 */
+    object-position: center; /* 이미지가 중앙에 위치하도록 설정 */
+    z-index: 100;
+}
+
+.char02-img {
+    position: absolute;
+    z-index: 50;
+}
+
+.char03-img {
+    position: absolute;
+    top: 200px;
+    z-index: 30;
+}
+
+/*box*/
+.box {
+    width: 100%;
+    height: 520px;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.nav-btn {
+    position: absolute;
+    top:-40px;
+    z-index: 150; /* nav-box보다 높게 설정 */
+}
+
+.nav-img {
+    z-index: 150; /* nav-box보다 높게 설정 */
+}
+
+
+.decos-img{
+    position: absolute;
+    top:14px;
+    left: 40px;
+}
+.shop-img{
+    position: absolute;
+    top:22px;
+    left: 130px;
+}
+.jewel-img{
+    position: absolute;
+    top: 27px;
+    left: 205px;
+}
+.face-img{
+    position: absolute;
+    top: 27px;
+    left: 280px;
+}
+/*nav-box*/
+.nav-box {
+    width: 430px;
+    height: 520px;
+    background-color: rgb(212, 219, 226);
+    position: absolute;
+    bottom: 0;
+    z-index: 100;
+    box-sizing: border-box;
+    padding: 10px;
+    padding-top: 70px;
+}
+.three-container{
+    display: flex;
+    
+}
+.one-box{
+    width: 122px;
+    height: 122px;
+    border-radius: 10px;
+    background-color: white;
+    margin: 10px;
+}

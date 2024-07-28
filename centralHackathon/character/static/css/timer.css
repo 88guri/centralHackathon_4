@@ -1,0 +1,341 @@
+@font-face {
+  font-family: 'NeoDunggeunmo';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+body{
+    padding: 0;
+    margin: 0;
+
+}
+button{
+  background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer
+
+}
+.timer-wrap{
+    width: 430px;
+    height: 932px;
+    background-color: white;
+    margin: 0 auto;
+  position: relative;
+}
+/* progress bar */
+.time-bar{
+    margin: 0 auto;
+    width: 387px;
+    height: 27px;    
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 100;
+}
+#time-bar{
+    -webkit-appearance: none;
+    position: absolute;
+    top:132px;
+}
+#time-bar::-webkit-progress-bar{
+    background-color: #A5D4FF;
+    border-radius: 12px;
+
+    width: 387px;
+    height: 27px;
+    margin: 20px auto;
+    overflow: hidden;
+}
+#time-bar::-webkit-progress-value{
+    background-color: #3080CB;
+    border-radius: 0px;
+    height: 28px;
+    width: 48px;
+}
+#time-bar[value]::after{
+    background-image: url("{% static 'img/mini-char.svg' %}" );
+}
+/*bak-button*/
+.bak-button{
+  position: absolute;
+  top:20px;
+  left:20px;
+}
+/*bubble*/
+.bubble-wrap {
+  width: 430px;
+  height: 430px;
+  margin-top: 250px;
+  overflow: hidden;
+  z-index: 1;
+  position: relative;
+}
+
+.bubble-img {
+  position: absolute;
+  width: 430px;
+  height: 440px;
+  object-fit: cover;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0));
+}
+
+.bubble {
+    height: 60px;
+    width: 60px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50px;
+    position: absolute;
+    animation: animate 10s linear infinite;
+    z-index: 150;
+  }
+   .bubble:nth-child(1) {
+    top: 20%;
+    left: 20%;
+    animation-duration: 8s;
+  }
+   .bubble:nth-child(2) {
+    top: 60%;
+    left: 80%;
+    animation-duration: 10s;
+  }
+   .bubble:nth-child(3) {
+    top: 40%;
+    left: 40%;
+    animation-duration: 3s;
+  }
+   .bubble:nth-child(4) {
+    top: 66%;
+    left: 30%;
+    animation-duration: 7s;
+  }
+   .bubble:nth-child(5) {
+    top: 90%;
+    left: 10%;
+    animation-duration: 9s;
+  }
+   .bubble:nth-child(6) {
+    top: 30%;
+    left: 60%;
+    animation-duration: 5s;
+  }
+   .bubble:nth-child(7) {
+    top: 70%;
+    left: 20%;
+    animation-duration: 8s;
+  }
+   .bubble:nth-child(8) {
+    top: 75%;
+    left: 60%;
+    animation-duration: 10s;
+  }
+   .bubble:nth-child(9) {
+    top: 50%;
+    left: 50%;
+    animation-duration: 6s;
+  }
+   .bubble:nth-child(10) {
+    top: 45%;
+    left: 20%;
+    animation-duration: 10s;
+  }
+   .bubble:nth-child(11) {
+    top: 10%;
+    left: 90%;
+    animation-duration: 9s;
+  }
+   .bubble:nth-child(12) {
+    top: 20%;
+    left: 70%;
+    animation-duration: 7s;
+  }
+   .bubble:nth-child(13) {
+    top: 20%;
+    left: 20%;
+    animation-duration: 8s;
+  }
+   .bubble:nth-child(14) {
+    top: 60%;
+    left: 5%;
+    animation-duration: 6s;
+  }
+   .bubble:nth-child(15) {
+    top: 90%;
+    left: 80%;
+    animation-duration: 9s;
+  }
+  @keyframes animate {
+    0% {
+      transform: scale(0) translateY(0) rotate(70deg);
+    }
+    100% {
+      transform: scale(1.3) translateY(-100px) rotate(360deg);
+    }
+  }
+/* timer */
+#timer {
+  position: absolute;
+  top: 180px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+  font-size: 30px;
+  font-family: 'NeoDunggeunmo', sans-serif; /* 폰트 패밀리 추가 */
+}
+/*button*/
+
+.container{
+
+    display: flex;
+    justify-content: center;
+}
+#start{
+    width: 259px;
+    height: 69px;
+    margin-top: 50px;
+    font-size: 25px;
+    font-weight: 100;
+    border-radius: 50px;
+    z-index: 200;
+    font-family: 'NeoDunggeunmo', sans-serif; /* 폰트 패밀리 추가 */
+    text-align: center;
+}
+.btn{
+  position: absolute;
+  bottom:106px;
+  z-index: 100;
+}
+.time-text {
+  font-size: 18px;
+  font-weight: bold;
+  width: 300px;
+  text-align: center;
+  position: absolute;
+  top: 250px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
+
+/*cloud*/
+
+.cloud-wrap{
+    position: absolute;
+    top:0px;
+    width: 430px;
+    height: 932px;
+    overflow: hidden;
+}   
+
+.cloud {
+    position: absolute;
+    object-fit: cover;
+    object-position: center;
+    width: 124.44px; /* 이미지 크기 조정 */
+    height: 70px;
+}
+
+.cloud:nth-child(1) {
+    top: 300px;
+    left: 322px;
+    z-index: 100;
+}
+
+.cloud:nth-child(2) {
+    width: 67.5px;
+    height: 37.71px;
+    top: 270px;
+    left: 0;
+    z-index: 100;
+}
+
+.cloud:nth-child(3) {
+  width: 97px;
+  height: 54.56px;
+  top: 40px;
+  left: 340px;
+  z-index: 100;
+}
+
+.cloud:nth-child(4) {
+  width: 103px;
+  height: 58px;
+  bottom: 180px;
+  left: -20px;
+  z-index: 100;
+}
+
+.cloud:nth-child(5) {
+  width: 97px;
+  height: 54.56px;
+  bottom: -10px;
+  left: 345px;
+  z-index: 100;
+}
+.cloud:nth-child(6) {
+  bottom: 240px;
+  left: 307px;
+  z-index: 100;
+}
+.invisible{
+  position: absolute;
+  display: none;
+}
+/*popup*/
+.popup01{
+  background-color: #9E949494;
+  z-index: 500;
+  width: 430px;
+  height: 932px;
+  position: absolute;
+  top:0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.popup{
+  width: 394px;
+  height: 305px;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.popup p{
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0;
+  margin-top: 10px;
+  z-index: 600;
+}
+.pop-bak{
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  z-index: 200;
+}
+
+.pop-bak02{
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  z-index: 300;
+}
+.pop-img{
+  z-index: 600;
+}
+
+.popup02{
+
+  background-color: #9E949494;
+  z-index: 500;
+  width: 430px;
+  height: 932px;
+  position: absolute;
+  top:0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  
+}
