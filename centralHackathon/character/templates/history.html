@@ -2,53 +2,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="{% static 'css/history.css' %}">
+    <link rel="stylesheet" href="{% static 'css/deco.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History</title>
+    <title>History02</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <button class="bak-button" type="button" onClick="history.go(-1)"><img src={% static 'img/back-btn.svg' %}> </button>
+    
+    <div class="deco-wrap">
+        <button class="bak-button" type="button" onClick="history.go(-1)"><img src="{% static 'img/back-btn.svg' %}"> </button>
         
-        <div class="history-bal">
-            <div class="char-bal">
-                <img class="balloon" src={% static 'img/balloon.svg' %}>
-                <div class="bal-text">
-                    <p>나의 집중시간은?</p>
-                    <p>"HUDY"가 분석해드려요!</p>
-                </div>
+        <div class="char">
+            <img class="char01-img" src="{% static 'img/main-char.svg' %}">
+        </div>
+        <div class="box">
+            <div class="nav-btn">
+                <button class="decos-img" onclick="filterImages('all')"><img src="{% static 'img/deco/shop.svg' %}"> </button>
+                <button class="shop-img" onclick="filterImages('cloth')"><img src="{% static 'img/deco/bag.svg' %}"> </button>
+                <button class="jewel-img" onclick="filterImages('accessory')"><img src="{% static 'img/deco/jewel.svg' %}"> </button>
+                <button class="face-img" onclick="filterImages('eyes')"><img src="{% static 'img/deco/face.svg' %}"> </button>
+                <img class="nav-img" src="{% static 'img/deco/nav.svg' %}">
             </div>
-            <div class="char">
-                <img class="char-img" src={% static 'img/main-char.svg' %}>  
-                <div class="shadow"></div>
+            <div class="nav-box">
+                <button class="one-box" type="button" onclick="addCharacterItem('hat', '{% static 'img/real_items/blue-hat.svg' %}')"><img data-value="cloth" src="{% static 'img/deco_items/blue-hat.svg' %}"></button>
+                <button class="one-box" type="button" onclick="addCharacterItem('eyes', '{% static 'img/real_items/sunglass.svg' %}')"><img data-value="eyes" src="{% static 'img/deco_items/sunglass.svg' %}"></button>
+                <button class="one-box" type="button" onclick="addCharacterItem('accessory', '{% static 'img/real_items/red-heart.svg' %}')"><img data-value="accessory" src="{% static 'img/deco_items/red-heart.svg' %}"></button>
+                <button class="one-box" type="button" onclick="addCharacterItem('pet', '{% static 'img/real_items/monsil.svg' %}')"><img data-value="cloth" src="{% static 'img/deco_items/monsil.svg' %}"></button>
+                <button class="one-box" type="button" onclick="addCharacterItem('accessory', '{% static 'img/real_items/flower.svg' %}')"><img data-value="accessory" src="{% static 'img/deco_items/flower.svg' %}"></button>
+                <button class="one-box" type="button" onclick="addCharacterItem('bag', '{% static 'img/real_items/bag.svg' %}')"><img data-value="cloth" src="{% static 'img/deco_items/bag.svg' %}"></button>
+                <button class="one-box" type="button" onclick="addCharacterItem('hat', '{% static 'img/real_items/ribbon.svg' %}')"><img data-value="cloth" src="{% static 'img/deco_items/ribbon.svg' %}"></button>
+                <button class="one-box" type="button" onclick="addCharacterItem('eyes', '{% static 'img/real_items/red-eye.svg' %}')"><img data-value="eyes" src="{% static 'img/deco_items/red-eye.svg' %}"></button>
+                <button class="one-box" type="button" onclick="addCharacterItem('eyes', '{% static 'img/real_items/blue-eye.svg' %}')"><img data-value="eyes" src="{% static 'img/deco_items/blue-eye.svg' %}"></button>
             </div>
         </div>
-        <div class="time">
-            <img class="btn" src={% static 'img/history-btn.svg' %}>
-            <p>
-                총 집중 시간: 
-                {% if total_hours == 0 %}
-                    {{ total_minutes }}분, {{ total_seconds }}초
-                {% else %}
-                    {{ total_hours }}시간, {{ total_minutes }}분, {{ total_seconds }}초
-                {% endif %}
-            </p>
-        </div>
-        <div class="con-day">
-            <img class="btn" src={% static 'img/history-btn.svg' %}>
-            <p>연속 집중 일수: {{ consecutive_days }}일</p>
-        </div>
-        <div class="cloud-wrap">
-            <img class="cloud" src={% static 'img/cloud.svg' %}>  
-            <img class="cloud" src={% static 'img/cloud.svg' %}>  
-            <img class="cloud" src={% static 'img/cloud.svg' %}>  
-            <img class="cloud" src={% static 'img/cloud.svg' %}>
-        </div>
-        <form class="toHistory02" action="{% url 'detailed_history' %}"><p>내 집중시간을 보고 싶다면?</p>
-            <img class="next-img" src={% static 'img/next-btn.svg' %}> 
-            <button class="toHisoty02-btn" type="submit"><img class="toHisoty02-img" src={% static 'img/toHistory2.png' %}> </button>
-        </form>
     </div>
+
+    <script>
+        function filterImages(filter) {
+            var boxes = document.querySelectorAll('.nav-box .one-box');
+            boxes.forEach(function(box) {
+                var img = box.querySelector('img');
+                if (filter === 'all' || img.getAttribute('data-value') === filter) {
+                    box.style.display = 'flex';
+                } else {
+                    box.style.display = 'none';
+                }
+            });
+        }
+
+        function addCharacterItem(type, src) {
+            // Remove existing item of the same type if it exists
+            var existingItem = document.querySelector(`.char .char-${type}`);
+            if (existingItem) {
+                existingItem.remove();
+            }
+
+            // Create and append the new item with the specified structure
+            
+            var charDiv = document.querySelector('.char');
+            var button = document.createElement('div');
+            var div = document.createElement('div');
+            var img = document.createElement('img');
+
+            button.className = 'char-item';
+            div.className = `char-${type}`;
+            img.src = src;
+
+            div.appendChild(img);
+            button.appendChild(div);
+            charDiv.appendChild(button);
+
+        }
+    </script>
 </body>
 </html>

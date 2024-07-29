@@ -4,24 +4,31 @@
   font-weight: normal;
   font-style: normal;
 }
-body{
-    padding: 0;
-    margin: 0;
-
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('../img/timer-bak.svg') no-repeat center center fixed;
+  background-size: contain;
+  font-family: 'NeoDunggeunmo', Arial, sans-serif;
 }
 button{
   background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer
 
 }
 .timer-wrap{
-    width: 430px;
-    height: 932px;
-    background-color: white;
-    margin: 0 auto;
-  position: relative;
+  width: 430px;
+  height: 932px;
+    position: relative;  
+  
 }
 /* progress bar */
-.time-bar{
+.time-bar{ 
     margin: 0 auto;
     width: 387px;
     height: 27px;    
@@ -73,7 +80,6 @@ button{
   width: 430px;
   height: 440px;
   object-fit: cover;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0));
 }
 
 .bubble {
@@ -203,7 +209,6 @@ button{
 }
 .time-text {
   font-size: 18px;
-  font-weight: bold;
   width: 300px;
   text-align: center;
   position: absolute;
@@ -213,66 +218,6 @@ button{
   z-index: 100;
 }
 
-/*cloud*/
-
-.cloud-wrap{
-    position: absolute;
-    top:0px;
-    width: 430px;
-    height: 932px;
-    overflow: hidden;
-}   
-
-.cloud {
-    position: absolute;
-    object-fit: cover;
-    object-position: center;
-    width: 124.44px; /* 이미지 크기 조정 */
-    height: 70px;
-}
-
-.cloud:nth-child(1) {
-    top: 300px;
-    left: 322px;
-    z-index: 100;
-}
-
-.cloud:nth-child(2) {
-    width: 67.5px;
-    height: 37.71px;
-    top: 270px;
-    left: 0;
-    z-index: 100;
-}
-
-.cloud:nth-child(3) {
-  width: 97px;
-  height: 54.56px;
-  top: 40px;
-  left: 340px;
-  z-index: 100;
-}
-
-.cloud:nth-child(4) {
-  width: 103px;
-  height: 58px;
-  bottom: 180px;
-  left: -20px;
-  z-index: 100;
-}
-
-.cloud:nth-child(5) {
-  width: 97px;
-  height: 54.56px;
-  bottom: -10px;
-  left: 345px;
-  z-index: 100;
-}
-.cloud:nth-child(6) {
-  bottom: 240px;
-  left: 307px;
-  z-index: 100;
-}
 .invisible{
   position: absolute;
   display: none;
@@ -281,8 +226,8 @@ button{
 .popup01{
   background-color: #9E949494;
   z-index: 500;
-  width: 430px;
-  height: 932px;
+  width: 100%;
+  height: 100%;
   position: absolute;
   top:0;
   display: flex;
@@ -291,6 +236,7 @@ button{
   align-items: center;
 }
 .popup{
+  position: relative;
   width: 394px;
   height: 305px;
   background-color: white;
@@ -300,9 +246,20 @@ button{
   justify-content: center;
   align-items: center;
 }
+.exp-circle{
+  position: relative;
+  z-index: 600;
+  font-weight: 100;
+  font-size: 30px;
+}
+.circle-txt{
+  position: absolute;
+  bottom: 20px;
+  z-index: 600;
+  text-align: center;
+}
 .popup p{
   font-size: 15px;
-  font-weight: bold;
   margin: 0;
   margin-top: 10px;
   z-index: 600;
@@ -321,15 +278,15 @@ button{
   z-index: 300;
 }
 .pop-img{
-  z-index: 600;
+  z-index: 300;
 }
 
 .popup02{
 
   background-color: #9E949494;
   z-index: 500;
-  width: 430px;
-  height: 932px;
+  width: 100%;
+  height: 100%;
   position: absolute;
   top:0;
   display: flex;

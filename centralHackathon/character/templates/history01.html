@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'css/history.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <button class="bak-button" type="button" onClick="history.go(-1)"><img src={% static 'img/back-btn.svg' %}> </button>
+        
+        <div class="history-bal">
+            <div class="char-bal">
+                <img class="balloon" src={% static 'img/balloon.svg' %}>
+                <div class="bal-text">
+                    <p>나의 집중시간은?</p>
+                    <p>"HUDY"가 분석해드려요!</p>
+                </div>
+            </div>
+            <div class="char">
+                <img class="char-img" src={% static 'img/main-char.svg' %}>  
+                <div class="shadow"></div>
+            </div>
+        </div>
+        <div class="time">
+            <img class="btn" src={% static 'img/history-btn.svg' %}>
+            <p>
+                총 집중 시간: 
+                {% if total_hours == 0 %}
+                    {{ total_minutes }}분 {{ total_seconds }}초
+                {% else %}
+                    {{ total_hours }}시간 {{ total_minutes }}분 {{ total_seconds }}초
+                {% endif %}
+            </p>
+        </div>
+        <div class="con-day">
+            <img class="btn" src={% static 'img/history-btn.svg' %}>
+            <p>연속 집중 일수: {{ consecutive_days }}일</p>
+        </div>
+        <form class="toHistory02" action="{% url 'detailed_history' %}"><p>내 집중시간을 보고 싶다면?</p>
+            <img class="next-img" src={% static 'img/next-btn.svg' %}> 
+            <button class="toHisoty02-btn" type="submit"><img class="toHisoty02-img" src={% static 'img/toHistory2.png' %}> </button>
+        </form>
+    </div>
+</body>
+</html>
