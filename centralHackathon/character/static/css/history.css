@@ -4,11 +4,19 @@
     font-weight: normal;
     font-style: normal;
 }
-body{
-    padding: 0;
+body, html {
     margin: 0;
-    font-family: 'NeoDunggeunmo';
-}
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../img/history01-bak.svg') no-repeat center center fixed;
+    background-size: contain;
+    font-family: 'NeoDunggeunmo', Arial, sans-serif;
+  }
 button{
   background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer
 
@@ -17,8 +25,6 @@ button{
 .container {
     width: 430px;
     height: 932px;
-    background-color: white;
-    margin: 0 auto;
     position: relative;
 }
 
@@ -122,58 +128,6 @@ button{
     margin-top: 150px;
     text-align: center;
     font-weight: bold;
-}
-/*cloud*/
-.cloud-logo{
-    position: absolute;
-    bottom:50px;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 67.05px;
-    height: 37.71px;
-  }
-.cloud-wrap {
-    position: absolute;
-    top: 0;
-    width: 430px;
-    height: 932px;
-    overflow: hidden;
-    z-index: 1; /* 모든 다른 요소들보다 낮게 설정 */
-}
-
-.cloud {
-    position: absolute;
-    object-fit: cover;
-    object-position: center;
-    width: 124.44px; /* 이미지 크기 조정 */
-    height: 70px;
-}
-
-.cloud:nth-child(1) {
-    top: 300px;
-    left: 322px;
-    z-index: 100;
-}
-.cloud:nth-child(2) {
-    top: 50px;
-    left: 345px;
-    width: 97px;
-    height: 54.56px;
-    z-index: 100;
-}
-.cloud:nth-child(3) {
-    top: 150px;
-    left: 0px;
-    width: 67.05px;
-    height: 37.71px;
-    z-index: 100;
-}
-.cloud:nth-child(4) {
-    width: 67.05px;
-    height: 37.71px;
-    top: 490px;
-    left: -15px;
-    z-index: 100;
 }
 
 /*history01*/
@@ -291,49 +245,6 @@ button{
     height: 60px;
 }
 
-/*01 cloud*/
-
-.cloud-wrap01 {
-    position: absolute;
-    top: 0;
-    width: 430px;
-    height: 932px;
-    overflow: hidden;
-    z-index: 1; /* 모든 다른 요소들보다 낮게 설정 */
-}
-.cloud01 {
-    position: absolute;
-    object-fit: cover;
-    object-position: center;
-    width: 124.44px; /* 이미지 크기 조정 */
-    height: 70px;
-}
-.cloud01:nth-child(1) {
-    top: 250px;
-    left: 338px;
-    z-index: 100;
-}
-.cloud01:nth-child(2) {
-    top: 50px;
-    left: 345px;
-    width: 97px;
-    height: 54.56px;
-    z-index: 100;
-}
-.cloud01:nth-child(3) {
-    top: 170px;
-    left: 0px;
-    width: 67.05px;
-    height: 37.71px;
-    z-index: 100;
-}
-.cloud01:nth-child(4) {
-    width: 67.05px;
-    height: 37.71px;
-    top: 380px;
-    left: -15px;
-    z-index: 100;
-}
 .toHisoty02-btn{
     cursor: pointer;
     z-index: 900;

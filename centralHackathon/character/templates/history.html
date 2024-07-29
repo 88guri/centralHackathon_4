@@ -29,21 +29,15 @@
             <p>
                 총 집중 시간: 
                 {% if total_hours == 0 %}
-                    {{ total_minutes }}분, {{ total_seconds }}초
+                    {{ total_minutes }}분 {{ total_seconds }}초
                 {% else %}
-                    {{ total_hours }}시간, {{ total_minutes }}분, {{ total_seconds }}초
+                    {{ total_hours }}시간 {{ total_minutes }}분 {{ total_seconds }}초
                 {% endif %}
             </p>
         </div>
         <div class="con-day">
             <img class="btn" src={% static 'img/history-btn.svg' %}>
             <p>연속 집중 일수: {{ consecutive_days }}일</p>
-        </div>
-        <div class="cloud-wrap">
-            <img class="cloud" src={% static 'img/cloud.svg' %}>  
-            <img class="cloud" src={% static 'img/cloud.svg' %}>  
-            <img class="cloud" src={% static 'img/cloud.svg' %}>  
-            <img class="cloud" src={% static 'img/cloud.svg' %}>
         </div>
         <form class="toHistory02" action="{% url 'detailed_history' %}"><p>내 집중시간을 보고 싶다면?</p>
             <img class="next-img" src={% static 'img/next-btn.svg' %}> 
