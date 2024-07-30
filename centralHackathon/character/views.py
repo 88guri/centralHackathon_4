@@ -53,6 +53,12 @@ def timer_page(request):
         timer_log.elapsed_time += elapsed_time - character.last_elapsed_time
         timer_log.save()
 
+        time = elapsed_time - character.last_elapsed_time
+
+        hours = time // 3600
+        minutes = (time % 3600) // 60
+        seconds = time % 60
+
         # 경험치 계산 및 업데이트
         if character.last_elapsed_time > 0:
             experience_to_add = ((elapsed_time - character.last_elapsed_time) // 10) * 200
@@ -65,8 +71,11 @@ def timer_page(request):
         character.save()
 
         return JsonResponse({
-            'experience': character.experience, 
+            'experience': experience_to_add, 
             'elapsed_time': character.last_elapsed_time,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds,
             'level': character.level,
             'stage': character.stage,
         })
@@ -80,6 +89,12 @@ def timer_page(request):
         timer_log.elapsed_time += elapsed_time - character.last_elapsed_time
         timer_log.save()
 
+        time = elapsed_time - character.last_elapsed_time
+
+        hours = time // 3600
+        minutes = (time % 3600) // 60
+        seconds = time % 60
+
         # 경험치 계산 및 업데이트
         experience_to_add = ((elapsed_time - character.last_elapsed_time) // 10) * 200
         character.add_experience(experience_to_add)
@@ -87,8 +102,15 @@ def timer_page(request):
         character.last_activity = now  # 마지막 활동 시간 갱신 
         character.save()
 
+        # 디버그용 로그
+        print(f"Calculated Time: {time}")
+        print(f"Hours: {hours}, Minutes: {minutes}, Seconds: {seconds}")
+
         return JsonResponse({
-            'experience': character.experience,
+            'experience': experience_to_add,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds,
             'level': character.level,
             'stage': character.stage,
         })

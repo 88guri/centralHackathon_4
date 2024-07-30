@@ -42,12 +42,10 @@
 
                     // popup02 내용 업데이트
                     const popup02 = document.querySelector('.popup02 .popup');
-                    let slicingTime = formatTime(elapsedTime);
-                    let timeParts = slicingTime.split(":");
                     popup02.innerHTML = `
                         <h2 class="exp-circle">+${exp}</h2> 
                         <div class="circle-txt">
-                            <p>총 ${timeParts[0]}시간 ${timeParts[1]}분 ${timeParts[2]}초 집중했고</p> 
+                            <p>총 ${data.hours}시간 ${data.minutes}분 ${data.seconds}초 집중했고</p>
                             <p>+${exp} 경험치를 얻었어요!</p>
                             <p>축하해요 🎉</p>
                         </div>
@@ -75,6 +73,7 @@
                 },
                 body: JSON.stringify({elapsed_time: elapsedTime})
             }).then(response => response.json()).then(data => {
+                console.log(data);
                 document.getElementById("experience").innerText = "Experience: " + data.experience;
                 document.getElementById("level").innerText = "Level: " + data.level;
                 document.getElementById("stage").innerText = "Stage: " + data.stage;
