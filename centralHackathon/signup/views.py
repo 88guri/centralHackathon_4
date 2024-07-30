@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.utils.crypto import get_random_string
 from .models import CustomUser
+from character.models import Character
 from .forms import LoginForm, SignUpForm
 
 User = CustomUser
@@ -96,4 +97,9 @@ def main_page(request):
     return render(request, 'Main.html', {'form': form})
 
 def home_page(request):
-    return render(request, 'Home.html')
+    try:
+        character = Character.objects.get(user=request.user)
+    except Character.DoesNotExist:
+        return redirect('create_character')
+
+    return render(request, 'home.html', {'character': character})

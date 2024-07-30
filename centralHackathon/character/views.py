@@ -206,15 +206,6 @@ def detailed_history(request):
     return render(request, 'detailed_history.html', context)
 
 @login_required
-def home(request): 
-    try:
-        character = Character.objects.get(user=request.user)
-    except Character.DoesNotExist:
-        return redirect('create_character')
-
-    return render(request, 'home.html', {'character': character})
-
-@login_required
 def deco(request):
     return render(request, 'deco.html')
 
