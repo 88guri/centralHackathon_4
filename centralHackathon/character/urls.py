@@ -1,6 +1,6 @@
 # urls.py
 from django.urls import path
-from .views import timer_page, create_character, history_page, detailed_history, character_missing, watch_ad ,home,deco
+from .views import timer_page, create_character, history_page, detailed_history, character_missing, watch_ad, deco
 
 urlpatterns = [
     path('timer/', timer_page, name='timer_page'),
@@ -9,6 +9,5 @@ urlpatterns = [
     path('detailed_history/', detailed_history, name='detailed_history'),
     path('character_missing/', character_missing, name='character_missing'), 
     path('watch_ad/', watch_ad, name='watch_ad'), 
-    path('home/',home,name='home'),
     path('deco/', deco, name='deco'),
 ]
