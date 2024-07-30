@@ -97,7 +97,13 @@ def timer_page(request):
     character.last_activity = now 
     character.save() 
 
-    return render(request, 'timer.html', {'character': character})
+    # 캐릭터의 이름을 Home.html에 전달 
+    context = {
+        'character': character,
+        'character_name': character.name  
+    }
+    
+    return render(request, 'timer.html', context) 
 
 @login_required
 def character_missing(request): 
@@ -198,3 +204,20 @@ def detailed_history(request):
     }
 
     return render(request, 'detailed_history.html', context)
+
+@login_required
+def home(request): 
+    try:
+        character = Character.objects.get(user=request.user)
+    except Character.DoesNotExist:
+        return redirect('create_character')
+
+    return render(request, 'home.html', {'character': character})
+
+@login_required
+def deco(request):
+    return render(request, 'deco.html')
+
+@login_required
+def timer(request):
+    return render(request, 'timer.html')
