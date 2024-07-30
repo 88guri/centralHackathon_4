@@ -125,7 +125,7 @@
         function resetAtMidnight() {
             let now = new Date();
             let resetTime = new Date(now);
-            resetTime.setHours(23, 59, 0, 0); // 자정 설정
+            resetTime.setHours(0, 0, 0, 0);
 
             if (now > resetTime) {
                 resetTime.setDate(resetTime.getDate() + 1);
