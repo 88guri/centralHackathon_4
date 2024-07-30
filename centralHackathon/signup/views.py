@@ -13,14 +13,27 @@ def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('signup_success')  
+            if request.session.get('verification_code') == request.POST.get('verification_code'):
+                user = form.save()
+                print(f"User saved: {user}")  # 디버깅: 저장된 사용자 정보 출력
+                return redirect('signup_success')
+            else:
+                form.add_error(None, '인증 코드가 잘못되었습니다.')
         else:
-            return render(request, 'signup.html', {'form': form})
+            print(form.errors)  # 디버깅: 폼 오류 출력
     else:
         form = SignUpForm()
-    
     return render(request, 'signup.html', {'form': form})
+
+
+def verify_code(request):
+    if request.method == 'POST':
+        input_code = request.POST.get('verification_code')
+        if input_code and input_code == request.session.get('verification_code'):
+            return JsonResponse({'message': '인증 성공'}, status=200)
+        return JsonResponse({'error': '인증 코드가 잘못되었습니다.'}, status=400)
+    return JsonResponse({'error': '잘못된 요청입니다.'}, status=400)
+
 
 def signup_success(request):
     return render(request, 'signup_success.html')
