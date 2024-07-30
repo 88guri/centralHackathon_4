@@ -32,30 +32,30 @@
             }
         }
 
-// 타이머 정지 함수
-function stopTimer() {
-    if (timer) {
-        clearInterval(timer);
-        timer = null;
-        sendElapsedTime().then((data) => {
-            exp = data.experience; // 서버로부터 받은 경험치로 exp 업데이트
+        // 타이머 정지 함수
+        function stopTimer() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+                sendElapsedTime().then((data) => {
+                    exp = data.experience; // 서버로부터 받은 경험치로 exp 업데이트
 
-            // popup02 내용 업데이트
-            const popup02 = document.querySelector('.popup02 .popup');
-            let slicingTime = formatTime(elapsedTime);
-            let timeParts = slicingTime.split(":");
-            popup02.innerHTML = `
-                <h2 class="exp-circle">+${exp}</h2> 
-                <div class="circle-txt">
-                    <p>총 ${timeParts[0]}시간 ${timeParts[1]}분 ${timeParts[2]}초 집중했고</p> 
-                    <p>+${exp} 경험치를 얻었어요!</p>
-                    <p>축하해요 🎉</p>
-                </div>
-                <img class="pop-bak02" src="{% static 'img/circle-bak-for.svg' %}">
-            `;
-        });
-    }
-}
+                    // popup02 내용 업데이트
+                    const popup02 = document.querySelector('.popup02 .popup');
+                    let slicingTime = formatTime(elapsedTime);
+                    let timeParts = slicingTime.split(":");
+                    popup02.innerHTML = `
+                        <h2 class="exp-circle">+${exp}</h2> 
+                        <div class="circle-txt">
+                            <p>총 ${timeParts[0]}시간 ${timeParts[1]}분 ${timeParts[2]}초 집중했고</p> 
+                            <p>+${exp} 경험치를 얻었어요!</p>
+                            <p>축하해요 🎉</p>
+                        </div>
+                        <img class="pop-bak02" src="{% static 'img/circle-bak-for.svg' %}">
+                    `;
+                });
+            }
+        }
 
         // 타이머 일시 정지 함수
         function pauseTimer() {
@@ -65,22 +65,22 @@ function stopTimer() {
             }
         }
 
-// 경과 시간 서버 전송 함수
-function sendElapsedTime() {
-    return fetch("{% url 'timer_page' %}", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: JSON.stringify({elapsed_time: elapsedTime})
-    }).then(response => response.json()).then(data => {
-        document.getElementById("experience").innerText = "Experience: " + data.experience;
-        document.getElementById("level").innerText = "Level: " + data.level;
-        document.getElementById("stage").innerText = "Stage: " + data.stage;
-        return data; // 서버 응답 데이터를 반환
-    });
-}
+        // 경과 시간 서버 전송 함수
+        function sendElapsedTime() {
+            return fetch("{% url 'timer_page' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({elapsed_time: elapsedTime})
+            }).then(response => response.json()).then(data => {
+                document.getElementById("experience").innerText = "Experience: " + data.experience;
+                document.getElementById("level").innerText = "Level: " + data.level;
+                document.getElementById("stage").innerText = "Stage: " + data.stage;
+                return data; // 서버 응답 데이터를 반환
+            });
+        }
 
         // progress 바 업데이트 함수
         function updateProgressBar(time) {
