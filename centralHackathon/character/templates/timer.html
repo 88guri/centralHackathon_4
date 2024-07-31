@@ -10,6 +10,7 @@
         const maxTime = 10; // progress bar의 max 값과 같아야 합니다.
         let popup01 = true;
         let exp = {{ character.experience }};
+        let rewardEligible = false; // 보상 여부
 
         // 시, 분, 초 형식으로 변환하는 함수
         function formatTime(seconds) {
@@ -18,7 +19,6 @@
             const secs = String(seconds % 60).padStart(2, '0');
             return `${hours}:${minutes}:${secs}`;
         }
-        
 
         // 타이머 시작 함수
         function startTimer() {
@@ -51,6 +51,13 @@
                         </div>
                         <img class="pop-bak02" src="{% static 'img/circle-bak-for.svg' %}">
                     `;
+                    
+                    // 접속 보상
+                    if (data.reward_eligible) {
+                        rewardEligible = true;
+                        document.getElementById('claimRewardButton').style.display = 'block';
+                        document.getElementById('watchAdButton').style.display = 'block';
+                    }
                 });
             }
         }
@@ -87,6 +94,31 @@
             progressBar.value = time % maxTime; // time을 maxTime으로 나눈 나머지 값을 value로 설정
         }
 
+        // 접속 보상
+        function claimReward() {
+            if (rewardEligible) {
+                fetch("{% url 'claim_reward' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                }).then(response => response.json()).then(data => {
+                    if (data.item) {
+                        document.getElementById('rewardMessage').innerHTML = `보상 아이템: ${data.item} <img src="${data.image}" style="width: 50px; height: 50px;">`;
+                        document.getElementById('claimRewardButton').style.display = 'none';
+                        document.getElementById('watchAdButton').style.display = 'none';
+                        rewardEligible = false;
+                    }
+                });
+            }
+        }
+
+        // 광고 보기 버튼 클릭 시 페이지 이동
+        function watchAd() {
+            window.location.href = "{% url 'watch_ad' %}";
+        }
+
         // 이벤트 리스너
         window.onload = function() {
             document.getElementById("start").addEventListener("click", function() {
@@ -105,6 +137,8 @@
                 }
             });
             document.getElementById("timer").innerText = formatTime(elapsedTime); // 초기 타이머 값을 변환하여 표시
+            document.getElementById("claimRewardButton").addEventListener("click", claimReward);
+            document.getElementById("watchAdButton").addEventListener("click", watchAd);
         };
 
         // 페이지 포커스 시 타이머 재개
@@ -189,6 +223,13 @@
         <div class="container">
             <button id="start">S T A R T !</button>
             <img class="btn" src={% static 'img/btn.svg' %}>
+        </div>
+
+        <!-- 접속 보상 받기 버튼 및 광고 버튼 추가 -->
+        <div class="reward-container">
+            <button id="claimRewardButton" style="display: none;">보상 받기</button>
+            <button id="watchAdButton" style="display: none;">광고 보기</button>
+            <p id="rewardMessage"></p>
         </div>
     </div>
     <div class="popup01" onclick='popup01None()'>
