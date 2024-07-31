@@ -76,6 +76,7 @@
             dataSet.push(temTime);
             i++;
         {% endfor %}
+        dataSet.reverse();
         console.log("DataSet:", dataSet); // 데이터셋 로그 추가
 
         var svgHeight = 150; // SVG의 높이 설정
