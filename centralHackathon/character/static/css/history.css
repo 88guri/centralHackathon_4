@@ -42,13 +42,21 @@ button{
 .bal-text {
     position: absolute;
     top: 10px;
-    left: 34px;
+    left: 50px;
     font-weight: 100; 
     font-size: 14px;
     display: flex;
     flex-direction: column;
     align-items: center;   
 }
+
+/*bak-button*/
+.bak-button{
+    position: absolute;
+    top:40px;
+    left:20px;
+    z-index:900;
+  }
 
 .bal-text > p:nth-child(1) {
     margin: 0;
@@ -59,13 +67,6 @@ button{
     margin: 0;
     margin-top: 6px;
 }
-/*bak-button*/
-.bak-button{
-    position: absolute;
-    top:40px;
-    left:20px;
-    z-index:900;
-  }
 /* 캐릭터 */
 .char {
     position: relative;
