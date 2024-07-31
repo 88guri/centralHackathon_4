@@ -42,3 +42,11 @@ class Item(models.Model):
     
     def __str__(self):
         return self.name
+    
+class UserItem(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    acquired_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.item.name}"

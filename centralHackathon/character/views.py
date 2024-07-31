@@ -3,10 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.utils import timezone
 from django.db.models import Sum
-from .models import Character, TimerLog
+from .models import Character, TimerLog, Item, UserItem
 from .forms import CharacterForm
 from datetime import datetime, timedelta
-import json, pytz
+import json, pytz, random
 
 # 사용자 비활성화 확인하는거!
 def check_inactivity(character): 
@@ -78,6 +78,7 @@ def timer_page(request):
             'seconds': seconds,
             'level': character.level,
             'stage': character.stage,
+            'reward_eligible': time >= 5,
         })
 
     if request.method == 'POST':
@@ -113,6 +114,7 @@ def timer_page(request):
             'seconds': seconds,
             'level': character.level,
             'stage': character.stage,
+            'reward_eligible': time >= 5,
         })
 
     # 마지막 활동 시간 갱신 
@@ -126,6 +128,18 @@ def timer_page(request):
     }
     
     return render(request, 'timer.html', context) 
+
+@login_required
+def claim_reward(request):
+    if request.method == 'POST':
+        user = request.user
+        items = list(Item.objects.all())
+        if items:
+            item_reward = random.choice(items)
+            UserItem.objects.create(user=user, item=item_reward)
+            print(f"image: {item_reward.image.url}")
+            return JsonResponse({'item': item_reward.name, 'image': item_reward.image.url})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 @login_required
 def character_missing(request): 
