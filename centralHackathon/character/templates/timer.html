@@ -93,7 +93,7 @@
             progressBar.value = time % maxTime; // time을 maxTime으로 나눈 나머지 값을 value로 설정
         }
 
-        // 보상 받기 버튼
+        // 접속 보상
         function claimReward() {
             if (rewardEligible) {
                 fetch("{% url 'claim_reward' %}", {
@@ -113,37 +113,9 @@
             }
         }
 
-        // 광고 보기 버튼
+        // 광고 보기 버튼 클릭 시 페이지 이동
         function watchAd() {
-            console.log("watchAd function called");
-            if (rewardEligible) {
-                console.log("rewardEligible is true");
-                fetch("{% url 'watch_ad_reward' %}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    }
-                }).then(response => response.json()).then(data => {
-                    console.log("Response from watch_ad_reward:", data);
-                    if (data.item_name) {
-                        const form = document.createElement('form');
-                        form.method = 'POST';
-                        form.action = "{% url 'watch_ad2' %}";
-                        form.innerHTML = `
-                            <input type="hidden" name="item_name" value="${data.item_name}">
-                            <input type="hidden" name="item_image" value="${data.item_image}">
-                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                        `;
-                        document.body.appendChild(form);
-                        form.submit();
-                    } else {
-                        console.log("No item_name in response data");
-                    }
-                });
-            } else {
-                window.location.href = "{% url 'watch_ad2' %}";
-            }
+            window.location.href = "{% url 'watch_ad' %}";
         }
 
         // 이벤트 리스너
@@ -153,7 +125,7 @@
                 if (timerStarted) {
                     startTimer();
                     document.getElementById("start").innerText = 'S T O P !';
-                    document.getElementsByClassName('popup01')[0].style.display = 'flex'; // popup01를 표시
+                    document.getElementsByClassName('popup01')[0].style.display = 'flex'; // popup02를 표시
                 } else {
                     stopTimer();
                     document.getElementById("start").innerText = 'S T A R T !';
