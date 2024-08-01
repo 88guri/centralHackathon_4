@@ -143,10 +143,18 @@ def claim_reward(request):
 
 @login_required
 def character_missing(request): 
+    character_name = None
+    try:
+        character = Character.objects.get(user=request.user)
+        character_name = character.name
+    except Character.DoesNotExist:
+        pass  # 캐릭터가 존재하지 않을 경우 처리
+
     if request.method == 'POST': 
         # 광고 시청, 캐릭터 복구
         return redirect('watch_ad') 
-    return render(request, 'character_missing.html') 
+    return render(request, 'character_missing.html', {'character_name': character_name}) 
+
 
 @login_required
 def watch_ad(request): 
@@ -243,8 +251,30 @@ def detailed_history(request):
 
 @login_required
 def deco(request):
-    return render(request, 'deco.html')
+    try:
+        character = Character.objects.get(user=request.user)
+    except Character.DoesNotExist:
+        return redirect('character_lost_forever') 
+    
+    user_items = UserItem.objects.filter(user=request.user)  # 유저 아이템을 항상 가져옴!
+
+    if request.method == 'POST':
+        pass
+
+    context = {
+        'user_items': user_items,
+    }
+    return render(request, 'deco.html', context)
+
 
 @login_required
-def timer(request):
-    return render(request, 'timer.html')
+def character_lost_forever(request):
+    try:
+        character = Character.objects.get(user=request.user)
+        # 캐릭터와 관련된 UserItem을 삭제
+        UserItem.objects.filter(user=request.user).delete()
+        character.delete()
+    except Character.DoesNotExist:
+        pass  # 캐릭터가 존재하지 않을 경우 처리
+
+    return render(request, 'character_lost_forever.html')

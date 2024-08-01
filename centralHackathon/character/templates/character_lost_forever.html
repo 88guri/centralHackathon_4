@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캐릭터 영영 못보기</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/character_lost_forever.css' %}">
+</head>
+<body>
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup">
+            <img src="{% static 'images/popup2.png' %}" alt="Popup Background" class="popup-background">
+            <div class="popup-content">
+                <div class="text">
+                    가출화면
+                </div>
+                <div class="button-container">
+                    <button class="btn-ok" onclick="window.location.href='{% url 'timer_page' %}'">
+                        확인
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('popup-overlay').style.display = 'flex';
+    </script>
+</body>
+</html>

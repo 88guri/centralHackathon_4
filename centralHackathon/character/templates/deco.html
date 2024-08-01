@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{% static 'css/deco.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History02</title>
+    <title>Deco</title>
 </head>
 <body>
     
@@ -24,15 +24,12 @@
                 <img class="nav-img" src="{% static 'img/deco/nav.svg' %}">
             </div>
             <div class="nav-box">
-                <button class="one-box" type="button" onclick="toggleCharacterItem('hat', '{% static 'img/real_items/blue-hat.svg' %}', '{% static 'img/deco_items/blue-hat.svg' %}')"><img data-value="cloth" src="{% static 'img/deco_items/blue-hat.svg' %}"></button>
-                <button class="one-box" type="button" onclick="toggleCharacterItem('eyes', '{% static 'img/real_items/sunglass.svg' %}', '{% static 'img/deco_items/sunglass.svg' %}')"><img data-value="eyes" src="{% static 'img/deco_items/sunglass.svg' %}"></button>
-                <button class="one-box" type="button" onclick="toggleCharacterItem('accessory', '{% static 'img/real_items/red-heart.svg' %}', '{% static 'img/deco_items/red-heart.svg' %}')"><img data-value="accessory" src="{% static 'img/deco_items/red-heart.svg' %}"></button>
-                <button class="one-box" type="button" onclick="toggleCharacterItem('pet', '{% static 'img/real_items/monsil.svg' %}', '{% static 'img/deco_items/monsil.svg' %}')"><img data-value="cloth" src="{% static 'img/deco_items/monsil.svg' %}"></button>
-                <button class="one-box" type="button" onclick="toggleCharacterItem('accessory', '{% static 'images/flower.png' %}', '{% static 'img/deco_items/flower.svg' %}')"><img data-value="accessory" src="{% static 'img/deco_items/flower.svg' %}"></button>
-                <button class="one-box" type="button" onclick="toggleCharacterItem('bag', '{% static 'img/real_items/bag.svg' %}', '{% static 'img/deco_items/bag.svg' %}')"><img data-value="cloth" src="{% static 'img/deco_items/bag.svg' %}"></button>
-                <button class="one-box" type="button" onclick="toggleCharacterItem('hat', '{% static 'img/real_items/ribbon.svg' %}', '{% static 'img/deco_items/ribbon.svg' %}')"><img data-value="cloth" src="{% static 'img/deco_items/ribbon.svg' %}"></button>
-                <button class="one-box" type="button" onclick="toggleCharacterItem('eyes', '{% static 'img/real_items/red-eye.svg' %}', '{% static 'img/deco_items/red-eye.svg' %}')"><img data-value="eyes" src="{% static 'img/deco_items/red-eye.svg' %}"></button>
-                <button class="one-box" type="button" onclick="toggleCharacterItem('eyes', '{% static 'img/real_items/blue-eye.svg' %}', '{% static 'img/deco_items/blue-eye.svg' %}')"><img data-value="eyes" src="{% static 'img/deco_items/blue-eye.svg' %}"></button>
+                <!-- 현재 보유한 아이템을 동적으로 생성합니다. -->
+                {% for user_item in user_items %}
+                <button class="one-box" type="button" onclick="toggleCharacterItem('{{ user_item.item.name }}', '{{ user_item.item.image.url }}', '{% static 'img/deco_items/'|add:user_item.item.name|add:'.svg' %}')">
+                    <img data-value="{{ user_item.item.name }}" src="{{ user_item.item.image.url }}">
+                </button>
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -57,7 +54,6 @@
             if (existingItem) {
                 existingItem.remove();
             } else {
-                var charDiv = document.querySelector('.char');
                 var button = document.createElement('div');
                 var div = document.createElement('div');
                 var img = document.createElement('img');

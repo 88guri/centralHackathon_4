@@ -1,8 +1,7 @@
-# models.py
 from django.db import models
+from django.utils import timezone
 from signup.models import CustomUser
 from datetime import date
-from django.utils import timezone
 
 class Character(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -29,7 +28,12 @@ class Character(models.Model):
             self.stage += 1
 
     def __str__(self): 
-        return f"{self.user.username}'s Character" 
+        return f"{self.user.username}'s Character"
+
+    def delete(self, *args, **kwargs):
+        # 캐릭터와 관련된 UserItem을 삭제
+        UserItem.objects.filter(user=self.user).delete()
+        super().delete(*args, **kwargs)
 
 class TimerLog(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

@@ -15,17 +15,17 @@
                 <img src="{% static 'images/sadcharacter.png' %}" alt="Character" class="main-item">
                 <div class="text">
                     오랫동안 접속하지 않으셔서<br>
-                    "캐릭터 이름" 이 가출하려고 해요 😢
+                    "{{ character_name }}" 이 가출하려고 해요 😢
                 </div>
                 <div class="button-container">
                     <form method="post" class="reward-button">
                         {% csrf_token %}
                         <button type="submit" class="btn-reward">
-                            <img src="{% static 'images/play.png' %}" class="icon">"캐릭터 이름"아 돌아와!
+                            <img src="{% static 'images/play.png' %}" class="icon">"{{ character_name }}"아 돌아와!
                         </button>
                     </form>
-                    <button class="reward-button" onclick="window.location.href='{% url 'timer_page'%}'">
-                        "캐릭터 이름" 영영 못보기
+                    <button class="reward-button" onclick="window.location.href='{% url 'character_lost_forever' %}'">
+                        "{{ character_name }}" 영영 못보기
                     </button>
                 </div>
             </div>
