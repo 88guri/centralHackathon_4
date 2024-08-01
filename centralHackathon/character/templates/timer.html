@@ -8,8 +8,8 @@
         let elapsedTime = {{ character.last_elapsed_time }};
         let timerStarted = false; // 타이머 시작 여부
         const maxTime = 10; // progress bar의 max 값과 같아야 합니다.
-        let popup01 = true;
         let exp = {{ character.experience }};
+        let rewardEligible = false; // 보상 여부
 
         // 시, 분, 초 형식으로 변환하는 함수
         function formatTime(seconds) {
@@ -18,7 +18,6 @@
             const secs = String(seconds % 60).padStart(2, '0');
             return `${hours}:${minutes}:${secs}`;
         }
-        
 
         // 타이머 시작 함수
         function startTimer() {
@@ -32,30 +31,35 @@
             }
         }
 
-// 타이머 정지 함수
-function stopTimer() {
-    if (timer) {
-        clearInterval(timer);
-        timer = null;
-        sendElapsedTime().then((data) => {
-            exp = data.experience; // 서버로부터 받은 경험치로 exp 업데이트
+        // 타이머 정지 함수
+        function stopTimer() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+                sendElapsedTime().then((data) => {
+                    exp = data.experience; // 서버로부터 받은 경험치로 exp 업데이트
 
-            // popup02 내용 업데이트
-            const popup02 = document.querySelector('.popup02 .popup');
-            let slicingTime = formatTime(elapsedTime);
-            let timeParts = slicingTime.split(":");
-            popup02.innerHTML = `
-                <h2 class="exp-circle">+${exp}</h2> 
-                <div class="circle-txt">
-                    <p>총 ${timeParts[0]}시간 ${timeParts[1]}분 ${timeParts[2]}초 집중했고</p> 
-                    <p>+${exp} 경험치를 얻었어요!</p>
-                    <p>축하해요 🎉</p>
-                </div>
-                <img class="pop-bak02" src="{% static 'img/circle-bak-for.svg' %}">
-            `;
-        });
-    }
-}
+                    // popup02 내용 업데이트
+                    const popup02 = document.querySelector('.popup02 .popup');
+                    popup02.innerHTML = `
+                        <h2 class="exp-circle">+${exp}</h2> 
+                        <div class="circle-txt">
+                            <p>총 ${data.hours}시간 ${data.minutes}분 ${data.seconds}초 집중했고</p>
+                            <p>+${exp} 경험치를 얻었어요!</p>
+                            <p>축하해요 🎉</p>
+                        </div>
+                        <img class="pop-bak02" src="{% static 'img/circle-bak-for.svg' %}">
+                    `;
+                    
+                    // 접속 보상
+                    if (data.reward_eligible) {
+                        rewardEligible = true;
+                        document.getElementById('claimRewardButton').style.display = 'block';
+                        document.getElementById('watchAdButton').style.display = 'block';
+                    }
+                });
+            }
+        }
 
         // 타이머 일시 정지 함수
         function pauseTimer() {
@@ -65,22 +69,23 @@ function stopTimer() {
             }
         }
 
-// 경과 시간 서버 전송 함수
-function sendElapsedTime() {
-    return fetch("{% url 'timer_page' %}", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': '{{ csrf_token }}'
-        },
-        body: JSON.stringify({elapsed_time: elapsedTime})
-    }).then(response => response.json()).then(data => {
-        document.getElementById("experience").innerText = "Experience: " + data.experience;
-        document.getElementById("level").innerText = "Level: " + data.level;
-        document.getElementById("stage").innerText = "Stage: " + data.stage;
-        return data; // 서버 응답 데이터를 반환
-    });
-}
+        // 경과 시간 서버 전송 함수
+        function sendElapsedTime() {
+            return fetch("{% url 'timer_page' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({elapsed_time: elapsedTime})
+            }).then(response => response.json()).then(data => {
+                console.log(data);
+                document.getElementById("experience").innerText = "Experience: " + data.experience;
+                document.getElementById("level").innerText = "Level: " + data.level;
+                document.getElementById("stage").innerText = "Stage: " + data.stage;
+                return data; // 서버 응답 데이터를 반환
+            });
+        }
 
         // progress 바 업데이트 함수
         function updateProgressBar(time) {
@@ -88,25 +93,50 @@ function sendElapsedTime() {
             progressBar.value = time % maxTime; // time을 maxTime으로 나눈 나머지 값을 value로 설정
         }
 
+        // 접속 보상
+        function claimReward() {
+            if (rewardEligible) {
+                fetch("{% url 'claim_reward' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                }).then(response => response.json()).then(data => {
+                    if (data.item) {
+                        document.getElementById('rewardMessage').innerHTML = `보상 아이템: ${data.item} <img src="${data.image}" style="width: 50px; height: 50px;">`;
+                        document.getElementById('claimRewardButton').style.display = 'none';
+                        document.getElementById('watchAdButton').style.display = 'none';
+                        rewardEligible = false;
+                    }
+                });
+            }
+        }
+
+        // 광고 보기 버튼 클릭 시 페이지 이동
+        function watchAd() {
+            window.location.href = "{% url 'watch_ad' %}";
+        }
+
         // 이벤트 리스너
         window.onload = function() {
-            document.getElementById("start").addEventListener("click", function() {
+            document.getElementsByClassName("start-stop")[0].addEventListener("click", function() {
                 timerStarted = !timerStarted;
                 if (timerStarted) {
                     startTimer();
                     document.getElementById("start").innerText = 'S T O P !';
-                    if (elapsedTime <= 10 && popup01) {
-                        document.getElementsByClassName('popup02')[0].style.display = 'none';
-                        stopTimer();
-                    }
+                    document.getElementsByClassName('popup01')[0].style.display = 'flex'; // popup02를 표시
                 } else {
                     stopTimer();
                     document.getElementById("start").innerText = 'S T A R T !';
-                    document.getElementsByClassName('popup02')[0].style.display = 'flex';
+                    document.getElementsByClassName('popup02')[0].style.display = 'flex'; // popup02를 표시
                 }
             });
             document.getElementById("timer").innerText = formatTime(elapsedTime); // 초기 타이머 값을 변환하여 표시
+            document.getElementById("claimRewardButton").addEventListener("click", claimReward);
+            document.getElementById("watchAdButton").addEventListener("click", watchAd);
         };
+        
 
         // 페이지 포커스 시 타이머 재개
         window.onfocus = function() {
@@ -126,7 +156,7 @@ function sendElapsedTime() {
         function resetAtMidnight() {
             let now = new Date();
             let resetTime = new Date(now);
-            resetTime.setHours(23, 59, 0, 0); // 자정 설정
+            resetTime.setHours(0, 0, 0, 0);
 
             if (now > resetTime) {
                 resetTime.setDate(resetTime.getDate() + 1);
@@ -148,10 +178,7 @@ function sendElapsedTime() {
         // 팝업 삭제
         function popup01None() {
             const div1 = document.getElementsByClassName('popup01')[0];
-            if (popup01) {
-                div1.style.display = 'none';
-                popup01 = false;
-            }
+            div1.style.display = 'none';
         } 
         function popup02None() {
             const div1 = document.getElementsByClassName('popup02')[0];
@@ -173,23 +200,42 @@ function sendElapsedTime() {
         <p class="time-text">집중에 성공하면 경험치를 획득해요!</p>
         <div class="bubble-wrap">
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
+            <div class="bubble"></div>
+            <div class="tity"></div>
             
             <p id="timer">{{ character.last_elapsed_time }}:{{ character.last_elapsed_time }}/60:{{ character.last_elapsed_time }} </p>
             <img class="bubble-img" src={% static 'img/circle-bak.svg' %}>  
         </div>
 
         <div class="container">
-            <button id="start">S T A R T !</button>
+            <button id="start" class="start-stop">S T A R T !</button>
             <img class="btn" src={% static 'img/btn.svg' %}>
+        </div>
+
+        <!-- 접속 보상 받기 버튼 및 광고 버튼 추가 -->
+        <div class="reward-container">
+            <button id="claimRewardButton" style="display: none;">보상 받기</button>
+            <button id="watchAdButton" style="display: none;">광고 보기</button>
+            <p id="rewardMessage"></p>
         </div>
     </div>
     <div class="popup01" onclick='popup01None()'>

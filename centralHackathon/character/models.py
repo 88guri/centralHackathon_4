@@ -35,3 +35,18 @@ class TimerLog(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
     elapsed_time = models.IntegerField(default=0)
+
+class Item(models.Model):
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to='items/')
+    
+    def __str__(self):
+        return self.name
+    
+class UserItem(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    acquired_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.item.name}"

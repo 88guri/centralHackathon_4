@@ -3,10 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.utils import timezone
 from django.db.models import Sum
-from .models import Character, TimerLog
+from .models import Character, TimerLog, Item, UserItem
 from .forms import CharacterForm
 from datetime import datetime, timedelta
-import json, pytz
+import json, pytz, random
 
 # 사용자 비활성화 확인하는거!
 def check_inactivity(character): 
@@ -53,6 +53,12 @@ def timer_page(request):
         timer_log.elapsed_time += elapsed_time - character.last_elapsed_time
         timer_log.save()
 
+        time = elapsed_time - character.last_elapsed_time
+
+        hours = time // 3600
+        minutes = (time % 3600) // 60
+        seconds = time % 60
+
         # 경험치 계산 및 업데이트
         if character.last_elapsed_time > 0:
             experience_to_add = ((elapsed_time - character.last_elapsed_time) // 10) * 200
@@ -65,10 +71,14 @@ def timer_page(request):
         character.save()
 
         return JsonResponse({
-            'experience': character.experience, 
+            'experience': experience_to_add, 
             'elapsed_time': character.last_elapsed_time,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds,
             'level': character.level,
             'stage': character.stage,
+            'reward_eligible': time >= 5,
         })
 
     if request.method == 'POST':
@@ -80,6 +90,12 @@ def timer_page(request):
         timer_log.elapsed_time += elapsed_time - character.last_elapsed_time
         timer_log.save()
 
+        time = elapsed_time - character.last_elapsed_time
+
+        hours = time // 3600
+        minutes = (time % 3600) // 60
+        seconds = time % 60
+
         # 경험치 계산 및 업데이트
         experience_to_add = ((elapsed_time - character.last_elapsed_time) // 10) * 200
         character.add_experience(experience_to_add)
@@ -87,17 +103,43 @@ def timer_page(request):
         character.last_activity = now  # 마지막 활동 시간 갱신 
         character.save()
 
+        # 디버그용 로그
+        print(f"Calculated Time: {time}")
+        print(f"Hours: {hours}, Minutes: {minutes}, Seconds: {seconds}")
+
         return JsonResponse({
-            'experience': character.experience,
+            'experience': experience_to_add,
+            'hours': hours,
+            'minutes': minutes,
+            'seconds': seconds,
             'level': character.level,
             'stage': character.stage,
+            'reward_eligible': time >= 5,
         })
 
     # 마지막 활동 시간 갱신 
     character.last_activity = now 
     character.save() 
 
-    return render(request, 'timer.html', {'character': character})
+    # 캐릭터의 이름을 Home.html에 전달 
+    context = {
+        'character': character,
+        'character_name': character.name  
+    }
+    
+    return render(request, 'timer.html', context) 
+
+@login_required
+def claim_reward(request):
+    if request.method == 'POST':
+        user = request.user
+        items = list(Item.objects.all())
+        if items:
+            item_reward = random.choice(items)
+            UserItem.objects.create(user=user, item=item_reward)
+            print(f"image: {item_reward.image.url}")
+            return JsonResponse({'item': item_reward.name, 'image': item_reward.image.url})
+    return JsonResponse({'error': 'Invalid request'}, status=400)
 
 @login_required
 def character_missing(request): 
@@ -198,3 +240,11 @@ def detailed_history(request):
     }
 
     return render(request, 'detailed_history.html', context)
+
+@login_required
+def deco(request):
+    return render(request, 'deco.html')
+
+@login_required
+def timer(request):
+    return render(request, 'timer.html')

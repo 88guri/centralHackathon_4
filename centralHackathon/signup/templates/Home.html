@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +11,11 @@
     <div class="container">
         <div class="header">
             <div class="level-info">
-                <span class="character-name">캐릭터 이름</span>
+                <span class="character-name">{{ character.name }}</span>
                 <div class="level-bar-container">
-                    <span class="level-text">LV. 1</span>
+                    <span class="level-text">LV. {{ character.level }}</span>
                     <div class="progress-bar">
-                        <div class="progress"></div>
+                        <div class="progress" style="width: {{ character.progress }}%;"></div>
                     </div>
                 </div>
             </div>
@@ -23,18 +23,25 @@
         <div class="character-container">
             <img src="{% static 'images/character.png' %}" alt="Character" class="character">
         </div>
+
         <div class="footer">
             <div class="button">
-                <img src="{% static 'images/history.png' %}" alt="History Icon" class="icon history">
-                <span>히스토리</span>
+                <a href="{% url 'history_page' %}">
+                    <img src="{% static 'images/history.png' %}" alt="History Icon" class="icon history">
+                    <span class="link-text">히스토리</span>
+                </a>
             </div>
             <div class="button">
-                <img src="{% static 'images/timer.png' %}" alt="Timer Icon" class="icon timer">
-                <span>타이머</span>
+                <a href="{% url 'timer_page' %}">
+                    <img src="{% static 'images/timer.png' %}" alt="Timer Icon" class="icon timer">
+                    <span class="link-text">타이머</span>
+                </a>
             </div>
             <div class="button">
-                <img src="{% static 'images/dress.png' %}" alt="Dressroom Icon" class="icon dressroom">
-                <span>드레스룸</span>
+                <a href="{% url 'deco' %}">
+                    <img src="{% static 'images/dress.png' %}" alt="Dressroom Icon" class="icon dressroom">
+                    <span class="link-text">드레스룸</span>
+                </a>
             </div>
         </div>
     </div>
