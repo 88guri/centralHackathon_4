@@ -49,8 +49,8 @@ button {
 .char-eyes{
     position: absolute;
     width: 120px;
-    top: 198px;
-    left: 152px;
+    top: 200px;
+    left: 155px;
     display: flex;
     justify-content: center;
     z-index: 600;
@@ -97,7 +97,7 @@ button {
 .char-bag{
     position: absolute;
     width: 120px;
-    top: 241px;
+    top: 281px;
     transform: scale(1.0);
     left: 276px;
     display: flex;
@@ -146,26 +146,65 @@ button {
 .nav-img {
     z-index: 150; /* nav-box보다 높게 설정 */
 }
+.nav-all {
+    position: absolute;
+    top:6px;
+    left: 40px;
+}
 
+.nav-cloth {
+    position: absolute;
+    top: 6px;
+    left: 124px;
+}
+
+.nav-accessory {
+    position: absolute;
+    top: 6px;
+    left: 205px;
+}
+
+.nav-eyes {
+    position: absolute;
+    top: 6px;
+    left: 280px;
+}
 .decos-img{
     position: absolute;
-    top:14px;
-    left: 40px;
+    top:20.5px;
+    left: 4px;
+    z-index: 600;
 }
 .shop-img{
     position: absolute;
-    top:22px;
-    left: 130px;
+    top:16px;
+    left:4px;
+    z-index: 600;
 }
 .jewel-img{
     position: absolute;
-    top: 27px;
-    left: 205px;
+    top: 21.5px;
+    left: 4px;
+    z-index: 600;
 }
 .face-img{
     position: absolute;
-    top: 27px;
-    left: 280px;
+    top: 20.5px;
+    left: 4px;
+    z-index: 600;
+}
+.blue-btn{
+    display: none;
+}
+.white-btn{
+    position: absolute;
+    top: 6px;
+    left: -10px;
+    background-color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: none;
 }
 /*nav-box*/
 .nav-box {

@@ -42,7 +42,7 @@ button{
     top:132px;
 }
 #time-bar::-webkit-progress-bar{
-    background-color: #A5D4FF;
+    background-color: #B6D1E6 ;
     border-radius: 12px;
 
     width: 387px;
@@ -51,7 +51,7 @@ button{
     overflow: hidden;
 }
 #time-bar::-webkit-progress-value{
-    background-color: #3080CB;
+    background-color: #6CAADD ;
     border-radius: 0px;
     height: 28px;
     width: 48px;
@@ -65,8 +65,7 @@ button{
   top:20px;
   left:20px;
 }
-/*bubble*/
-.bubble-wrap {
+/*bubble*/.bubble-wrap {
   width: 430px;
   height: 430px;
   margin-top: 250px;
@@ -82,98 +81,95 @@ button{
   object-fit: cover;
 }
 
+/* Bubble */
 .bubble {
-    height: 60px;
-    width: 60px;
-    border: 2px solid rgba(255, 255, 255, 0.7);
-    border-radius: 50px;
-    position: absolute;
-    animation: animate 10s linear infinite;
-    z-index: 150;
+  height: 45px;
+  width: 45px;
+  border: 4px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  position: absolute;
+  animation: animate 10s linear infinite;
+  z-index: 150;
+}
+
+.bubble:nth-child(1) { top: 20%; left: 20%; animation-duration: 8s; }
+.bubble:nth-child(2) { top: 60%; left: 80%; animation-duration: 10s; }
+.bubble:nth-child(3) { top: 40%; left: 40%; animation-duration: 3s; }
+.bubble:nth-child(4) { top: 66%; left: 30%; animation-duration: 7s; }
+.bubble:nth-child(5) { top: 90%; left: 10%; animation-duration: 9s; }
+.bubble:nth-child(6) { top: 30%; left: 60%; animation-duration: 5s; }
+.bubble:nth-child(7) { top: 55%; left: 30%; animation-duration: 8s; }
+.bubble:nth-child(8) { top: 75%; left: 60%; animation-duration: 10s; }
+.bubble:nth-child(9) { top: 50%; left: 50%; animation-duration: 6s; }
+.bubble:nth-child(10) { top: 45%; left: 20%; animation-duration: 10s; }
+.bubble:nth-child(11) { top: 10%; left: 90%; animation-duration: 9s; }
+.bubble:nth-child(12) { top: 20%; left: 70%; animation-duration: 7s; }
+.bubble:nth-child(13) { top: 20%; left: 20%; animation-duration: 8s; }
+.bubble:nth-child(14) { top: 60%; left: 5%; animation-duration: 6s; }
+.bubble:nth-child(15) { top: 90%; left: 80%; animation-duration: 9s; }
+
+/* Tity */
+.tity {
+  position: absolute;
+  width: 40px; /* 십자의 너비 조정 */
+  height: 40px; /* 십자의 높이 조정 */
+  background: transparent;
+  animation: animate 10s linear infinite;
+  z-index: 150;
+}
+
+.tity::before, .tity::after {
+  content: "";
+  position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: 150;
+}
+
+.tity::before {
+  width: 40px; /* 십자 수평 길이 조정 */
+  height: 2px; /* 십자 두께 */
+  top: 50%; /* 수직 중앙 */
+  left: 0;
+}
+
+.tity::after {
+  width: 2px; /* 십자 수직 두께 */
+  height: 40px; /* 십자 수직 길이 조정 */
+  top: 0;
+  left: 50%; /* 수평 중앙 */
+}
+
+
+.tity:nth-child(1) { top: 30%; left: 30%; animation-duration: 8s; }
+.tity:nth-child(2) { top: 30%; left: 70%; animation-duration: 10s; }
+.tity:nth-child(3) { top: 50%; left: 50%; animation-duration: 3s; }
+.tity:nth-child(4) { top: 40%; left: 30%; animation-duration: 7s; }
+.tity:nth-child(5) { top: 60%; left: 20%; animation-duration: 9s; }
+.tity:nth-child(6) { top: 20%; left: 60%; animation-duration: 5s; }
+.tity:nth-child(7) { top: 50%; left: 30%; animation-duration: 8s; }
+.tity:nth-child(8) { top: 55%; left: 70%; animation-duration: 10s; }
+.tity:nth-child(9) { top: 50%; left: 50%; animation-duration: 6s; }
+.tity:nth-child(10) { top: 45%; left: 40%; animation-duration: 10s; }
+.tity:nth-child(11) { top: 10%; left: 70%; animation-duration: 9s; }
+.tity:nth-child(12) { top: 30%; left: 50%; animation-duration: 7s; }
+.tity:nth-child(13) { top: 25%; left: 25%; animation-duration: 8s; }
+.tity:nth-child(14) { top: 60%; left: 10%; animation-duration: 6s; }
+.tity:nth-child(15) { top: 80%; left: 60%; animation-duration: 9s; }
+.tity:nth-child(16) { top: 25%; left: 70%; animation-duration: 8s; }
+.tity:nth-child(17) { top: 55%; left: 15%; animation-duration: 7s; }
+.tity:nth-child(18) { top: 65%; left: 55%; animation-duration: 9s; }
+.tity:nth-child(19) { top: 35%; left: 80%; animation-duration: 6s; }
+.tity:nth-child(20) { top: 80%; left: 40%; animation-duration: 10s; }
+
+@keyframes animate {
+  0% {
+    transform: scale(0) translateY(0) rotate(70deg);
   }
-   .bubble:nth-child(1) {
-    top: 20%;
-    left: 20%;
-    animation-duration: 8s;
+  100% {
+    transform: scale(0.6) translateY(-100px) rotate(360deg);
   }
-   .bubble:nth-child(2) {
-    top: 60%;
-    left: 80%;
-    animation-duration: 10s;
-  }
-   .bubble:nth-child(3) {
-    top: 40%;
-    left: 40%;
-    animation-duration: 3s;
-  }
-   .bubble:nth-child(4) {
-    top: 66%;
-    left: 30%;
-    animation-duration: 7s;
-  }
-   .bubble:nth-child(5) {
-    top: 90%;
-    left: 10%;
-    animation-duration: 9s;
-  }
-   .bubble:nth-child(6) {
-    top: 30%;
-    left: 60%;
-    animation-duration: 5s;
-  }
-   .bubble:nth-child(7) {
-    top: 70%;
-    left: 20%;
-    animation-duration: 8s;
-  }
-   .bubble:nth-child(8) {
-    top: 75%;
-    left: 60%;
-    animation-duration: 10s;
-  }
-   .bubble:nth-child(9) {
-    top: 50%;
-    left: 50%;
-    animation-duration: 6s;
-  }
-   .bubble:nth-child(10) {
-    top: 45%;
-    left: 20%;
-    animation-duration: 10s;
-  }
-   .bubble:nth-child(11) {
-    top: 10%;
-    left: 90%;
-    animation-duration: 9s;
-  }
-   .bubble:nth-child(12) {
-    top: 20%;
-    left: 70%;
-    animation-duration: 7s;
-  }
-   .bubble:nth-child(13) {
-    top: 20%;
-    left: 20%;
-    animation-duration: 8s;
-  }
-   .bubble:nth-child(14) {
-    top: 60%;
-    left: 5%;
-    animation-duration: 6s;
-  }
-   .bubble:nth-child(15) {
-    top: 90%;
-    left: 80%;
-    animation-duration: 9s;
-  }
-  @keyframes animate {
-    0% {
-      transform: scale(0) translateY(0) rotate(70deg);
-    }
-    100% {
-      transform: scale(1.3) translateY(-100px) rotate(360deg);
-    }
-  }
+}
+
 /* timer */
 #timer {
   position: absolute;
@@ -187,14 +183,15 @@ button{
 /*button*/
 
 .container{
-
     display: flex;
     justify-content: center;
+
 }
-#start{
+.start-stop{
     width: 259px;
     height: 69px;
-    margin-top: 50px;
+    padding-left: 14px;
+    margin-top: 100px;
     font-size: 25px;
     font-weight: 100;
     border-radius: 50px;
@@ -204,7 +201,7 @@ button{
 }
 .btn{
   position: absolute;
-  bottom:106px;
+  bottom:56px;
   z-index: 100;
 }
 .time-text {
@@ -230,10 +227,10 @@ button{
   height: 100%;
   position: absolute;
   top:0;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  display: none;
 }
 .popup{
   position: relative;

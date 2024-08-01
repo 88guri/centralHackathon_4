@@ -8,7 +8,6 @@
         let elapsedTime = {{ character.last_elapsed_time }};
         let timerStarted = false; // 타이머 시작 여부
         const maxTime = 10; // progress bar의 max 값과 같아야 합니다.
-        let popup01 = true;
         let exp = {{ character.experience }};
         let rewardEligible = false; // 보상 여부
 
@@ -121,25 +120,23 @@
 
         // 이벤트 리스너
         window.onload = function() {
-            document.getElementById("start").addEventListener("click", function() {
+            document.getElementsByClassName("start-stop")[0].addEventListener("click", function() {
                 timerStarted = !timerStarted;
                 if (timerStarted) {
                     startTimer();
                     document.getElementById("start").innerText = 'S T O P !';
-                    if (elapsedTime <= 10 && popup01) {
-                        document.getElementsByClassName('popup02')[0].style.display = 'none';
-                        stopTimer();
-                    }
+                    document.getElementsByClassName('popup01')[0].style.display = 'flex'; // popup02를 표시
                 } else {
                     stopTimer();
                     document.getElementById("start").innerText = 'S T A R T !';
-                    document.getElementsByClassName('popup02')[0].style.display = 'flex';
+                    document.getElementsByClassName('popup02')[0].style.display = 'flex'; // popup02를 표시
                 }
             });
             document.getElementById("timer").innerText = formatTime(elapsedTime); // 초기 타이머 값을 변환하여 표시
             document.getElementById("claimRewardButton").addEventListener("click", claimReward);
             document.getElementById("watchAdButton").addEventListener("click", watchAd);
         };
+        
 
         // 페이지 포커스 시 타이머 재개
         window.onfocus = function() {
@@ -181,10 +178,7 @@
         // 팝업 삭제
         function popup01None() {
             const div1 = document.getElementsByClassName('popup01')[0];
-            if (popup01) {
-                div1.style.display = 'none';
-                popup01 = false;
-            }
+            div1.style.display = 'none';
         } 
         function popup02None() {
             const div1 = document.getElementsByClassName('popup02')[0];
@@ -206,22 +200,34 @@
         <p class="time-text">집중에 성공하면 경험치를 획득해요!</p>
         <div class="bubble-wrap">
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
             <div class="bubble"></div>
+            <div class="tity"></div>
+            <div class="bubble"></div>
+            <div class="tity"></div>
             
             <p id="timer">{{ character.last_elapsed_time }}:{{ character.last_elapsed_time }}/60:{{ character.last_elapsed_time }} </p>
             <img class="bubble-img" src={% static 'img/circle-bak.svg' %}>  
         </div>
 
         <div class="container">
-            <button id="start">S T A R T !</button>
+            <button id="start" class="start-stop">S T A R T !</button>
             <img class="btn" src={% static 'img/btn.svg' %}>
         </div>
 
