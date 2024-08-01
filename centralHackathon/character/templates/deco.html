@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{% static 'css/deco.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deco</title>
+    <title>deco</title>
 </head>
 <body>
     
@@ -24,7 +24,7 @@
                 <img class="nav-img" src="{% static 'img/deco/nav.svg' %}">
             </div>
             <div class="nav-box">
-                <!-- 현재 보유한 아이템을 동적으로 생성합니다. -->
+                <!-- 현재 보유한 아이템을 동적으로 생성 -->
                 {% for user_item in user_items %}
                 <button class="one-box" type="button" onclick="toggleCharacterItem('{{ user_item.item.name }}', '{{ user_item.item.image.url }}', '{% static 'img/deco_items/'|add:user_item.item.name|add:'.svg' %}')">
                     <img data-value="{{ user_item.item.name }}" src="{{ user_item.item.image.url }}">
@@ -53,19 +53,21 @@
             
             if (existingItem) {
                 existingItem.remove();
-            } else {
-                var button = document.createElement('div');
-                var div = document.createElement('div');
-                var img = document.createElement('img');
-                
-                button.className = 'char-item';
-                div.className = `char-${type}`;
-                img.src = src;
-                
-                div.appendChild(img);
-                button.appendChild(div);
-                charDiv.appendChild(button);
             }
+
+            var charDiv = document.querySelector('.char');
+            var button = document.createElement('div');
+            var div = document.createElement('div');
+            var img = document.createElement('img');
+            
+            button.className = 'char-item';
+            div.className = `char-${type}`;
+            img.src = src;
+            
+            div.appendChild(img);
+            button.appendChild(div);
+            charDiv.appendChild(button);
+            
         }
     </script>
 </body>
