@@ -7,6 +7,8 @@ from django.utils.crypto import get_random_string
 from .models import CustomUser
 from character.models import Character
 from .forms import LoginForm, SignUpForm
+from django.contrib.auth.decorators import login_required
+
 
 User = CustomUser
 
@@ -109,10 +111,20 @@ def main_page(request):
     form = LoginForm()
     return render(request, 'Main.html', {'form': form})
 
+@login_required
 def home_page(request):
     try:
         character = Character.objects.get(user=request.user)
     except Character.DoesNotExist:
         return redirect('create_character')
 
-    return render(request, 'home.html', {'character': character})
+    current_experience = character.experience
+    max_experience = 1500
+
+    context = {
+        'character': character,
+        'current_experience': current_experience,
+        'max_experience': max_experience,
+    }
+    
+    return render(request, 'home.html', context)

@@ -41,12 +41,13 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 서버에서 레벨을 가져와서 사용
+            // 서버에서 레벨과 경험치를 가져와서 사용
             var level = parseInt(document.getElementById('character-level').innerText, 10);
+            var currentExperience = {{ current_experience }};
+            var maxExperience = {{ max_experience }};
             var progressBar = document.getElementById('progress-bar');
-            var maxLevel = 1500;
 
-            var progressWidth = (level / maxLevel) * 100;
+            var progressWidth = (currentExperience / maxExperience) * 100;
             progressBar.style.width = progressWidth + '%';
         });
     </script>
