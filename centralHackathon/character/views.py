@@ -12,7 +12,7 @@ import json, pytz, random
 def check_inactivity(character): 
     now = timezone.now() 
     if character.last_activity:
-        if now - character.last_activity > timedelta(minutes=2): 
+        if now - character.last_activity > timedelta(days=3):
             return True 
     return False 
 
