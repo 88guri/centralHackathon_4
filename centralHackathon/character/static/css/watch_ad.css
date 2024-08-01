@@ -11,7 +11,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('../images/ad.png') no-repeat center center;
+    background: url('../images/watchad.png') no-repeat center center;
     background-size: contain;
     font-family: 'NeoDunggeunmo', Arial, sans-serif;
 }
@@ -27,7 +27,3 @@ body, html {
     cursor: pointer;
 }
 
-.btn-submit img {
-    width: 70%;
-    height: auto;
-}

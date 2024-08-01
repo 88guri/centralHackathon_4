@@ -1,4 +1,5 @@
-{% load static %}<!DOCTYPE html>
+{% load static %}
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="{% static 'css/timer.css' %}">
@@ -37,8 +38,8 @@
                 clearInterval(timer);
                 timer = null;
                 sendElapsedTime().then((data) => {
-                    exp = data.experience; // 서버로부터 받은 경험치로 exp 업데이트
-
+                    exp = data.experience;
+                
                     // popup02 내용 업데이트
                     const popup02 = document.querySelector('.popup02 .popup');
                     popup02.innerHTML = `
@@ -51,16 +52,15 @@
                         <img class="pop-bak02" src="{% static 'img/circle-bak-for.svg' %}">
                     `;
                     
-                    // 접속 보상
+                    // 보상 수령 가능할 경우 reward-container 표시
                     if (data.reward_eligible) {
                         rewardEligible = true;
-                        document.getElementById('claimRewardButton').style.display = 'block';
-                        document.getElementById('watchAdButton').style.display = 'block';
+                        document.querySelector('.reward-container').style.display = 'flex'; // 보상 컨테이너 표시
                     }
                 });
             }
         }
-
+        
         // 타이머 일시 정지 함수
         function pauseTimer() {
             if (timer) {
@@ -93,7 +93,7 @@
             progressBar.value = time % maxTime; // time을 maxTime으로 나눈 나머지 값을 value로 설정
         }
 
-        // 보상 받기 버튼
+        // 접속 보상
         function claimReward() {
             if (rewardEligible) {
                 fetch("{% url 'claim_reward' %}", {
@@ -104,7 +104,14 @@
                     }
                 }).then(response => response.json()).then(data => {
                     if (data.item) {
-                        document.getElementById('rewardMessage').innerHTML = `보상 아이템: ${data.item} <img src="${data.image}" style="width: 50px; height: 50px;">`;
+                        // Update the popup to show the received item
+                        document.querySelector('.reward-popup').innerHTML = `
+                    <div class="item-display onclick='popup01None()">
+                        <img src="${data.image}" alt="${data.item}" class="reward-item-image">
+                        <p>“캐릭터이름”의 선물을 받았어요!<br>“${data.item}”</p>
+                    </div>
+                    <img src="{% static 'images/giftpopup2.png' %}" alt="Gift Popup Background" class="popup-background">
+                `
                         document.getElementById('claimRewardButton').style.display = 'none';
                         document.getElementById('watchAdButton').style.display = 'none';
                         rewardEligible = false;
@@ -113,37 +120,9 @@
             }
         }
 
-        // 광고 보기 버튼
+        // 광고 보기 버튼 클릭 시 페이지 이동
         function watchAd() {
-            console.log("watchAd function called");
-            if (rewardEligible) {
-                console.log("rewardEligible is true");
-                fetch("{% url 'watch_ad_reward' %}", {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    }
-                }).then(response => response.json()).then(data => {
-                    console.log("Response from watch_ad_reward:", data);
-                    if (data.item_name) {
-                        const form = document.createElement('form');
-                        form.method = 'POST';
-                        form.action = "{% url 'watch_ad2' %}";
-                        form.innerHTML = `
-                            <input type="hidden" name="item_name" value="${data.item_name}">
-                            <input type="hidden" name="item_image" value="${data.item_image}">
-                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                        `;
-                        document.body.appendChild(form);
-                        form.submit();
-                    } else {
-                        console.log("No item_name in response data");
-                    }
-                });
-            } else {
-                window.location.href = "{% url 'watch_ad2' %}";
-            }
+            window.location.href = "{% url 'watch_ad2' %}";
         }
 
         // 이벤트 리스너
@@ -165,7 +144,6 @@
             document.getElementById("watchAdButton").addEventListener("click", watchAd);
         };
         
-
         // 페이지 포커스 시 타이머 재개
         window.onfocus = function() {
             if (timerStarted) {
@@ -216,7 +194,9 @@
 </head>
 <body>
     <div class="timer-wrap">
-        <button class="bak-button" type="button" onClick="history.go(-1)"><img src={% static 'img/back-btn.svg' %}></button>
+        <button class="bak-button" type="button" onClick="history.go(-1)">
+            <img src={% static 'img/back-btn.svg' %}>
+        </button>
         <div class="invisible">
             <h3 id="level">Level: {{ character.level }}</h3>
             <h3 id="experience">Experience: {{ character.experience }}</h3>
@@ -249,9 +229,9 @@
             <div class="tity"></div>
             <div class="bubble"></div>
             <div class="tity"></div>
-            
+
             <p id="timer">{{ character.last_elapsed_time }}:{{ character.last_elapsed_time }}/60:{{ character.last_elapsed_time }} </p>
-            <img class="bubble-img" src={% static 'img/circle-bak.svg' %}>  
+            <img class="bubble-img" src={% static 'img/circle-bak.svg' %}>
         </div>
 
         <div class="container">
@@ -259,26 +239,34 @@
             <img class="btn" src={% static 'img/btn.svg' %}>
         </div>
 
-        <!-- 접속 보상 받기 버튼 및 광고 버튼 추가 -->
-        <div class="reward-container">
-            <button id="claimRewardButton" style="display: none;">보상 받기</button>
-            <button id="watchAdButton" style="display: none;">광고 보기</button>
-            <p id="rewardMessage"></p>
+        <div class="reward-container" style="display: none;">
+            <div class="reward-popup">
+                <img src="{% static 'images/giftpopup.png' %}" alt="Gift Popup Background" class="popup-background">
+                <p>4시간 이상 집중해서<br>“캐릭터이름”의 선물이 도착했어요!</p>
+                <div class="reward-buttons">
+                    <button id="claimRewardButton">
+                        <img src="{% static 'images/gift.png' %}" alt="Gift Icon"> 선물 받기
+                    </button>
+                    <button id="watchAdButton">
+                        <img src="{% static 'images/play.png' %}" alt="Play Icon"> 선물 2배로 받기
+                    </button>
+                    <p id="rewardMessage"></p>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="popup01" onclick='popup01None()'>
-        <div class="popup">
-            <img class="pop-img" src="{% static 'images/default.png' %}">  
-            <p>“{{ character.name }}”이(가)</p> 
-            <p>당신의 디지털 디톡스를 응원해요!💪🏻</p>
-            <img class="pop-bak" src="{% static 'img/circle-bak02.png' %}">
-            <img class="pop-bak" src="{% static 'img/circle-bak01.png' %}"> 
-        </div>
-    </div>
-    
-    <div class="popup02" onclick='popup02None()'>
-        <div class="popup">
 
+        <div class="popup01" onclick='popup01None()'>
+            <div class="popup">
+                <img class="pop-img" src={% static 'img/main-char.svg' %}>
+                <p>“{{ character.name }}"이(가)</p>
+                <p>당신의 디지털 디톡스를 응원해요!💪🏻</p>
+                <img class="pop-bak" src={% static 'img/circle-bak02.png' %}>
+                <img class="pop-bak" src={% static 'img/circle-bak01.png' %}>
+            </div>
+        </div>
+        <div class="popup02" onclick='popup02None()'>
+            <div class="popup">
+            </div>
         </div>
     </div>
     <script>
