@@ -256,15 +256,23 @@ def deco(request):
     except Character.DoesNotExist:
         return redirect('character_lost_forever') 
     
-    user_items = UserItem.objects.filter(user=request.user)  # 유저 아이템을 항상 가져옴!
+    # 유저 아이템을 가져옴
+    all_user_items = UserItem.objects.filter(user=request.user).order_by('acquired_date')
 
-    if request.method == 'POST':
-        pass
+    # 아이템 이름을 기준으로 중복 제거
+    unique_user_items = []
+    seen_items = set()
+    for item in all_user_items:
+        if item.item.name not in seen_items:
+            seen_items.add(item.item.name)
+            unique_user_items.append(item)
 
     context = {
-        'user_items': user_items,
+        'user_items': unique_user_items,
     }
     return render(request, 'deco.html', context)
+
+
 
 
 @login_required
