@@ -13,9 +13,9 @@
             <div class="level-info">
                 <span class="character-name">{{ character.name }}</span>
                 <div class="level-bar-container">
-                    <span class="level-text">LV. {{ character.level }}</span>
+                    <span class="level-text">LV. <span id="character-level">{{ character.level }}</span></span>
                     <div class="progress-bar">
-                        <div class="progress" style="width: {{ character.progress }}%;"></div>
+                        <div class="progress" id="progress-bar"></div>
                     </div>
                 </div>
             </div>
@@ -39,5 +39,16 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 서버에서 레벨을 가져와서 사용
+            var level = parseInt(document.getElementById('character-level').innerText, 10);
+            var progressBar = document.getElementById('progress-bar');
+            var maxLevel = 1500;
+
+            var progressWidth = (level / maxLevel) * 100;
+            progressBar.style.width = progressWidth + '%';
+        });
+    </script>
 </body>
 </html>
