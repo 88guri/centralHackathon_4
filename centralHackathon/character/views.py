@@ -306,10 +306,9 @@ def deco(request):
 
     context = {
         'user_items': unique_user_items,
+        'character': character,
     }
     return render(request, 'deco.html', context)
-
-
 
 
 @login_required

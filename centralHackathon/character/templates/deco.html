@@ -8,12 +8,11 @@
     <title>deco</title>
 </head>
 <body>
-    
     <div class="deco-wrap">
         <button class="bak-button" type="button" onClick="history.go(-1)"><img src="{% static 'img/back-btn.svg' %}"> </button>
         
         <div class="char">
-            <img class="char01-img" src="{% static 'images/character.png' %}">
+            <img id="character-image" class="char01-img" src="{% static 'images/default.png' %}">
         </div>
         <div class="box">
             <div class="nav-btn">
@@ -35,6 +34,23 @@
     </div>
 
     <script>
+        // 캐릭터 레벨에 따라 이미지 바꾸는거
+        document.addEventListener('DOMContentLoaded', function() {
+            // 레벨 값을 가져옴 
+            var characterLevel = {{ character.level|default:1 }};
+
+            var imageElement = document.getElementById('character-image');
+            
+            // 레벨에 따라 이미지 소스 설정
+            if (characterLevel >= 30) {
+                imageElement.src = "{% static 'images/adult.png' %}";
+            } else if (characterLevel >= 5) {
+                imageElement.src = "{% static 'images/child.png' %}";
+            } else {
+                imageElement.src = "{% static 'images/default.png' %}";
+            }
+        });
+
         function filterImages(filter) {
             var boxes = document.querySelectorAll('.nav-box .one-box');
             boxes.forEach(function(box) {
@@ -55,7 +71,6 @@
                 existingItem.remove();
             }
 
-            var charDiv = document.querySelector('.char');
             var button = document.createElement('div');
             var div = document.createElement('div');
             var img = document.createElement('img');
@@ -67,7 +82,6 @@
             div.appendChild(img);
             button.appendChild(div);
             charDiv.appendChild(button);
-            
         }
     </script>
 </body>
