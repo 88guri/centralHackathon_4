@@ -12,16 +12,17 @@
         <div class="popup">
             <img src="{% static 'images/popup2.png' %}" alt="Popup Background" class="popup-background">
             <div class="popup-content">
-                <img src="{% static 'images/sadcharacter.png' %}" alt="Character" class="main-item">
+                <!-- JavaScript에서 이미지 소스가 설정되므로 기본 이미지를 사용 -->
+                <img src="{% static 'images/default.png' %}" alt="Character" class="main-item" id="character-image">
                 <div class="text">
                     오랫동안 접속하지 않으셔서<br>
-                    "{{ character_name }}" 이 가출하려고 해요 😢
+                    "{{ character_name }}"이(가) 가출하려고 해요 😢
                 </div>
                 <div class="button-container">
                     <form method="post" class="reward-button">
                         {% csrf_token %}
                         <button type="submit" class="btn-reward">
-                            <img src="{% static 'images/play.png' %}" class="icon">"{{ character_name }}"아 돌아와!
+                            <img src="{% static 'images/play.png' %}" class="icon"> "{{ character_name }}"아 돌아와!
                         </button>
                     </form>
                     <button class="reward-button" onclick="window.location.href='{% url 'character_lost_forever' %}'">
@@ -32,7 +33,22 @@
         </div>
     </div>
     <script>
-        document.getElementById('popup-overlay').style.display = 'flex';
+        document.addEventListener('DOMContentLoaded', function() {
+            // 레벨 값을 가져옴
+            var characterLevel = {{ character_level|default:1|safe }};
+
+            // 클래스를 이용하여 이미지 요소 선택
+            var imageElement = document.getElementById('character-image');
+
+            // 레벨에 따라 이미지 소스 설정
+            if (characterLevel >= 30) {
+                imageElement.src = "{% static 'images/adult.png' %}";
+            } else if (characterLevel >= 5) {
+                imageElement.src = "{% static 'images/child.png' %}";
+            } else {
+                imageElement.src = "{% static 'images/default.png' %}";
+            }
+        });
     </script>
 </body>
 </html>
