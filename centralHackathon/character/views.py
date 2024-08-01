@@ -190,9 +190,14 @@ def watch_ad(request):
 @login_required
 def watch_ad2(request): 
     if request.method == 'POST':
+        try:
+            character = Character.objects.get(user=request.user)
+        except Character.DoesNotExist:
+            return redirect('create_character')
         item_name = request.POST.get('item_name')
         item_image = request.POST.get('item_image')
         return render(request, 'watch_ad2.html', {
+            'character_name': character.name,
             'item_name': item_name,
             'item_image': item_image
         })
