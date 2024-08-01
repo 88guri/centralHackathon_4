@@ -61,9 +61,9 @@ def timer_page(request):
 
         # 경험치 계산 및 업데이트
         if character.last_elapsed_time > 0:
-            experience_to_add = ((elapsed_time - character.last_elapsed_time) // 10) * 200
+            experience_to_add = elapsed_time - character.last_elapsed_time
         else:
-            experience_to_add = (elapsed_time // 10) * 200
+            experience_to_add = elapsed_time
 
         character.add_experience(experience_to_add)
         character.last_elapsed_time = 0
@@ -97,7 +97,7 @@ def timer_page(request):
         seconds = time % 60
 
         # 경험치 계산 및 업데이트
-        experience_to_add = ((elapsed_time - character.last_elapsed_time) // 10) * 200
+        experience_to_add = elapsed_time - character.last_elapsed_time
         character.add_experience(experience_to_add)
         character.last_elapsed_time = elapsed_time  # 마지막 타이머 시간 저장
         character.last_activity = now  # 마지막 활동 시간 갱신 
