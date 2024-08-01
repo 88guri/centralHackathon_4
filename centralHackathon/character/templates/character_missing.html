@@ -42,11 +42,11 @@
 
             // 레벨에 따라 이미지 소스 설정
             if (characterLevel >= 30) {
-                imageElement.src = "{% static 'images/adult.png' %}";
+                imageElement.src = "{% static 'images/sadcharacter.png' %}";
             } else if (characterLevel >= 5) {
-                imageElement.src = "{% static 'images/child.png' %}";
+                imageElement.src = "{% static 'images/cryingBaby.png' %}";
             } else {
-                imageElement.src = "{% static 'images/default.png' %}";
+                imageElement.src = "{% static 'images/cryingEgg.png' %}";
             }
         });
     </script>
