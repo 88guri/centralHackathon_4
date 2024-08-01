@@ -25,23 +25,17 @@
         </div>
 
         <div class="footer">
-            <div class="button">
-                <a href="{% url 'history_page' %}">
-                    <img src="{% static 'images/history.png' %}" alt="History Icon" class="icon history">
-                    <span class="link-text">히스토리</span>
-                </a>
+            <div class="button" onclick="window.location.href='{% url 'history_page' %}'">
+                <img src="{% static 'images/history.png' %}" alt="History Icon" class="icon history">
+                <span>히스토리</span>
             </div>
-            <div class="button">
-                <a href="{% url 'timer_page' %}">
-                    <img src="{% static 'images/timer.png' %}" alt="Timer Icon" class="icon timer">
-                    <span class="link-text">타이머</span>
-                </a>
+            <div class="button" onclick="window.location.href='{% url 'timer_page' %}'">
+                <img src="{% static 'images/timer.png' %}" alt="Timer Icon" class="icon timer">
+                <span>타이머</span>
             </div>
-            <div class="button">
-                <a href="{% url 'deco' %}">
-                    <img src="{% static 'images/dress.png' %}" alt="Dressroom Icon" class="icon dressroom">
-                    <span class="link-text">드레스룸</span>
-                </a>
+            <div class="button" onclick="window.location.href='{% url 'deco' %}'">
+                <img src="{% static 'images/dress.png' %}" alt="Dressroom Icon" class="icon dressroom">
+                <span>드레스룸</span>
             </div>
         </div>
     </div>
