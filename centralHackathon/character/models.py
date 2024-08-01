@@ -14,18 +14,19 @@ class Character(models.Model):
 
     def add_experience(self, amount):
         self.experience += amount
-        while self.experience >= 1000:
-            self.experience -= 1000
+        while self.experience >= 15000:
+            self.experience -= 15000
             self.level_up()
 
     def level_up(self):
         self.level += 1
-        if self.level % 8 == 0:
-            self.evolve()
+        self.evolve()
 
     def evolve(self):
-        if self.stage < 3:
-            self.stage += 1
+        if self.level >= 30:
+            self.stage = 3
+        elif self.level >= 5:
+            self.stage = 2
 
     def __str__(self): 
         return f"{self.user.username}'s Character"
