@@ -21,7 +21,6 @@
             </div>
         </div>
         <div class="character-container">
-            <!-- 캐릭터 이미지의 ID를 추가하여 JavaScript로 동적으로 변경 -->
             <img id="character-image" src="{% static 'images/default.png' %}" alt="Character" class="character">
         </div>
 
@@ -42,7 +41,6 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 서버에서 레벨과 경험치를 가져와서 사용
             var level = parseInt(document.getElementById('character-level').innerText, 10);
             var currentExperience = {{ current_experience }};
             var maxExperience = {{ max_experience }};
@@ -60,6 +58,19 @@
                 characterImage.src = "{% static 'images/child.png' %}";
             } else {
                 characterImage.src = "{% static 'images/default.png' %}";
+            }
+
+            // 로컬 저장소에서 캐릭터 아이템을 로드합니다
+            var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
+            var charDiv = document.querySelector('.character-container');
+
+            for (var type in charItems) {
+                if (charItems.hasOwnProperty(type)) {
+                    var img = document.createElement('img');
+                    img.src = charItems[type];
+                    img.className = `char-${type}`;
+                    charDiv.appendChild(img);
+                }
             }
         });
     </script>

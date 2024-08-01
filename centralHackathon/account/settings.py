@@ -139,3 +139,5 @@ EMAIL_HOST_USER = '보낼 이메일주소'
 EMAIL_HOST_PASSWORD = '보안키'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'character/static')]

@@ -10,7 +10,9 @@
 <body>
     
     <div class="deco-wrap">
-        <button class="bak-button" type="button" onClick="history.go(-1)"><img src="{% static 'img/back-btn.svg' %}"> </button>
+        <button class="bak-button" type="button" onClick="history.go(-1)">
+            <img src="{% static 'img/back-btn.svg' %}">
+        </button>
         
         <div class="char">
             <img id="character-image" class="char01-img" src="{% static 'images/default.png' %}">
@@ -40,18 +42,27 @@
                 <img class="nav-img" src="{% static 'img/deco/nav.svg' %}">
             </div>
             <div class="nav-box">
-                <!-- 현재 보유한 아이템을 동적으로 생성 -->
                 {% for user_item in user_items %}
-                <button class="one-box" type="button" onclick="toggleCharacterItem('{{ user_item.item.name }}', '{{ user_item.item.image.url }}', '{% static 'img/deco_items/'|add:user_item.item.name|add:'.svg' %}')">
-                    <img data-value="{{ user_item.item.name }}" src="{{ user_item.item.image.url }}">
+                <button class="one-box" type="button" 
+                        onclick="toggleCharacterItem('{{ user_item.item.name }}', '{{ user_item.item.image.url }}', '{% static 'img/real_items/'|add:user_item.item.name|add:'.svg' %}')"
+                        data-type="{{ user_item.item.name }}">
+                    <img data-png-src="{{ user_item.item.image.url }}" 
+                         data-svg-src="{% static 'img/real_items/'|add:user_item.item.name|add:'.svg' %}" 
+                         src="{{ user_item.item.image.url }}" class="item-img">
                 </button>
-                {% endfor %}
+                {% endfor %}                   
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            var items = document.querySelectorAll('.item-img');
+            items.forEach(function(item) {
+                var svgSrc = item.getAttribute('data-svg-src');
+                item.src = svgSrc;
+            });
+
             var characterLevel = {{ character.level|default:1 }};
             var imageElement = document.getElementById('character-image');
             
@@ -63,27 +74,27 @@
                 imageElement.src = "{% static 'images/default.png' %}";
             }
         });
-        
+
         function filterImages(filter) {
             // .nav-box 내의 .one-box 요소들을 선택합니다.
             var boxes = document.querySelectorAll('.nav-box .one-box');
             // 모든 .one-box 요소를 필터링합니다.
             boxes.forEach(function(box) {
                 var img = box.querySelector('img');
-                // 필터가 'all'이거나, 이미지의 data-value가 필터와 일치하는 경우에는 box를 표시합니다.
-                if (filter === 'all' || img.getAttribute('data-value') === filter) {
+                // 필터가 'all'이거나, 이미지의 data-type이 필터와 일치하는 경우에는 box를 표시합니다.
+                if (filter === 'all' || box.getAttribute('data-type') === filter) {
                     box.style.display = 'flex';
                 } else {
                     box.style.display = 'none';
                 }
             });
-    
+
             // .nav-btn 내의 모든 버튼을 선택합니다.
             var buttons = document.querySelectorAll('.nav-btn button');
             // 각 버튼에 대해 작업을 수행합니다.
             buttons.forEach(function(button) {
                 var buttonClass = button.className;
-    
+
                 // 버튼의 .white-btn 요소를 숨깁니다.
                 var whiteBtn = button.querySelector('.white-btn');
                 if (whiteBtn) {
@@ -93,7 +104,7 @@
                         whiteBtn.style.display = 'none';
                     }
                 }
-    
+
                 // 버튼의 .blue-btn 요소를 선택합니다.
                 var blueBtn = button.querySelector('.blue-btn');
                 if (blueBtn) {
@@ -106,29 +117,43 @@
             });
         }
 
-        function toggleCharacterItem(type, src, decoSrc) {
-            var charDiv = document.querySelector('.char');
-            var existingItem = document.querySelector(`.char .char-${type}`);
-            
-            if (existingItem) {
-                existingItem.remove();
-            }
+        function toggleCharacterItem(type, pngSrc, svgSrc) {
+    var charDiv = document.querySelector('.char');
+    var existingItem = document.querySelector(`.char .char-${type}`);
+    var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
 
-            var charDiv = document.querySelector('.char');
-            var button = document.createElement('div');
-            var div = document.createElement('div');
-            var img = document.createElement('img');
-            
-            button.className = 'char-item';
-            div.className = `char-${type}`;
-            img.src = src;
-            
-            div.appendChild(img);
-            button.appendChild(div);
-            charDiv.appendChild(button);
-            
+    if (existingItem) {
+        existingItem.remove();
+        delete charItems[type];
+    } else {
+        var button = document.createElement('div');
+        var div = document.createElement('div');
+        var img = document.createElement('img');
+
+        button.className = 'char-item';
+        div.className = `char-${type}`;
+        img.src = svgSrc;
+
+        div.appendChild(img);
+        button.appendChild(div);
+        charDiv.appendChild(button);
+
+        // 강제로 스타일 적용
+        if (type === 'hat') {
+            div.style.background = 'url("../img/deco/ribbon.svg") no-repeat center center';
+            div.style.backgroundSize = 'contain';
+            div.style.overflow = 'visible';
+            div.style.width = '120px';  // 원래 CSS 스타일과 일치하도록 폭을 설정
+            div.style.height = '120px'; // 원래 CSS 스타일과 일치하도록 높이를 설정
         }
-        
+
+        charItems[type] = svgSrc;
+    }
+
+    // 상태를 로컬 저장소에 저장
+    localStorage.setItem('charItems', JSON.stringify(charItems));
+}
+
     </script>
 </body>
 </html>
