@@ -19,7 +19,7 @@ def signup(request):
             if request.session.get('verification_code') == request.POST.get('verification_code'):
                 user = form.save()
                 print(f"User saved: {user}")  # 디버깅: 저장된 사용자 정보 출력
-                return redirect('signup_success')
+                return redirect('home')
             else:
                 form.add_error(None, '인증 코드가 잘못되었습니다.')
         else:
@@ -39,7 +39,7 @@ def verify_code(request):
 
 
 def signup_success(request):
-    return render(request, 'signup_success.html')
+    return render(request, 'Home.html')
 
 def send_verification_email(request):
     if request.method == 'POST':

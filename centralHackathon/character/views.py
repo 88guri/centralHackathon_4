@@ -12,7 +12,7 @@ import json, pytz, random
 def check_inactivity(character): 
     now = timezone.now() 
     if character.last_activity:
-        if now - character.last_activity > timedelta(days=3): 
+        if now - character.last_activity > timedelta(days=3):
             return True 
     return False 
 
@@ -24,7 +24,7 @@ def create_character(request):
             character = form.save(commit=False)
             character.user = request.user
             character.save()
-            return redirect('timer_page')
+            return redirect('home')
     else:
         form = CharacterForm()
     return render(request, 'create_character.html', {'form': form})
@@ -45,41 +45,42 @@ def timer_page(request):
 
     # 자정 초기화
     if now.hour == 0 and now.minute == 0 and now.second == 0:
-        data = json.loads(request.body)
-        elapsed_time = int(data.get('elapsed_time', 0))
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            elapsed_time = int(data.get('elapsed_time', 0))
 
-        # 타이머 로그 저장
-        timer_log, created = TimerLog.objects.get_or_create(user=request.user, date=now.date())
-        timer_log.elapsed_time += elapsed_time - character.last_elapsed_time
-        timer_log.save()
+            # 타이머 로그 저장
+            timer_log, created = TimerLog.objects.get_or_create(user=request.user, date=now.date())
+            timer_log.elapsed_time += elapsed_time - character.last_elapsed_time
+            timer_log.save()
 
-        time = elapsed_time - character.last_elapsed_time
+            time = elapsed_time - character.last_elapsed_time
 
-        hours = time // 3600
-        minutes = (time % 3600) // 60
-        seconds = time % 60
+            hours = time // 3600
+            minutes = (time % 3600) // 60
+            seconds = time % 60
 
-        # 경험치 계산 및 업데이트
-        if character.last_elapsed_time > 0:
-            experience_to_add = elapsed_time - character.last_elapsed_time
-        else:
-            experience_to_add = elapsed_time
+            # 경험치 계산 및 업데이트
+            if character.last_elapsed_time > 0:
+                experience_to_add = elapsed_time - character.last_elapsed_time
+            else:
+                experience_to_add = elapsed_time
 
-        character.add_experience(experience_to_add)
-        character.last_elapsed_time = 0
-        character.last_activity = now  # 마지막 활동 시간 갱신 
-        character.save()
+            character.add_experience(experience_to_add)
+            character.last_elapsed_time = 0
+            character.last_activity = now  # 마지막 활동 시간 갱신 
+            character.save()
 
-        return JsonResponse({
-            'experience': experience_to_add, 
-            'elapsed_time': character.last_elapsed_time,
-            'hours': hours,
-            'minutes': minutes,
-            'seconds': seconds,
-            'level': character.level,
-            'stage': character.stage,
-            'reward_eligible': time >= 5,
-        })
+            return JsonResponse({
+                'experience': experience_to_add, 
+                'elapsed_time': character.last_elapsed_time,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds,
+                'level': character.level,
+                'stage': character.stage,
+                'reward_eligible': time >= 5,
+            })
 
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -121,13 +122,14 @@ def timer_page(request):
     character.last_activity = now 
     character.save() 
 
-    # 캐릭터의 이름을 Home.html에 전달 
+    # 캐릭터의 이름을 timer.html에 전달 
     context = {
         'character': character,
         'character_name': character.name  
     }
     
-    return render(request, 'timer.html', context) 
+    return render(request, 'timer.html', context)
+
 
 @login_required
 def claim_reward(request):
@@ -162,18 +164,25 @@ def watch_ad_reward(request):
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 @login_required
-def character_missing(request): 
-    character_name = None
+def character_missing(request):
     try:
+        # 사용자로부터 캐릭터를 가져옴
         character = Character.objects.get(user=request.user)
         character_name = character.name
+        character_level = character.level  # 캐릭터 레벨 추가
     except Character.DoesNotExist:
-        pass  # 캐릭터가 존재하지 않을 경우 처리
+        character_name = None
+        character_level = None  # 캐릭터가 없을 경우 기본 값 설정
 
     if request.method == 'POST': 
-        # 광고 시청, 캐릭터 복구
+        # 광고 시청 후 캐릭터 복구
         return redirect('watch_ad') 
-    return render(request, 'character_missing.html', {'character_name': character_name}) 
+
+    # 템플릿에 캐릭터 이름과 레벨을 전달
+    return render(request, 'character_missing.html', {
+        'character_name': character_name,
+        'character_level': character_level  # 레벨을 템플릿 컨텍스트에 추가
+    })
 
 # 광고 - 가출
 @login_required
@@ -306,10 +315,9 @@ def deco(request):
 
     context = {
         'user_items': unique_user_items,
+        'character': character,
     }
     return render(request, 'deco.html', context)
-
-
 
 
 @login_required

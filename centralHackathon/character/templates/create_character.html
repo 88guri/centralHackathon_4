@@ -11,7 +11,7 @@
     <div class="container mt-5">
         <h1>디지털 디톡스를 함께할 캐릭터의</h1>
         <h1>이름을 지어주세요!</h1>
-        <img src="{% static 'images/character.png' %}" alt="character" class="character">
+        <img src="{% static 'images/default.png' %}" alt="character" class="character">
         <form method="post">
             {% csrf_token %}
             {{ form.name }}

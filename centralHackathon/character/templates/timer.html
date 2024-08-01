@@ -254,7 +254,6 @@
                 </div>
             </div>
         </div>
-        
 
         <div class="popup01" onclick='popup01None()'>
             <div class="popup">
@@ -270,4 +269,24 @@
             </div>
         </div>
     </div>
+    <script>
+             document.addEventListener('DOMContentLoaded', function() {
+    // 레벨 값을 가져옴 
+    var characterLevel = {{ character.level|default:1 }};
+
+    // 클래스를 이용하여 이미지 요소 선택
+    var imageElement = document.querySelector('.popup01 .pop-img');
+    
+    // 레벨에 따라 이미지 소스 설정
+    if (characterLevel >= 30) {
+        imageElement.src = "{% static 'images/adult.png' %}";
+    } else if (characterLevel >= 5) {
+        imageElement.src = "{% static 'images/child.png' %}";
+    } else {
+        imageElement.src = "{% static 'images/default.png' %}";
+    }
+});
+
+    </script>
 </body>
+</html>
