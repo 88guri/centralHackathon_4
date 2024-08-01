@@ -240,17 +240,37 @@
     </div>
     <div class="popup01" onclick='popup01None()'>
         <div class="popup">
-            <img class="pop-img" src={% static 'img/main-char.svg' %}>  
-            <p>“{{ character.name }}"이(가)</p> 
+            <img class="pop-img" src="{% static 'images/default.png' %}">  
+            <p>“{{ character.name }}”이(가)</p> 
             <p>당신의 디지털 디톡스를 응원해요!💪🏻</p>
-            <img class="pop-bak" src={% static 'img/circle-bak02.png' %}>
-            <img class="pop-bak" src={% static 'img/circle-bak01.png' %}> 
+            <img class="pop-bak" src="{% static 'img/circle-bak02.png' %}">
+            <img class="pop-bak" src="{% static 'img/circle-bak01.png' %}"> 
         </div>
     </div>
+    
     <div class="popup02" onclick='popup02None()'>
         <div class="popup">
 
         </div>
     </div>
+    <script>
+             document.addEventListener('DOMContentLoaded', function() {
+    // 레벨 값을 가져옴 
+    var characterLevel = {{ character.level|default:1 }};
+
+    // 클래스를 이용하여 이미지 요소 선택
+    var imageElement = document.querySelector('.popup01 .pop-img');
+    
+    // 레벨에 따라 이미지 소스 설정
+    if (characterLevel >= 30) {
+        imageElement.src = "{% static 'images/adult.png' %}";
+    } else if (characterLevel >= 5) {
+        imageElement.src = "{% static 'images/child.png' %}";
+    } else {
+        imageElement.src = "{% static 'images/default.png' %}";
+    }
+});
+
+    </script>
 </body>
 </html>
