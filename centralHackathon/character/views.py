@@ -138,7 +138,27 @@ def claim_reward(request):
             item_reward = random.choice(items)
             UserItem.objects.create(user=user, item=item_reward)
             print(f"image: {item_reward.image.url}")
-            return JsonResponse({'item': item_reward.name, 'image': item_reward.image.url})
+            return JsonResponse({
+                'item': item_reward.name, 
+                'image': item_reward.image.url
+                })
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+@login_required
+def watch_ad_reward(request): 
+    if request.method == 'POST':
+        user = request.user
+        items = list(Item.objects.all())
+        if items:
+            item_rewards = random.sample(items, 2)  # 아이템 2개 랜덤 선택
+            for item_reward in item_rewards:
+                UserItem.objects.create(user=user, item=item_reward)
+            # 첫 번째 아이템 정보
+            first_item = item_rewards[0]
+            return JsonResponse({
+                'item_name': first_item.name, 
+                'item_image': first_item.image.url
+            })
     return JsonResponse({'error': 'Invalid request'}, status=400)
 
 @login_required
@@ -155,7 +175,7 @@ def character_missing(request):
         return redirect('watch_ad') 
     return render(request, 'character_missing.html', {'character_name': character_name}) 
 
-
+# 광고 - 가출
 @login_required
 def watch_ad(request): 
     if request.method == 'POST': 
@@ -164,7 +184,19 @@ def watch_ad(request):
         character.last_activity = timezone.now()  # 캐릭터 복구할 때  활동 시간 갱신 
         character.save() 
         return redirect('timer_page') 
-    return render(request, 'watch_ad.html') 
+    return render(request, 'watch_ad.html')
+
+# 광고 - 2배 보상
+@login_required
+def watch_ad2(request): 
+    if request.method == 'POST':
+        item_name = request.POST.get('item_name')
+        item_image = request.POST.get('item_image')
+        return render(request, 'watch_ad2.html', {
+            'item_name': item_name,
+            'item_image': item_image
+        })
+    return render(request, 'watch_ad2.html')
 
 @login_required
 def history_page(request):
