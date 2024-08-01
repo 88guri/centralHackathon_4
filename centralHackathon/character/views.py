@@ -24,7 +24,7 @@ def create_character(request):
             character = form.save(commit=False)
             character.user = request.user
             character.save()
-            return redirect('timer_page')
+            return redirect('home')
     else:
         form = CharacterForm()
     return render(request, 'create_character.html', {'form': form})
