@@ -46,24 +46,27 @@
             var maxExperience = {{ max_experience }};
             var progressBar = document.getElementById('progress-bar');
             var characterImage = document.getElementById('character-image');
-
+    
             // 진행 상황 바의 너비를 레벨에 따라 조정
             var progressWidth = (currentExperience / maxExperience) * 100;
             progressBar.style.width = progressWidth + '%';
-
+    
             // 캐릭터 진화 설정
             if (level >= 30) {
                 characterImage.src = "{% static 'images/adult.png' %}";
+                characterImage.className = "character adult"; 
             } else if (level >= 5) {
                 characterImage.src = "{% static 'images/child.png' %}";
+                characterImage.className = "character child";
             } else {
                 characterImage.src = "{% static 'images/default.png' %}";
+                characterImage.className = "character default";
             }
-
+    
             // 로컬 저장소에서 캐릭터 아이템을 로드합니다
             var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
             var charDiv = document.querySelector('.character-container');
-
+    
             for (var type in charItems) {
                 if (charItems.hasOwnProperty(type)) {
                     var img = document.createElement('img');
@@ -74,5 +77,6 @@
             }
         });
     </script>
+    
 </body>
 </html>

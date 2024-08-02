@@ -30,7 +30,8 @@ body, html {
 
 .header {
     margin-top: 160px;
-    width: 50%; 
+    width: 303px;
+    height:65px;
     background: url('../images/header.png') no-repeat center center;
     background-size: cover; 
     padding: 20px;
@@ -51,31 +52,31 @@ body, html {
 }
 
 .character-name {
-    font-size: 15px; 
+    font-size: 20px; 
     color: #333;
     margin-bottom: 5px;
     padding-bottom: 10px;
 }
 
 .level-text {
-    font-size: 15px; 
+    font-size: 20px; 
     color: #333;
     margin-right: 10px;
 }
 
 .progress-bar {
-    width: 100px; 
-    height: 10px; 
+    width: 156px; 
+    height: 12px; 
     background-color: #b3e5fc;
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
 }
 
 .progress {
-    width: 50px; 
-    height: 10px; 
+    width: 80px; 
+    height: 12px; 
     background-color: #6ab4ff;
-    border-radius: 5px 0 0 50px;
+    border-radius: 8px ;
 }
 
 .character-container {
@@ -83,17 +84,23 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top:70px;
 }
 
-.character {
-    width: 220px; 
-    padding-top: 150px; 
-    margin-bottom: 10px;
+.character.adult,
+.character.child{
+    width: 150px; 
+    height: 160px; 
+}
+.character.default{
+    width: 240px; 
+    height: 320px; 
 }
 
 .footer {
-    width: 70%; 
-    margin-bottom: 150px;
+    width: 388px; 
+    height:70px;
+    margin-bottom: 70px;
     background: url('../images/footer.png') no-repeat center center;
     background-size: cover; 
     padding: 12px 0; 
@@ -103,14 +110,14 @@ body, html {
 }
 
 .button {
-    font-size: 12px; 
+    font-size: 14px; 
     color: white;
     cursor: pointer;
     text-align: center;
     display: flex;
     flex-direction: column; 
     align-items: center;
-    margin: 0 20px; 
+    margin: 0 25px; 
 }
 
 .button:hover {
@@ -233,10 +240,6 @@ body, html {
     object-fit: contain; 
 }
 
-
-
-
-/*뒷배경-하트*/
 .char-accessory{
     position: absolute;
     width: 120px;
