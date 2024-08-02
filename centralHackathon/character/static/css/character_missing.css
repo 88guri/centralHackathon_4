@@ -81,7 +81,7 @@ body, html {
     background-color: transparent; 
     font-size: 14px;
     margin-top: 30px;
-    margin-left: 30px;
+    margin-left: 65px;
 }
 
 .btn-reward {
@@ -96,11 +96,11 @@ body, html {
     text-decoration: none;
     background-color: transparent; 
     font-size: 14px; 
-    margin-left: -12px;
+    margin-left: -75px;
 }
 
 .reward-button .icon {
     width: 14px;
     height: 14px;
-    margin-right: 2px;
+    margin-right: 8px;
 }
