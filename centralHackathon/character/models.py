@@ -5,7 +5,7 @@ from datetime import date
 
 class Character(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    name = models.CharField(max_length=3)
+    name = models.CharField(max_length=8)
     level = models.IntegerField(default=1)
     experience = models.IntegerField(default=0)
     stage = models.IntegerField(default=1)  # 총 3단계
