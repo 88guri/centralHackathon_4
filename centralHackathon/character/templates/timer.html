@@ -108,11 +108,16 @@
                         // Update the popup to show the received item
                         document.querySelector('.reward-popup').innerHTML = `
                     <div class="item-display onclick='popup01None()">
+                    <button type="submit" class="btn-submit1">
+                    <a href="{% url 'timer_page' %}">
+                        <img src="{% static 'images/X.png' %}" alt="Close Ad">
+                    </a>
+                </button>
                         <img src="${data.image}" alt="${data.item}" class="reward-item-image">
                         <p>“캐릭터이름”의 선물을 받았어요!<br>“${data.item}”</p>
                     </div>
                     <img src="{% static 'images/giftpopup2.png' %}" alt="Gift Popup Background" class="popup-background">
-                `
+                ` 
                         document.getElementById('claimRewardButton').style.display = 'none';
                         document.getElementById('watchAdButton').style.display = 'none';
                         rewardEligible = false;
