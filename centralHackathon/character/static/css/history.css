@@ -186,6 +186,18 @@ button{
     margin-left: 50px;
     z-index: 200;
 }
+.com-tNone{
+    position: absolute;
+    top:70px;
+    right:30px;
+    margin-left: 50px;
+    z-index: 200;
+}
+.com-tNone br {
+    display: block;
+    content: "";
+    margin-top: 4px;
+  }
 .com-time{
     position: absolute;
     top:71px;
