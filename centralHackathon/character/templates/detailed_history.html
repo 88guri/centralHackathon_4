@@ -44,7 +44,7 @@
                     <p class="com-text">지난주 대비 집중 시간</p>
                     <p class="com-time">{{ percentage_change }}</p>
                     <p class="com-per">%</p>
-                    <img class="com-up" src="{% static 'img/next-btn.svg' %}">  
+                    <img id="com-change" class="com-up" src="{% static 'img/next-btn.svg' %}">  
                     {% endif %}
                 </div>
             </div>
@@ -120,8 +120,23 @@
             .attr("fill", "#6CAADD") // 막대 색상 설정
             .attr("rx", 15) // 막대 끝을 둥글게 설정
             .attr("ry", 15);
-    
-        console.log("Script execution finished"); // 종료 부분에 로그 추가
+
+            // 이미지 변경 로직 추가
+            var percentageChange = "{{ percentage_change|slice:':-1' }}"; // 마지막 '%' 제거
+            var percentageValue = parseFloat(percentageChange); // 값을 숫자로 변환
+
+            var comChangeElement = document.getElementById('com-change');
+
+            if (percentageValue > 0) {
+                comChangeElement.src = "{% static 'img/next-btn.svg' %}";
+                comChangeElement.className = ''; // 모든 클래스 제거
+                comChangeElement.classList.add('com-up');
+            } else {
+                comChangeElement.src = "{% static 'img/next-btn.svg' %}";
+                comChangeElement.className = ''; // 모든 클래스 제거
+                comChangeElement.classList.add('com-bottom');
+            }
+        console.log(percentageValue); 
     </script>
 </body>
 </html>
