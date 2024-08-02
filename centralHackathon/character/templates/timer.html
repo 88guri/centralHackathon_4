@@ -120,10 +120,38 @@
             }
         }
 
-        // 광고 보기 버튼 클릭 시 페이지 이동
-        function watchAd() {
-            window.location.href = "{% url 'watch_ad2' %}";
-        }
+                // 광고 보기 버튼
+                function watchAd() {
+                    console.log("watchAd function called");
+                    if (rewardEligible) {
+                        console.log("rewardEligible is true");
+                        fetch("{% url 'watch_ad_reward' %}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': '{{ csrf_token }}'
+                            }
+                        }).then(response => response.json()).then(data => {
+                            console.log("Response from watch_ad_reward:", data);
+                            if (data.item_name) {
+                                const form = document.createElement('form');
+                                form.method = 'POST';
+                                form.action = "{% url 'watch_ad2' %}";
+                                form.innerHTML = `
+                                    <input type="hidden" name="item_name" value="${data.item_name}">
+                                    <input type="hidden" name="item_image" value="${data.item_image}">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                                `;
+                                document.body.appendChild(form);
+                                form.submit();
+                            } else {
+                                console.log("No item_name in response data");
+                            }
+                        });
+                    } else {
+                        window.location.href = "{% url 'watch_ad2' %}";
+                    }
+                }
 
         // 이벤트 리스너
         window.onload = function() {

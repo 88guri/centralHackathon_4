@@ -6,12 +6,19 @@
     <link rel="stylesheet" href="{% static 'css/watch_ad.css' %}">
 </head>
 <body>
-    <button type="submit" class="btn-submit">
-        <a href="{% url 'timer_page' %}">
-            <img src="{% static 'images/X.png' %}" alt="Close Ad">
-        </a>
-    </button>
-    <p>"{{ character_name }}"의 선물을 받았어요!</p> 
-    <p>{{ item_name }} <img src="{{ item_image }}"></p>
+        <button type="submit" class="btn-submit">
+            <a href="{% url 'timer_page' %}">
+                <img src="{% static 'images/X.png' %}" alt="Close Ad">
+            </a>
+        </button>
+        <div class="gift-box">
+            <img class="item-image" src="{{ item_image }}" alt="{{ item_name }}">
+            <p class="character-name">"{{ character_name }}"의 선물을 받았어요!</p>
+            <div class="item-details">
+                <p class="item-name">"{{ item_name }}"</p>
+            </div>
+            <p class="additional-info">추가로 1개의 아이템을 더 받았어요!</p>
+        </div>
+    </div>
 </body>
 </html>
