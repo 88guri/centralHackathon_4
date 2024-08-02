@@ -412,3 +412,16 @@ button{
   text-overflow: ellipsis; 
   margin-top: 70px;
 }
+.btn-submit1 {
+  position: absolute;
+  top: 90px; /* 팝업의 위쪽에 위치 */
+  left: 190px; /* 팝업의 왼쪽에 위치 */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-submit1 img {
+  width: 24px;
+  height: 24px;
+}
