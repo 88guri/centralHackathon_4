@@ -181,31 +181,40 @@ button{
 }
 .com-text{
     position: absolute;
-    top:65px;
-    right:96px;
+    top:70px;
+    right:108px;
     margin-left: 50px;
     z-index: 200;
 }
 .com-time{
     position: absolute;
-    top:66px;
+    top:71px;
     right:70px;
     margin-left: 10px;
     z-index: 200;
 }
 .com-per{
     position: absolute;
-    top:66px;
+    top:71px;
     right:60px;
     margin-left: 10px;
     z-index: 200;
 }
 .com-up{
     position: absolute;
-    top:67px;
+    top:74px;
     right:40px;
     z-index: 200;
     transform: rotate(270deg);
+    width: 23px;
+    height: 34.82px;
+}
+.com-bottom{
+    position: absolute;
+    top:74px;
+    right:40px;
+    z-index: 200;
+    transform: rotate(90deg);
     width: 23px;
     height: 34.82px;
 }
