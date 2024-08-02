@@ -30,10 +30,8 @@
             <p class="ave-text">일일 평균</p>
             <div class="ave-com">
                 <p class="ave-time">
-                    {% if avg_hours > 0 %}
-                        {{ avg_hours }}시간
-                    {% elif avg_minutes > 0 %}
-                        {{ avg_minutes }}분
+                    {% if avg_minutes > 0 %}
+                        {{ avg_hours }}시간 {{ avg_minutes }}분
                     {% else %}
                         {{ avg_seconds }}초
                     {% endif %}
@@ -41,7 +39,7 @@
                 
                 <div class="compare">
                     {% if percentage_change == "지난주의 데이터가 존재하지 않습니다." %}
-                        <p class="com-tNone">지난주의 데이터가<br>존재하지 않습니다.</p>
+                    <p class="com-text">지난주 대비 집중 시간 -</p>
                     {% else %}
                         <p class="com-text">지난주 대비 집중 시간</p>
                         <p class="com-time">{{ percentage_change }}</p>

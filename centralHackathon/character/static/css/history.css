@@ -181,10 +181,11 @@ button{
 }
 .com-text{
     position: absolute;
-    top:70px;
-    right:108px;
+    top:80px;
+    right:48px;
     margin-left: 50px;
     z-index: 200;
+    font-size: 12px;
 }
 .com-tNone{
     position: absolute;

@@ -83,12 +83,14 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .character {
     width: 220px; 
-    padding-top: 150px; 
+    margin-top: 150px; 
     margin-bottom: 10px;
+    z-index: 400;
 }
 
 .footer {
@@ -150,8 +152,8 @@ body, html {
 
 .char-blue-eye{
     position: absolute;
-    top: 510;
-    left: 119px;
+    top: 510px;
+    left: 165px;
     display: flex;
     justify-content: center;
     z-index: 600;
@@ -164,8 +166,8 @@ body, html {
 
 .char-red-eye{
     position: absolute;
-    top: 510;
-    left: 119px;
+    top: 510px;
+    left: 165px;
     display: flex;
     justify-content: center;
     z-index: 600;
@@ -178,8 +180,8 @@ body, html {
 
 .char-sunglass{
     position: absolute;
-    top: 510;
-    left: 119px;
+    top: 510px;
+    left: 158px;
     display: flex;
     justify-content: center;
     z-index: 600;
@@ -193,17 +195,15 @@ body, html {
 
 .char-ribbon {
     position: absolute; 
-    top: 90px; 
-    left: 50%; 
-    transform: translateX(-50%); 
+    top: 400px; 
+    left: 158px;
     width: 100px; 
     height: 100px; 
-    border-radius: 50%; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
     overflow: hidden; 
-    z-index: 100;
+    z-index: 600;
 }
 
 .char-ribbon img {
@@ -214,24 +214,18 @@ body, html {
 
 .char-blue-hat {
     position: absolute; 
-    top: 90px; 
-    left: 50%; 
+    top: 400px; 
+    left: 208px;
     transform: translateX(-50%); 
     width: 100px; 
     height: 100px; 
-    border-radius: 50%; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
     overflow: hidden; 
-    z-index: 100;
+    z-index: 600;
 }
 
-.char-blue-hat {
-    max-width: 100%; 
-    max-height: 100%; 
-    object-fit: contain; 
-}
 
 
 
@@ -250,10 +244,9 @@ body, html {
 
 .char-red-heart{
     position: absolute;
-    width: 120px;
-    top: 102px;
+    width: 440px;
     transform: scale(0.9);
-    left: 156px;
+    top: 400px;
     display: flex;
     justify-content: center;
     z-index: 1;
@@ -261,10 +254,9 @@ body, html {
 
 .char-flower{
     position: absolute;
-    width: 120px;
-    top: 102px;
+    width: 440px;
     transform: scale(0.9);
-    left: 156px;
+    top: 400px;
     display: flex;
     justify-content: center;
     z-index: 1;
@@ -284,7 +276,7 @@ body, html {
 .char-monsil{
     position: absolute;
     width: 120px;
-    top: 275px;
+    top: 575px;
     transform: scale(1.0);
     left: 20px;
     display: flex;
@@ -295,7 +287,7 @@ body, html {
 .char-bag{
     position: absolute;
     width: 120px;
-    top: 281px;
+    top: 581px;
     transform: scale(1.0);
     left: 276px;
     display: flex;
