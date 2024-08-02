@@ -277,7 +277,7 @@ def detailed_history(request):
             percentage_change = ((today_time - last_week_time) / last_week_time) * 100
         else:
             percentage_change = 0 if today_time == 0 else 100
-        percentage_change_str = f"{percentage_change:.2f}%"
+        percentage_change_str = f"{percentage_change:.0f}"
     else:
         percentage_change_str = "지난주의 데이터가 존재하지 않습니다."
 
