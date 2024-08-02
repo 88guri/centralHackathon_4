@@ -23,26 +23,26 @@ body, html {
 }
 
 h1 {
-    font-size: 13px;
+    font-size: 18px;
     color: #333;
     margin-bottom: 10px;
 }
 
 .character {
-    width: 160px;
-    margin-bottom: 20px;
-    margin-top: 10px;
+    width: 180px;
+    margin-bottom: 50px;
+    margin-top: 30px;
 }
 
 input[type="text"] {
     background: url('../images/login.png') no-repeat center center;
     background-size: contain;
-    width: 100%;
-    padding: 15px;
+    width: 239px;
+    padding: 17px;
     margin-bottom: 20px;
     border: none;
     border-radius: 5px;
-    font-size: 14px;
+    font-size: 20px;
     color: #333;
     box-sizing: border-box;
     outline: none;
