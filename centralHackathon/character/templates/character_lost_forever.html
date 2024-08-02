@@ -5,26 +5,83 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>캐릭터 영영 못보기</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/character_lost_forever.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lost_forever.css' %}">
 </head>
 <body>
-    <div class="popup-overlay" id="popup-overlay">
-        <div class="popup">
-            <img src="{% static 'images/popup2.png' %}" alt="Popup Background" class="popup-background">
-            <div class="popup-content">
-                <div class="text">
-                    가출화면
+    <div class="lcontainer">
+        <div class="lheader">
+            <div class="llevel-info">
+                <span class="lcharacter-name">{{ character.name }}</span>
+                <div class="llevel-bar-container">
+                    <span class="llevel-text">LV. <span id="lcharacter-level">{{ character.level }}</span></span>
+                    <div class="lprogress-bar">
+                        <div class="lprogress" id="lprogress-bar"></div>
+                    </div>
                 </div>
-                <div class="button-container">
-                    <button class="btn-ok" onclick="window.location.href='{% url 'timer_page' %}'">
-                        확인
-                    </button>
-                </div>
+            </div>
+        </div>
+        <div class="lcharacter-container">
+            <img id="lcharacter-image" src="{% static 'images/default.png' %}" alt="Character" class="lcharacter">
+        </div>
+        <div class="lbutton-container">
+            <button class="btn-ok" onclick="window.location.href='{% url 'timer_page' %}'">
+                확인
+            </button>
+        
+        <div class="lfooter">
+            <div class="lbutton" onclick="window.location.href='{% url 'history_page' %}'">
+                <img src="{% static 'images/history.png' %}" alt="History Icon" class="licon history">
+                <span>히스토리</span>
+            </div>
+            <div class="lbutton" onclick="window.location.href='{% url 'timer_page' %}'">
+                <img src="{% static 'images/timer.png' %}" alt="Timer Icon" class="licon timer">
+                <span>타이머</span>
+            </div>
+            <div class="lbutton" onclick="window.location.href='{% url 'deco' %}'">
+                <img src="{% static 'images/dress.png' %}" alt="Dressroom Icon" class="licon dressroom">
+                <span>드레스룸</span>
             </div>
         </div>
     </div>
     <script>
-        document.getElementById('popup-overlay').style.display = 'flex';
+        document.addEventListener('DOMContentLoaded', function() {
+            var level = parseInt(document.getElementById('lcharacter-level').innerText, 10);
+            var currentExperience = {{ current_experience }};
+            var maxExperience = {{ max_experience }};
+            var progressBar = document.getElementById('lprogress-bar');
+            var lcharacterImage = document.getElementById('lcharacter-image');
+    
+            // 진행 상황 바의 너비를 레벨에 따라 조정
+            var progressWidth = (currentExperience / maxExperience) * 100;
+            progressBar.style.width = progressWidth + '%';
+    
+            // 캐릭터 가출 설정
+            if (level >= 30) {
+                lcharacterImage.src = "{% static 'images/byeadult.png' %}";
+                lcharacterImage.className = "character adult"; 
+            } else if (level >= 5) {
+                lcharacterImage.src = "{% static 'images/byechild.png' %}";
+                lcharacterImage.className = "character child";
+            } else {
+                lcharacterImage.src = "{% static 'images/byedefault.png' %}";
+                characterImage.className = "character default";
+            }
+    
+            // 로컬 저장소에서 캐릭터 아이템을 로드합니다
+            var charItems = JSON.parse(localStorage.getItem('lcharItems')) || {};
+            var charDiv = document.querySelector('.lcharacter-container');
+    
+            for (var type in charItems) {
+                if (charItems.hasOwnProperty(type)) {
+                    var img = document.createElement('img');
+                    img.src = charItems[type];
+                    img.className = `char-${type}`;
+                    charDiv.appendChild(img);
+                }
+            }
+        });
     </script>
+    
 </body>
 </html>
+               
