@@ -11,23 +11,53 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('../images/ad.png') no-repeat center center;
+    background: url('../images/watchad.png') no-repeat center center;
     background-size: contain;
     font-family: 'NeoDunggeunmo', Arial, sans-serif;
 }
-.form-submit {
-    position: absolute;
-    top: 30px;
-    left: 250px;
-}
+
 
 .btn-submit {
+    align-self: flex-end;
     background: none;
     border: none;
     cursor: pointer;
+    margin-bottom: 840px;
 }
 
-.btn-submit img {
-    width: 70%;
+.gift-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right:40px;
+    margin-top:10px;
+}
+
+.character-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: -10px;
+    margin-bottom: -20px;
+}
+
+.item-details {
+    margin-bottom: 10px;
+}
+
+.item-image {
+    width: 100px; 
     height: auto;
+    margin-top:50px;
+    margin-bottom: 30px;
+}
+
+.item-name {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.additional-info {
+    font-size: 16px;
+    color: #333;
+    margin-top: 10px;
 }

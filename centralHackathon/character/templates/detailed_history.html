@@ -31,12 +31,12 @@
             <div class="ave-com">
                 <p class="ave-time">
                     {% if avg_hours > 0 %}
-                    {{ avg_hours }}시간
-                {% elif avg_minutes > 0 %}
-                    {{ avg_minutes }}분
-                {% else %}
-                    {{ avg_seconds }}초
-                {% endif %}
+                        {{ avg_hours }}시간
+                    {% elif avg_minutes > 0 %}
+                        {{ avg_minutes }}분
+                    {% else %}
+                        {{ avg_seconds }}초
+                    {% endif %}
                 </p>
                 
                 <div class="compare">
@@ -63,29 +63,38 @@
         console.log("Script execution started"); // 시작 부분에 로그 추가
     
         var dataSet = [];
-        var i = 0;
-        var temTime=0;
+        var totalTime = 0;
+        var count = 0;
+    
+        // 첫 번째 루프: 총 시간 계산
         {% for date, time in logs.items %}
             temTime = ({{ time.hours }} * 3600 + {{ time.minutes }} * 60 + {{ time.seconds }});
-            if({{ time.hours }}>0){
-                temTime =temTime/360;
-            }
-            else if({{ time.minutes }}>0){
-                temTime =temTime/60;
-            }
-            dataSet.push(temTime);
-            i++;
+            totalTime += temTime;
+            count++;
+            console.log({{ time.hours }} * 3600 + {{ time.minutes }} * 60 + {{ time.seconds }});
         {% endfor %}
+    
+        // 평균값 계산
+        var averageTime = totalTime / count;
+        console.log("Average Time:", averageTime); // 평균값 로그 추가
+    
+        // 두 번째 루프: 데이터셋 생성 및 평균값에 따라 정규화
+        {% for date, time in logs.items %}
+            temTime = ({{ time.hours }} * 3600 + {{ time.minutes }} * 60 + {{ time.seconds }});
+            temTime = temTime / averageTime;
+            dataSet.push(temTime);
+        {% endfor %}
+    
         dataSet.reverse();
         console.log("DataSet:", dataSet); // 데이터셋 로그 추가
-
+    
+        // 기존 그래프 생성 코드에 추가
         var svgHeight = 150; // SVG의 높이 설정
         var barWidth = 30; // 각 막대의 너비 설정
         var barSpacing = 60; // 각 막대 사이의 간격 설정
     
         var svgWidth = dataSet.length * (barWidth + barSpacing); // SVG의 너비 설정
         var maxDataValue = d3.max(dataSet); // 데이터의 최대값 계산
-    
         var yScale = d3.scaleLinear()
             .domain([0, maxDataValue]) // 데이터 값 범위
             .range([0, svgHeight]); // SVG 높이 범위
@@ -111,10 +120,8 @@
             .attr("fill", "#6CAADD") // 막대 색상 설정
             .attr("rx", 15) // 막대 끝을 둥글게 설정
             .attr("ry", 15);
+    
         console.log("Script execution finished"); // 종료 부분에 로그 추가
     </script>
-    
-    
-    
 </body>
 </html>
