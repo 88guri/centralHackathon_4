@@ -11,7 +11,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('../images/missad.png') no-repeat center center;
+    background: url('../images/watchad.png') no-repeat center center;
     background-size: contain;
     font-family: 'NeoDunggeunmo', Arial, sans-serif;
 }
@@ -22,7 +22,6 @@ body, html {
     border: none;
     cursor: pointer;
     margin-bottom: 840px;
-    margin-right: 330px;
 }
 
 .gift-box {
