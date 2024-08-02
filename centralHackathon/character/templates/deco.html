@@ -45,12 +45,13 @@
                 {% for user_item in user_items %}
                 <button class="one-box" type="button" 
                         onclick="toggleCharacterItem('{{ user_item.item.name }}', '{{ user_item.item.image.url }}', '{% static 'img/real_items/'|add:user_item.item.name|add:'.svg' %}')"
-                        data-type="{{ user_item.item.name }}">
+                        data-type="{% if user_item.item.name in 'bag.svg ribbon.svg blue-hat.svg monsil.svg' %}cloth{% elif user_item.item.name in 'blue-heart.svg flower.svg red-heart.svg' %}accessory{% elif user_item.item.name in 'red-eye.svg blue-eye.svg' %}eyes{% else %}all{% endif %}">
                     <img data-png-src="{{ user_item.item.image.url }}" 
                          data-svg-src="{% static 'img/real_items/'|add:user_item.item.name|add:'.svg' %}" 
                          src="{{ user_item.item.image.url }}" class="item-img">
                 </button>
                 {% endfor %}                   
+              
             </div>
         </div>
     </div>
@@ -98,7 +99,7 @@
                 // 버튼의 .white-btn 요소를 숨깁니다.
                 var whiteBtn = button.querySelector('.white-btn');
                 if (whiteBtn) {
-                    if (buttonClass === `nav-${filter}`) {
+                    if (buttonClass.includes(`nav-${filter}`)) {
                         whiteBtn.style.display = 'block';
                     } else {
                         whiteBtn.style.display = 'none';
@@ -108,7 +109,7 @@
                 // 버튼의 .blue-btn 요소를 선택합니다.
                 var blueBtn = button.querySelector('.blue-btn');
                 if (blueBtn) {
-                    if (buttonClass === `nav-${filter}`) {
+                    if (buttonClass.includes(`nav-${filter}`)) {
                         blueBtn.style.display = 'block';
                     } else {
                         blueBtn.style.display = 'none';
@@ -116,6 +117,7 @@
                 }
             });
         }
+
 
         function toggleCharacterItem(type, pngSrc, svgSrc) {
     var charDiv = document.querySelector('.char');
