@@ -7,6 +7,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
+    background: url('../img/deco/bac.svg') no-repeat center center fixed;
     background-size: contain;
     font-family: 'NeoDunggeunmo', Arial, sans-serif;
   }
@@ -35,8 +36,7 @@ button {
     height: 932px;
     margin: 0 auto;
     position: relative;
-    overflow: hidden;    
-    background: url('../img/deco/bac.svg') no-repeat center center fixed;
+    overflow: hidden;
 }
 
 .char {
@@ -60,17 +60,98 @@ button {
     transform: scale(1.1);
     z-index: 600;
 }
-/*hat*/
-.char-hat{
+
+.char-blue-eye{
     position: absolute;
     width: 120px;
-    top: 102px;
-    transform: scale(1.2);
-    left: 156px;
+    top: 200px;
+    left: 155px;
     display: flex;
     justify-content: center;
     z-index: 600;
 }
+.char-blue-eye>img{
+    position: relative;
+    transform: scale(1.1);
+    z-index: 600;
+}
+
+.char-red-eye{
+    position: absolute;
+    width: 120px;
+    top: 200px;
+    left: 155px;
+    display: flex;
+    justify-content: center;
+    z-index: 600;
+}
+.char-red-eye>img{
+    position: relative;
+    transform: scale(1.1);
+    z-index: 600;
+}
+
+.char-sunglass{
+    position: absolute;
+    width: 120px;
+    top: 200px;
+    left: 155px;
+    display: flex;
+    justify-content: center;
+    z-index: 600;
+}
+.char-sunglass>img{
+    position: relative;
+    transform: scale(1.1);
+    z-index: 600;
+}
+/*hat*/
+
+.char-ribbon {
+    position: absolute; 
+    top: 90px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden; 
+    z-index: 100;
+}
+
+.char-ribbon img {
+    max-width: 100%; 
+    max-height: 100%; 
+    object-fit: contain; 
+}
+
+.char-blue-hat {
+    position: absolute; 
+    top: 90px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 100px; 
+    height: 100px; 
+    border-radius: 50%; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden; 
+    z-index: 100;
+}
+
+.char-blue-hat {
+    max-width: 100%; 
+    max-height: 100%; 
+    object-fit: contain; 
+}
+
+
+
+
 /*뒷배경-하트*/
 .char-accessory{
     position: absolute;
@@ -82,8 +163,41 @@ button {
     justify-content: center;
     z-index: 1;
 }
+
+.char-red-heart{
+    position: absolute;
+    width: 120px;
+    top: 102px;
+    transform: scale(0.9);
+    left: 156px;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
+
+.char-flower{
+    position: absolute;
+    width: 120px;
+    top: 102px;
+    transform: scale(0.9);
+    left: 156px;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
 /*pet*/
 .char-pet{
+    position: absolute;
+    width: 120px;
+    top: 275px;
+    transform: scale(1.0);
+    left: 20px;
+    display: flex;
+    justify-content: center;
+    z-index: 600;
+}
+
+.char-monsil{
     position: absolute;
     width: 120px;
     top: 275px;
