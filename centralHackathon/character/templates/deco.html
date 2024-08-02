@@ -63,7 +63,7 @@
                 var svgSrc = item.getAttribute('data-svg-src');
                 item.src = svgSrc;
             });
-
+    
             var characterLevel = {{ character.level|default:1 }};
             var imageElement = document.getElementById('character-image');
             
@@ -74,7 +74,32 @@
             } else {
                 imageElement.src = "{% static 'images/default.png' %}";
             }
+    
+            // Call the setup function to ensure initial button state
+            setupInitialButtonState();
         });
+    
+        function setupInitialButtonState() {
+            var buttons = document.querySelectorAll('.nav-btn button');
+            var whiteBtnAll = document.querySelector('.nav-btn .nav-all .white-btn');
+            var blueBtnAll = document.querySelector('.nav-btn .nav-all .blue-btn');
+            
+            // Display white-btn for nav-all button and hide others
+            if (whiteBtnAll) whiteBtnAll.style.display = 'block';
+            if (blueBtnAll) blueBtnAll.style.display = 'block';
+            
+            buttons.forEach(function(button) {
+                var whiteBtn = button.querySelector('.white-btn');
+                var blueBtn = button.querySelector('.blue-btn');
+                if (button.classList.contains('nav-all')) {
+                    if (whiteBtn) whiteBtn.style.display = 'block';
+                    if (blueBtn) blueBtn.style.display = 'block';
+                } else {
+                    if (whiteBtn) whiteBtn.style.display = 'none';
+                    if (blueBtn) blueBtn.style.display = 'none';
+                }
+            });
+        }
 
         function filterImages(filter) {
             // .nav-box 내의 .one-box 요소들을 선택합니다.
