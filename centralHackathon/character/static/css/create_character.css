@@ -28,6 +28,12 @@ h1 {
     margin-bottom: 10px;
 }
 
+h2 {
+    font-size: 13px;
+    color: #6e6e6e;
+    margin-bottom: 10px;
+}
+
 .character {
     width: 180px;
     margin-bottom: 50px;

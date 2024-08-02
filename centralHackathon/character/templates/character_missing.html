@@ -12,7 +12,6 @@
         <div class="popup">
             <img src="{% static 'images/popup2.png' %}" alt="Popup Background" class="popup-background">
             <div class="popup-content">
-                <!-- JavaScript에서 이미지 소스가 설정되므로 기본 이미지를 사용 -->
                 <img src="{% static 'images/default.png' %}" alt="Character" class="main-item" id="character-image">
                 <div class="text">
                     오랫동안 접속하지 않으셔서<br>
@@ -22,11 +21,11 @@
                     <form method="post" class="reward-button">
                         {% csrf_token %}
                         <button type="submit" class="btn-reward">
-                            <img src="{% static 'images/play.png' %}" class="icon"> "{{ character_name }}"아 돌아와!
+                            <img src="{% static 'images/play.png' %}" class="icon"> 가지말고 돌아와!
                         </button>
                     </form>
                     <button class="reward-button" onclick="window.location.href='{% url 'character_lost_forever' %}'">
-                        "{{ character_name }}" 영영 못보기
+                        영영 못보기
                     </button>
                 </div>
             </div>
