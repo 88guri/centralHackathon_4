@@ -114,7 +114,7 @@
                     </a>
                 </button>
                         <img src="${data.image}" alt="${data.item}" class="reward-item-image">
-                        <p>“캐릭터이름”의 선물을 받았어요!<br>“${data.item}”</p>
+                        <p>“{{ character.name }}”의 선물을 받았어요!<br>“${data.item}”</p>
                     </div>
                     <img src="{% static 'images/giftpopup2.png' %}" alt="Gift Popup Background" class="popup-background">
                 ` 
@@ -276,7 +276,7 @@
         <div class="reward-container" style="display: none;">
             <div class="reward-popup">
                 <img src="{% static 'images/giftpopup.png' %}" alt="Gift Popup Background" class="popup-background">
-                <p>4시간 이상 집중해서<br>“캐릭터이름”의 선물이 도착했어요!</p>
+                <p>4시간 이상 집중해서<br>“{{ character.name }}”의 선물이 도착했어요!</p>
                 <div class="reward-buttons">
                     <button id="claimRewardButton">
                         <img src="{% static 'images/gift.png' %}" alt="Gift Icon"> 선물 받기
