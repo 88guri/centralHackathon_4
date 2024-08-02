@@ -179,6 +179,14 @@ button{
 .compare{
     display: flex;
 }
+.com-text2{
+    position: absolute;
+    top:76px;
+    right:108px;
+    margin-left: 50px;
+    z-index: 200;
+    font-size: 12px;
+}
 .com-text{
     position: absolute;
     top:80px;
