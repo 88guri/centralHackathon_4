@@ -12,7 +12,7 @@ body, html {
     justify-content: center;
     align-items: center;
     background: url('../images/watchad.png') no-repeat center center;
-    background-size: cover;
+    background-size: contain;
     font-family: 'NeoDunggeunmo', Arial, sans-serif;
 }
 
@@ -22,7 +22,7 @@ body, html {
     background: none;
     border: none;
     cursor: pointer;
-    margin-bottom: 10px;
+    margin-bottom: 840px;
 }
 
 .gift-box {
@@ -30,13 +30,13 @@ body, html {
     flex-direction: column;
     align-items: center;
     margin-right:40px;
-    margin-top:50px;
+    margin-top:10px;
 }
 
 .character-name {
     font-size: 20px;
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: -10px;
     margin-bottom: -20px;
 }
 
