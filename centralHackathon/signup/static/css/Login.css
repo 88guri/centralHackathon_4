@@ -18,7 +18,7 @@ body, html {
 
 .login-container {
     text-align: center;
-    width: 300px;
+    width: 378px;
 }
 
 form {
@@ -29,23 +29,24 @@ form {
 
 label {
     display: block;
-    margin-top: 10px;
-    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
     color: #333;
     width: 100%;
     text-align: left;
-    padding-left: 10px;
+    padding-left: 20px;
 }
 
 input[type="text"], input[type="password"] {
     background: url('../images/input.png') no-repeat center center;
     background-size: contain;
     width: 100%;
-    padding: 15px;
+    padding: 20px;
     margin-bottom: 35px;
     border: none;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 13px;
     color: #333;
     box-sizing: border-box;
     outline: none;
@@ -59,19 +60,20 @@ input::placeholder {
 button {
     background: url('../images/login.png') no-repeat center center;
     background-size: contain;
-    width: 100%;
-    height: 50px;
+    width: 239px;
+    height: 66px;
     border: none;
     cursor: pointer;
+    margin-top: 20px;
     margin-bottom: 20px;
-    font-size: 16px;
+    font-size: 20px;
     color: black;
     text-indent: 0;
     font-family: 'NeoDunggeunmo', Arial, sans-serif;
 }
 
 .signup-link {
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
     text-decoration: none;
     font-family: 'NeoDunggeunmo', Arial, sans-serif;

@@ -19,7 +19,7 @@ body, html {
 
 .signup-container {
     text-align: center;
-    width: 300px;
+    width: 378px;
 }
 
 form {
@@ -31,27 +31,27 @@ form {
 label {
     display: block;
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 15px;
     color: #333;
     width: 100%;
     text-align: left;
-    padding-left: 10px;
+    padding-left: 30px;
 }
 
 .input-group {
     position: relative;
     width: 100%;
-    margin-bottom: 10px; 
+    margin-bottom: 1px; 
 }
 
 input[type="text"], input[type="password"] {
     background: url('../images/input.png') no-repeat center center;
     background-size: contain;
     width: 100%;
-    padding: 15px;
+    padding: 20px;
     border: none;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 13px;
     color: #333;
     box-sizing: border-box;
     outline: none;
@@ -59,24 +59,24 @@ input[type="text"], input[type="password"] {
 }
 
 input[type="text"].with-button, input[type="password"].with-button {
-    padding-right: 90px;
+    padding-right: 100px;
 }
 
 .verify-button {
     position: absolute;
-    right: -5px;
+    right: -7px;
     top: 50%;
     transform: translateY(-50%);
     background: url('../images/ok.png') no-repeat center center;
     background-size: 80%; 
     background-position: 5px center; 
-    width: 80px;
+    width: 100px;
     height: 40px;
     border: none;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 13px;
     color: #aaa;
-    padding-left: 2px; 
+    padding-left: 3px; 
     font-family: 'NeoDunggeunmo', Arial, sans-serif;
 }
 
@@ -85,24 +85,24 @@ input::placeholder {
 }
 
 .password-requirements {
-    font-size: 10.5px;
+    font-size: 11px;
     color: #aaa; 
     text-align: left;
     width: 100%;
     margin-top: 10px;
     margin-bottom: 5px;
-    padding-left: 10px;
+    padding-left: 30px;
 }
 
 button#signup-button {
     background: url('../images/login.png') no-repeat center center;
     background-size: contain;
-    width: 100%;
-    height: 50px;
+    width: 239px;
+    height: 55px;
     border: none;
     cursor: pointer;
     margin-top: 30px;
-    font-size: 16px;
+    font-size: 18px;
     color: black;
     text-indent: 0;
     font-family: 'NeoDunggeunmo', Arial, sans-serif;
