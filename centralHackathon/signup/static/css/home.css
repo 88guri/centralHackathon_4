@@ -84,7 +84,7 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    margin-top:-40px;
 }
 .adult{
     width: 297px; 
@@ -110,12 +110,11 @@ body, html {
 }
 
 .footer {
-    width: 388px; 
-    height:70px;
-    margin-bottom: 70px;
+    width:388px; 
+    height:100px;
+    margin-bottom: 20px;
     background: url('../images/footer.png') no-repeat center center;
     background-size: cover; 
-    padding: 12px 0; 
     display: flex;
     justify-content: center; 
     align-items: center;
@@ -129,7 +128,7 @@ body, html {
     display: flex;
     flex-direction: column; 
     align-items: center;
-    margin: 0 25px; 
+    margin: 0 27px; 
 }
 
 .button:hover {
