@@ -63,7 +63,7 @@
                 var svgSrc = item.getAttribute('data-svg-src');
                 item.src = svgSrc;
             });
-
+    
             // Set character image based on level
             var characterLevel = {{ character.level|default:1 }};
             var imageElement = document.getElementById('character-image');
@@ -74,11 +74,20 @@
             } else {
                 imageElement.src = "{% static 'images/default.png' %}";
             }
-
+    
+            // Set the class name based on the image source
+            var className = imageElement.src.split('/').pop().split('.')[0];
+            imageElement.className = className;
+    
+            // Save the character image to local storage as the first item
+            var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
+            charItems['characterImage'] = { src: imageElement.src, className: className };  // Save the character image source and class name
+            localStorage.setItem('charItems', JSON.stringify(charItems));
+    
             // Apply saved items from local storage
             applySavedItems();
         });
-
+    
         function filterImages(filter) {
             // Filter nav-box items
             var boxes = document.querySelectorAll('.nav-box .one-box');
@@ -89,7 +98,7 @@
                     box.style.display = 'none';
                 }
             });
-
+    
             // Update nav-btn buttons
             var buttons = document.querySelectorAll('.nav-btn button');
             buttons.forEach(function(button) {
@@ -104,12 +113,12 @@
                 }
             });
         }
-
+    
         function toggleCharacterItem(type, pngSrc, svgSrc) {
             var charDiv = document.querySelector('.char');
             var existingItem = document.querySelector(`.char .char-${type}`);
             var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
-
+    
             if (existingItem) {
                 existingItem.remove();
                 delete charItems[type];
@@ -117,15 +126,15 @@
                 var button = document.createElement('div');
                 var div = document.createElement('div');
                 var img = document.createElement('img');
-
+    
                 button.className = 'char-item';
                 div.className = `char-${type}`;
                 img.src = svgSrc;
-
+    
                 div.appendChild(img);
                 button.appendChild(div);
                 charDiv.appendChild(button);
-
+    
                 // Apply specific styles
                 if (type === 'hat') {
                     div.style.background = 'url("../img/deco/ribbon.svg") no-repeat center center';
@@ -134,42 +143,61 @@
                     div.style.width = '120px';
                     div.style.height = '120px';
                 }
-
+    
                 charItems[type] = svgSrc;
             }
-
+    
             // Save to local storage
             localStorage.setItem('charItems', JSON.stringify(charItems));
         }
-
+    
         function applySavedItems() {
             var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
             var charDiv = document.querySelector('.char');
-
+            
+            // Remove all child elements except for #character-image
+            charDiv.querySelectorAll('div').forEach(function(item) {
+                if (item.id !== 'character-image') {
+                    item.remove();
+                }
+            });
+        
+            // Restore the character image from local storage
+            if (charItems.characterImage) {
+                var characterImage = document.getElementById('character-image');
+                characterImage.src = charItems.characterImage.src;
+                characterImage.className = charItems.characterImage.className;
+            }
+        
+            // Restore other character items
             Object.keys(charItems).forEach(function(type) {
-                var svgSrc = charItems[type];
-                var button = document.createElement('div');
-                var div = document.createElement('div');
-                var img = document.createElement('img');
-
-                button.className = 'char-item';
-                div.className = `char-${type}`;
-                img.src = svgSrc;
-
-                div.appendChild(img);
-                button.appendChild(div);
-                charDiv.appendChild(button);
-
-                // Apply specific styles
-                if (type === 'hat') {
-                    div.style.background = 'url("../img/deco/ribbon.svg") no-repeat center center';
-                    div.style.backgroundSize = 'contain';
-                    div.style.overflow = 'visible';
-                    div.style.width = '120px';
-                    div.style.height = '120px';
+                var item = charItems[type];
+                if (type !== 'characterImage') {  // Skip the character image
+                    var button = document.createElement('div');
+                    var div = document.createElement('div');
+                    var img = document.createElement('img');
+        
+                    button.className = 'char-item';
+                    div.className = `char-${type}`;
+                    img.src = item;
+        
+                    div.appendChild(img);
+                    button.appendChild(div);
+                    charDiv.appendChild(button);
+        
+                    // Apply specific styles
+                    if (type === 'hat') {
+                        div.style.background = 'url("../img/deco/ribbon.svg") no-repeat center center';
+                        div.style.backgroundSize = 'contain';
+                        div.style.overflow = 'visible';
+                        div.style.width = '120px';
+                        div.style.height = '120px';
+                    }
                 }
             });
         }
+        
     </script>
+    
 </body>
 </html>

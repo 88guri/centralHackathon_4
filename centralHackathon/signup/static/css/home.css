@@ -95,14 +95,19 @@ body, html {
     margin-top:70px;
 }
 
-.character.adult,
-.character.child{
+.adult,
+.child{
     width: 150px; 
     height: 160px; 
+    position: absolute;
+    bottom: 20px;
+    z-index: 600;
 }
-.character.default{
+.default{
     width: 240px; 
     height: 320px; 
+    position: absolute;
+    z-index: 600;
 }
 
 .footer {

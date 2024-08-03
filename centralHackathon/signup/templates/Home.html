@@ -22,9 +22,7 @@
             </div>
         </div>
         <div class="character-container">
-            <img id="character-image" src="{% static 'images/default.png' %}" alt="Character" class="character">
-        </div>
-        <div class="character-container">
+            <!-- Add the character image here -->
             <img id="character-image" src="{% static 'images/default.png' %}" alt="Character" class="character">
         </div>
         <div class="footer">
@@ -57,19 +55,25 @@
                 progressBar.style.width = progressWidth + '%';
 
                 // 캐릭터 진화 설정
+                var imageSrc;
                 if (level >= 30) {
-                    characterImage.src = "{% static 'images/adult.png' %}";
+                    imageSrc = "{% static 'images/adult.png' %}";
                 } else if (level >= 5) {
-                    characterImage.src = "{% static 'images/child.png' %}";
+                    imageSrc = "{% static 'images/child.png' %}";
                 } else {
-                    characterImage.src = "{% static 'images/default.png' %}";
+                    imageSrc = "{% static 'images/default.png' %}";
                 }
+                characterImage.src = imageSrc;
+
+                // Set the class name based on the image source
+                var className = imageSrc.split('/').pop().split('.')[0];
+                characterImage.className = className;
 
                 // 로컬 저장소에서 캐릭터 아이템을 로드합니다
                 var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
 
                 // 현재 캐릭터 컨테이너의 기존 아이템을 지웁니다
-                charDiv.querySelectorAll('img').forEach(function(img) {
+                charDiv.querySelectorAll('img:not(#character-image)').forEach(function(img) {
                     img.remove();
                 });
 
@@ -94,7 +98,5 @@
             });
         });
     </script>
-    
 </body>
 </html>
-

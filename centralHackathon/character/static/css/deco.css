@@ -45,6 +45,19 @@ button {
     justify-content: center;
     position: relative;
 }
+
+.adult,
+.child{
+    width: 150px; 
+    height: 160px; 
+    position: absolute;
+    bottom: 20px;
+}
+.default{
+    width: 240px; 
+    height: 320px; 
+    position: absolute;
+}
 /*eyes*/
 .char-eyes{
     position: absolute;
