@@ -104,3 +104,18 @@ body, html {
     height: 14px;
     margin-right: 8px;
 }
+
+.sadcharacter {
+    width: 180px;
+    margin-top:40px;
+}
+
+.cryingBaby {
+    width: 150px;
+    margin-top:55px;
+}
+
+.cryingEgg {
+    width: 130px;
+    margin-top:43px;
+}
