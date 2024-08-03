@@ -317,7 +317,7 @@ button{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: -80px;
   z-index: 1; 
   position: relative;
 }
