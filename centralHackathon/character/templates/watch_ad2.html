@@ -6,12 +6,12 @@
     <link rel="stylesheet" href="{% static 'css/watch_ad2.css' %}">
 </head>
 <body>
-        <button type="submit" class="btn-submit">
-            <a href="{% url 'timer_page' %}">
-                <img src="{% static 'images/X.png' %}" alt="Close Ad">
-            </a>
-        </button>
         <div class="gift-box">
+            <button type="submit" class="btn-submit">
+                <a href="{% url 'timer_page' %}">
+                    <img src="{% static 'images/X.png' %}" alt="Close Ad">
+                </a>
+            </button>
             <img class="item-image" src="{{ item_image }}" alt="{{ item_name }}">
             <p class="character-name">"{{ character_name }}"의 선물을 받았어요!</p>
             <div class="item-details">

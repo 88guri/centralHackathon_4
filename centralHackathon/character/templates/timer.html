@@ -228,7 +228,7 @@
 </head>
 <body>
     <div class="timer-wrap">
-        <button class="bak-button" type="button" onClick="history.go(-1)">
+        <button class="bak-button" type="button" onClick="window.location.href='{% url 'home' %}'">
             <img src={% static 'img/back-btn.svg' %}>
         </button>
         <div class="invisible">

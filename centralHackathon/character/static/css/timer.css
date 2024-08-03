@@ -281,11 +281,11 @@ button{
 }
 .pop-img{
   z-index: 300;
-  width: 180px;
+  width: 100px;
+  margin-bottom: 20px;
 }
 
 .popup02{
-
   background-color: #9E949494;
   z-index: 500;
   width: 100%;

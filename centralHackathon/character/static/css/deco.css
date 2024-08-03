@@ -46,12 +46,19 @@ button {
     position: relative;
 }
 
-.adult,
-.child{
-    width: 150px; 
-    height: 160px; 
+.adult{
+    width: 249px; 
+    height: 267px; 
     position: absolute;
-    bottom: 20px;
+    top: 100px;
+    z-index: 10;
+}
+.child{
+    width: 249px; 
+    height: 267px; 
+    position: absolute;
+    top: 100px;
+    z-index: 10;
 }
 .default{
     position: absolute;
@@ -80,11 +87,12 @@ button {
 .char-blue-eye{
     position: absolute;
     width: 120px;
-    top: 200px;
+    top: 210px;
     left: 155px;
     display: flex;
     justify-content: center;
     z-index: 600;
+
 }
 .char-blue-eye>img{
     position: relative;
@@ -95,7 +103,7 @@ button {
 .char-red-eye{
     position: absolute;
     width: 120px;
-    top: 200px;
+    top: 210px;
     left: 155px;
     display: flex;
     justify-content: center;
@@ -109,12 +117,12 @@ button {
 
 .char-sunglass{
     position: absolute;
-    width: 120px;
+    width: 130px;
     top: 200px;
-    left: 155px;
+    left: 150px;
     display: flex;
     justify-content: center;
-    z-index: 600;
+    z-index: 650;
 }
 .char-sunglass>img{
     position: relative;
@@ -215,9 +223,9 @@ button {
 .char-monsil{
     position: absolute;
     width: 120px;
-    top: 275px;
-    transform: scale(1.0);
-    left: 20px;
+    top: 290px;
+    transform: scale(1.2);
+    left: 25px;
     display: flex;
     justify-content: center;
     z-index: 600;
@@ -226,8 +234,8 @@ button {
 .char-bag{
     position: absolute;
     width: 120px;
-    top: 281px;
-    transform: scale(1.0);
+    top: 290px;
+    transform: scale(1.1);
     left: 276px;
     display: flex;
     justify-content: center;
