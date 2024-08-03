@@ -8,7 +8,19 @@
     <link rel="stylesheet" href="{% static 'css/character_missing.css' %}">
 </head>
 <body>
-    <div class="popup-overlay" id="popup-overlay">
+    <div class="container">
+        <div class="overlay"></div>
+        <div class="header">
+            <div class="level-info">
+                <span class="character-name">{{ character.name }}</span>
+                <div class="level-bar-container">
+                    <span class="level-text">LV. <span id="character-level">{{ character.level }}</span></span>
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="popup">
             <img src="{% static 'images/popup2.png' %}" alt="Popup Background" class="popup-background">
             <div class="popup-content">
@@ -34,20 +46,25 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var characterLevel = {{ character_level|default:1|safe }};
-    
             var imageElement = document.getElementById('character-image');
-    
+            var bodyElement = document.body; // Reference to the body element
+
+            // Set character image based on level
             if (characterLevel >= 30) {
                 imageElement.src = "{% static 'images/sadcharacter.png' %}";
                 imageElement.className = 'main-item sadcharacter';
+                bodyElement.style.backgroundImage = "url('{% static 'images/missing3.png' %}')"; // Change background
             } else if (characterLevel >= 5) {
                 imageElement.src = "{% static 'images/cryingBaby.png' %}";
                 imageElement.className = 'main-item cryingBaby';
+                bodyElement.style.backgroundImage = "url('{% static 'images/missing2.png' %}')"; // Change background
             } else {
                 imageElement.src = "{% static 'images/cryingEgg.png' %}";
                 imageElement.className = 'main-item cryingEgg';
+                bodyElement.style.backgroundImage = "url('{% static 'images/missing1.png' %}')"; // Change background
             }
-    
+
+            // Event listener for the "lost forever" button
             document.getElementById('lost-forever-button').addEventListener('click', function() {
                 fetch("{% url 'delete_character' %}", {
                     method: 'POST',
