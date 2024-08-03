@@ -8,37 +8,20 @@
     <link rel="stylesheet" href="{% static 'css/character_missing.css' %}">
 </head>
 <body>
-        <div class="container">
-            <div class="overlay"></div>
-            <div class="header">
-                <div class="level-info">
-                    <span class="character-name">{{ character.name }}</span>
-                    <div class="level-bar-container">
-                        <span class="level-text">LV. <span id="character-level">{{ character.level }}</span></span>
-                        <div class="progress-bar">
-                            <div class="progress" id="progress-bar"></div>
-                        </div>
-                    </div>
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup">
+            <img src="{% static 'images/popup2.png' %}" alt="Popup Background" class="popup-background">
+            <div class="popup-content">
+                <img src="{% static 'images/default.png' %}" alt="Character" class="main-item" id="character-image">
+                <div class="text">
+                    오랫동안 접속하지 않으셔서<br>
+                    "{{ character_name }}"이(가) 가출하려고 해요 😢
                 </div>
-            </div>
-            <div class="popup">
-                <img src="{% static 'images/popup2.png' %}" alt="Popup Background" class="popup-background">
-                <div class="popup-content">
-                    <img src="{% static 'images/default.png' %}" alt="Character" class="main-item" id="character-image">
-                    <div class="text">
-                        오랫동안 접속하지 않으셔서<br>
-                        "{{ character_name }}"이(가) 가출하려고 해요 😢
-                    </div>
-                    
-                    <div class="button-container">
-                        <form method="post" class="reward-button">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-reward">
-                                <img src="{% static 'images/play.png' %}" class="icon"> 가지말고 돌아와!
-                            </button>
-                        </form>
-                        <button class="reward-button" onclick="window.location.href='{% url 'character_lost_forever' %}'">
-                            영영 못보기
+                <div class="button-container">
+                    <form method="post" class="reward-button">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-reward">
+                            <img src="{% static 'images/play.png' %}" class="icon"> 가지말고 돌아와!
                         </button>
                     </form>
                     <button class="reward-button" id="lost-forever-button">
