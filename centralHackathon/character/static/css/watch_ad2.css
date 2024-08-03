@@ -17,45 +17,45 @@ body, html {
 }
 
 .btn-submit {
-    margin-left:340px;
-    margin-bottom:-50px;
+    align-self: flex-end;
     background: none;
     border: none;
     cursor: pointer;
-    transform: scale(0.5);
+    margin-left: 330px;
+    margin-bottom: -45px;
+    transform: scale(0.8);
 }
 
 .gift-box {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right:-20px;
-    transform: scale(2.2);
+    margin-bottom:10px;
 }
 
 .character-name {
     font-size: 20px;
-    margin-top: 20px;
+    margin-top: -10px;
     margin-bottom: -20px;
 }
 
 .item-details {
-    margin-bottom: -5px;
+    margin-bottom: 10px;
 }
 
 .item-image {
     width: 90px; 
-    margin-top:70px;
-    margin-bottom: 30px;
+    height: auto;
+    margin-top:50px;
+    margin-bottom: 40px;
 }
 
 .item-name {
-    font-size: 20px;
-    margin-top:25px;
+    font-size: 22px;
 }
 
 .additional-info {
-    font-size: 15px;
+    font-size: 16px;
     color: #333;
-    margin-top: 20px;
+    margin-top: 10px;
 }
