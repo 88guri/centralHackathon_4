@@ -163,7 +163,7 @@ button {
     justify-content: center; 
     align-items: center; 
     overflow: hidden; 
-    z-index: 100;
+    z-index: 600;
 }
 
 .char-blue-hat {
