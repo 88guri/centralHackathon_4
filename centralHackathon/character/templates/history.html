@@ -9,7 +9,9 @@
 </head>
 <body>
     <div class="container mt-5">
-        <button class="bak-button" type="button" onClick="history.go(-1)"><img src={% static 'img/back-btn.svg' %}> </button>
+        <button class="bak-button" type="button" onClick="window.location.href='{% url 'home' %}'">
+            <img src={% static 'img/back-btn.svg' %}>
+        </button>
         
         <div class="history-bal">
             <div class="char-bal">
