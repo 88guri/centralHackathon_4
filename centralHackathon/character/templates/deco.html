@@ -45,7 +45,7 @@
                 {% for user_item in user_items %}
                 <button class="one-box" type="button" 
                         onclick="toggleCharacterItem('{{ user_item.item.name }}', '{{ user_item.item.image.url }}', '{% static 'img/real_items/'|add:user_item.item.name|add:'.svg' %}')"
-                        data-type="{{ user_item.item.name }}">
+                        data-type="{% if user_item.item.name in 'bag.svg ribbon.svg blue-hat.svg monsil.svg' %}cloth{% elif user_item.item.name in 'blue-heart.svg flower.svg red-heart.svg' %}accessory{% elif user_item.item.name in 'red-eye.svg blue-eye.svg' %}eyes{% else %}all{% endif %}">
                     <img data-png-src="{{ user_item.item.image.url }}" 
                          data-svg-src="{% static 'img/real_items/'|add:user_item.item.name|add:'.svg' %}" 
                          src="{{ user_item.item.image.url }}" class="item-img">
@@ -84,13 +84,39 @@
             charItems['characterImage'] = { src: imageElement.src, className: className };  // Save the character image source and class name
             localStorage.setItem('charItems', JSON.stringify(charItems));
     
+            // Call the setup function to ensure initial button state
+            setupInitialButtonState();
+
             // Apply saved items from local storage
             applySavedItems();
         });
-    
+
+        function setupInitialButtonState() {
+            var buttons = document.querySelectorAll('.nav-btn button');
+            var whiteBtnAll = document.querySelector('.nav-btn .nav-all .white-btn');
+            var blueBtnAll = document.querySelector('.nav-btn .nav-all .blue-btn');
+
+            // Display white-btn for nav-all button and hide others
+            if (whiteBtnAll) whiteBtnAll.style.display = 'block';
+            if (blueBtnAll) blueBtnAll.style.display = 'block';
+
+            buttons.forEach(function(button) {
+                var whiteBtn = button.querySelector('.white-btn');
+                var blueBtn = button.querySelector('.blue-btn');
+                if (button.classList.contains('nav-all')) {
+                    if (whiteBtn) whiteBtn.style.display = 'block';
+                    if (blueBtn) blueBtn.style.display = 'block';
+                } else {
+                    if (whiteBtn) whiteBtn.style.display = 'none';
+                    if (blueBtn) blueBtn.style.display = 'none';
+                }
+            });
+        }
+
         function filterImages(filter) {
-            // Filter nav-box items
+            // .nav-box 내의 .one-box 요소들을 선택합니다.
             var boxes = document.querySelectorAll('.nav-box .one-box');
+            // 모든 .one-box 요소를 필터링합니다.
             boxes.forEach(function(box) {
                 if (filter === 'all' || box.getAttribute('data-type') === filter) {
                     box.style.display = 'flex';
@@ -98,27 +124,28 @@
                     box.style.display = 'none';
                 }
             });
-    
-            // Update nav-btn buttons
+
+            // .nav-btn 내의 모든 버튼을 선택합니다.
             var buttons = document.querySelectorAll('.nav-btn button');
+            // 각 버튼에 대해 작업을 수행합니다.
             buttons.forEach(function(button) {
                 var buttonClass = button.className;
                 var whiteBtn = button.querySelector('.white-btn');
                 var blueBtn = button.querySelector('.blue-btn');
                 if (whiteBtn) {
-                    whiteBtn.style.display = (buttonClass === `nav-${filter}`) ? 'block' : 'none';
+                    whiteBtn.style.display = (buttonClass.includes(`nav-${filter}`)) ? 'block' : 'none';
                 }
                 if (blueBtn) {
-                    blueBtn.style.display = (buttonClass === `nav-${filter}`) ? 'block' : 'none';
+                    blueBtn.style.display = (buttonClass.includes(`nav-${filter}`)) ? 'block' : 'none';
                 }
             });
         }
-    
+
         function toggleCharacterItem(type, pngSrc, svgSrc) {
             var charDiv = document.querySelector('.char');
             var existingItem = document.querySelector(`.char .char-${type}`);
             var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
-    
+
             if (existingItem) {
                 existingItem.remove();
                 delete charItems[type];
@@ -126,15 +153,15 @@
                 var button = document.createElement('div');
                 var div = document.createElement('div');
                 var img = document.createElement('img');
-    
+
                 button.className = 'char-item';
                 div.className = `char-${type}`;
                 img.src = svgSrc;
-    
+
                 div.appendChild(img);
                 button.appendChild(div);
                 charDiv.appendChild(button);
-    
+
                 // Apply specific styles
                 if (type === 'hat') {
                     div.style.background = 'url("../img/deco/ribbon.svg") no-repeat center center';
@@ -143,14 +170,14 @@
                     div.style.width = '120px';
                     div.style.height = '120px';
                 }
-    
+
                 charItems[type] = svgSrc;
             }
-    
+
             // Save to local storage
             localStorage.setItem('charItems', JSON.stringify(charItems));
         }
-    
+
         function applySavedItems() {
             var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
             var charDiv = document.querySelector('.char');
@@ -196,7 +223,6 @@
                 }
             });
         }
-        
     </script>
     
 </body>

@@ -54,9 +54,12 @@ button {
     bottom: 20px;
 }
 .default{
+    position: absolute;
+    top: 80px;
     width: 240px; 
     height: 320px; 
-    position: absolute;
+    transform: scale(0.8);
+    z-index: 600;
 }
 /*eyes*/
 .char-eyes{
@@ -127,12 +130,11 @@ button {
     transform: translateX(-50%); 
     width: 100px; 
     height: 100px; 
-    border-radius: 50%; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    overflow: hidden; 
-    z-index: 100;
+
+    z-index: 600;
 }
 
 .char-ribbon img {
