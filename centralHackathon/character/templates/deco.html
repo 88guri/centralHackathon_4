@@ -44,7 +44,7 @@
                 {% for user_item in user_items %}
                 <button class="one-box" type="button" 
                         onclick="toggleCharacterItem('{{ user_item.item.name }}', '{{ user_item.item.image.url }}', '{% static 'img/real_items/'|add:user_item.item.name|add:'.svg' %}')"
-                        data-type="{% if user_item.item.name in 'bag.svg ribbon.svg blue-hat.svg monsil.svg' %}cloth{% elif user_item.item.name in 'blue-heart.svg flower.svg red-heart.svg' %}accessory{% elif user_item.item.name in 'red-eye.svg blue-eye.svg' %}eyes{% else %}all{% endif %}">
+                        data-type="{% if user_item.item.name in 'bag.svg ribbon.svg blue-hat.svg monsil.svg' %}cloth{% elif user_item.item.name in 'blue-heart.svg flower.svg red-heart.svg' %}accessory{% elif user_item.item.name in 'red-eye.svg blue-eye.svg sunglass.svg' %}eyes{% else %}all{% endif %}">
                     <img data-png-src="{{ user_item.item.image.url }}" 
                          data-svg-src="{% static 'img/real_items/'|add:user_item.item.name|add:'.svg' %}" 
                          src="{{ user_item.item.image.url }}" class="item-img">
