@@ -7,6 +7,7 @@ from .models import Character, TimerLog, Item, UserItem
 from .forms import CharacterForm
 from datetime import datetime, timedelta
 import json, pytz, random
+from django.views.decorators.csrf import csrf_exempt
 
 # 사용자 비활성화 확인하는거!
 def check_inactivity(character): 
@@ -319,15 +320,15 @@ def deco(request):
     }
     return render(request, 'deco.html', context)
 
-
+@csrf_exempt
 @login_required
-def character_lost_forever(request):
-    try:
-        character = Character.objects.get(user=request.user)
-        # 캐릭터와 관련된 UserItem을 삭제
-        UserItem.objects.filter(user=request.user).delete()
-        character.delete()
-    except Character.DoesNotExist:
-        pass  # 캐릭터가 존재하지 않을 경우 처리
-
-    return render(request, 'character_lost_forever.html')
+def delete_character(request):
+    if request.method == 'POST':
+        try:
+            character = Character.objects.get(user=request.user)
+            UserItem.objects.filter(user=request.user).delete()
+            character.delete()
+            return JsonResponse({'success': True})
+        except Character.DoesNotExist:
+            return JsonResponse({'success': False, 'error': '캐릭터를 찾을 수 없습니다.'})
+    return JsonResponse({'success': False, 'error': '잘못된 요청입니다.'})
