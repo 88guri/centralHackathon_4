@@ -167,23 +167,21 @@ def watch_ad_reward(request):
 @login_required
 def character_missing(request):
     try:
-        # 사용자로부터 캐릭터를 가져옴
         character = Character.objects.get(user=request.user)
-        character_name = character.name
-        character_level = character.level  # 캐릭터 레벨 추가
     except Character.DoesNotExist:
-        character_name = None
-        character_level = None  # 캐릭터가 없을 경우 기본 값 설정
+        return redirect('create_character')
 
     if request.method == 'POST': 
         # 광고 시청 후 캐릭터 복구
         return redirect('watch_ad') 
 
-    # 템플릿에 캐릭터 이름과 레벨을 전달
-    return render(request, 'character_missing.html', {
-        'character_name': character_name,
-        'character_level': character_level  # 레벨을 템플릿 컨텍스트에 추가
-    })
+    context = {
+        'character': character,
+        'character_name': character.name,
+        'character_level': character.level
+    }
+    
+    return render(request, 'character_missing.html', context)
 
 # 광고 - 가출
 @login_required
