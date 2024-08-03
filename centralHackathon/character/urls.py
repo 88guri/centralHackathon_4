@@ -1,5 +1,9 @@
 from django.urls import path
-from .views import timer_page, create_character, history_page, detailed_history, character_missing, watch_ad, deco, claim_reward, character_lost_forever, watch_ad_reward, watch_ad2
+from .views import (
+    create_character, timer_page, history_page, detailed_history,
+    character_missing, watch_ad, deco, claim_reward, delete_character,
+    watch_ad_reward, watch_ad2
+)
 
 urlpatterns = [
     path('timer/', timer_page, name='timer_page'),
@@ -10,7 +14,7 @@ urlpatterns = [
     path('watch_ad/', watch_ad, name='watch_ad'),
     path('deco/', deco, name='deco'),
     path('claim_reward/', claim_reward, name='claim_reward'),
-    path('character_lost_forever/', character_lost_forever, name='character_lost_forever'),
+    path('delete_character/', delete_character, name='delete_character'),
     path('watch_ad_reward/', watch_ad_reward, name='watch_ad_reward'),
     path('watch_ad2/', watch_ad2, name='watch_ad2'),
 ]

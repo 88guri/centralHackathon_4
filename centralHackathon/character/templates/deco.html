@@ -8,7 +8,6 @@
     <title>deco</title>
 </head>
 <body>
-    
     <div class="deco-wrap">
         <button class="bak-button" type="button" onClick="window.location.href='{% url 'home' %}'">
             <img src="{% static 'img/back-btn.svg' %}">
@@ -57,14 +56,12 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Update images to SVGs
             var items = document.querySelectorAll('.item-img');
             items.forEach(function(item) {
                 var svgSrc = item.getAttribute('data-svg-src');
                 item.src = svgSrc;
             });
     
-            // Set character image based on level
             var characterLevel = {{ character.level|default:1 }};
             var imageElement = document.getElementById('character-image');
             if (characterLevel >= 30) {
@@ -74,21 +71,19 @@
             } else {
                 imageElement.src = "{% static 'images/default.png' %}";
             }
-    
-            // Set the class name based on the image source
+   
             var className = imageElement.src.split('/').pop().split('.')[0];
             imageElement.className = className;
     
-            // Save the character image to local storage as the first item
             var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
-            charItems['characterImage'] = { src: imageElement.src, className: className };  // Save the character image source and class name
+            charItems['characterImage'] = { src: imageElement.src, className: className };  
             localStorage.setItem('charItems', JSON.stringify(charItems));
     
-            // Call the setup function to ensure initial button state
             setupInitialButtonState();
 
-            // Apply saved items from local storage
             applySavedItems();
+
+            filterImages('all');
         });
 
         function setupInitialButtonState() {
@@ -96,7 +91,6 @@
             var whiteBtnAll = document.querySelector('.nav-btn .nav-all .white-btn');
             var blueBtnAll = document.querySelector('.nav-btn .nav-all .blue-btn');
 
-            // Display white-btn for nav-all button and hide others
             if (whiteBtnAll) whiteBtnAll.style.display = 'block';
             if (blueBtnAll) blueBtnAll.style.display = 'block';
 
@@ -162,7 +156,6 @@
                 button.appendChild(div);
                 charDiv.appendChild(button);
 
-                // Apply specific styles
                 if (type === 'hat') {
                     div.style.background = 'url("../img/deco/ribbon.svg") no-repeat center center';
                     div.style.backgroundSize = 'contain';
@@ -173,7 +166,6 @@
                 charItems[type] = svgSrc;
             }
 
-            // Save to local storage
             localStorage.setItem('charItems', JSON.stringify(charItems));
         }
 
@@ -181,24 +173,21 @@
             var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
             var charDiv = document.querySelector('.char');
             
-            // Remove all child elements except for #character-image
             charDiv.querySelectorAll('div').forEach(function(item) {
                 if (item.id !== 'character-image') {
                     item.remove();
                 }
             });
         
-            // Restore the character image from local storage
             if (charItems.characterImage) {
                 var characterImage = document.getElementById('character-image');
                 characterImage.src = charItems.characterImage.src;
                 characterImage.className = charItems.characterImage.className;
             }
         
-            // Restore other character items
             Object.keys(charItems).forEach(function(type) {
                 var item = charItems[type];
-                if (type !== 'characterImage') {  // Skip the character image
+                if (type !== 'characterImage') {  
                     var button = document.createElement('div');
                     var div = document.createElement('div');
                     var img = document.createElement('img');
@@ -210,8 +199,7 @@
                     div.appendChild(img);
                     button.appendChild(div);
                     charDiv.appendChild(button);
-        
-                    // Apply specific styles
+
                     if (type === 'hat') {
                         div.style.background = 'url("../img/deco/ribbon.svg") no-repeat center center';
                         div.style.backgroundSize = 'contain';
@@ -223,6 +211,5 @@
             });
         }
     </script>
-    
 </body>
 </html>

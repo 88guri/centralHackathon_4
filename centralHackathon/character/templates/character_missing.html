@@ -40,20 +40,20 @@
                         <button class="reward-button" onclick="window.location.href='{% url 'character_lost_forever' %}'">
                             영영 못보기
                         </button>
-                    </div>
+                    </form>
+                    <button class="reward-button" id="lost-forever-button">
+                        영영 못보기
+                    </button>
                 </div>
             </div>
         </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 레벨 값을 가져옴
             var characterLevel = {{ character_level|default:1|safe }};
-
-            // 클래스를 이용하여 이미지 요소 선택
+    
             var imageElement = document.getElementById('character-image');
-
-            // 레벨에 따라 이미지 소스 설정 및 클래스 할당
+    
             if (characterLevel >= 30) {
                 imageElement.src = "{% static 'images/sadcharacter.png' %}";
                 imageElement.className = 'main-item sadcharacter';
@@ -63,8 +63,35 @@
             } else {
                 imageElement.src = "{% static 'images/cryingEgg.png' %}";
                 imageElement.className = 'main-item cryingEgg';
-            } 
-        });
+            }
+    
+            document.getElementById('lost-forever-button').addEventListener('click', function() {
+                fetch("{% url 'delete_character' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        delete_items: true // 아이템도 삭제할 것임을 서버에 알려줍니다
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // 로컬 스토리지에서 아이템 삭제
+                        localStorage.removeItem('charItems');
+                        window.location.href = "{% url 'create_character' %}"; // 캐릭터 생성 페이지로 리디렉션
+                    } else {
+                        alert('캐릭터 삭제에 실패했습니다: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('문제가 발생했습니다.');
+                });
+            });
+        });    
     </script>
 </body>
 </html>
