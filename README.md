@@ -18,12 +18,12 @@
  
 <span>Design: </span>
 <span><img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"></span>
-<span><img src="https://github.com/user-attachments/assets/4879512a-f435-456c-813a-da40b62443d3"></span>
-<span><img src="https://github.com/user-attachments/assets/4eb548e7-6adf-4867-9364-e58ee9ccb35b"></span>
+<span><img src="https://img.shields.io/badge/Adobe-#FF0000?style=for-the-badge&logo=Adobe&logoColor=white"></span>
+<span><img src="https://img.shields.io/badge/adobei llustrator-#FF9A00?style=for-the-badge&logo=adobei llustrator&logoColor=white"></span>
 <span>Front End :</span> 
 <span><img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"></span>
-<span><img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"></span>
-<span><img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"></span>
+<span><img src=""></span>
+<span><img src=""></span>
 
 <span>Back End: </span>
 <span><img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white"></span>
