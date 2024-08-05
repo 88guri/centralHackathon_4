@@ -127,4 +127,4 @@ def home_page(request):
         'max_experience': max_experience,
     }
     
-    return render(request, 'home.html', context)
+    return render(request, 'Home.html', context)
