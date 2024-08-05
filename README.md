@@ -7,7 +7,7 @@
 ### 블라블라 <br/>
 ### 블라블라
 <br/>
-<img src="https://github.com/user-attachments/assets/b9137b84-4c66-4f2a-82ec-4d27cce75873">
+<img src="https://github.com/user-attachments/assets/0347e4ec-7212-47ee-81ea-bcf16ca1462a">
 <br/>
 <br/>
 ## ProtoType
@@ -18,7 +18,8 @@
  
 <span>Design: </span>
 <span><img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"></span>
-
+<span><img src="https://github.com/user-attachments/assets/4879512a-f435-456c-813a-da40b62443d3"></span>
+<span><img src="https://github.com/user-attachments/assets/4eb548e7-6adf-4867-9364-e58ee9ccb35b"></span>
 <span>Front End :</span> 
 <span><img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"></span>
 <span><img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"></span>
