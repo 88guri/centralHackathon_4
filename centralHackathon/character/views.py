@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 def check_inactivity(character): 
     now = timezone.now() 
     if character.last_activity:
-        if now - character.last_activity > timedelta(seconds=3):
+        if now - character.last_activity > timedelta(days=3):
             return True 
     return False 
 
