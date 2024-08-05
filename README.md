@@ -19,7 +19,7 @@
 <span>Design: </span>
 <span><img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"></span>
 <span><img src="https://img.shields.io/badge/Adobe-FF0000?style=for-the-badge&logo=Adobe&logoColor=white"></span>
-<span><img src="https://img.shields.io/badge/adobei llustrator-FF9A00?style=for-the-badge&logo=adobei llustrator&logoColor=white"></span>
+<span><img src="https://img.shields.io/badge/adobeillustrator-FF9A00?style=for-the-badge&logo=adobeillustrator&logoColor=white"></span>
 
 <span>Front End :</span> 
 <span><img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white"></span>
@@ -89,7 +89,7 @@
    │  ├─ tests.py
    │  └─ views.py
    └─ manage.py
-
+  ```
 <br/>
 <br/>
 
