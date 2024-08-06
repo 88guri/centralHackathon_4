@@ -1,14 +1,13 @@
 # 멋쟁이사자처럼 12기 중앙 해커톤
- 12기 중앙 해커톤 : 다마수정입니다 ;)
+ 12기 중앙 해커톤 : 다마수정입니다!
 <br/>
 <br/>
 
 ## 📘 서비스 소개
-### 블라블라 <br/>
-### 블라블라
+### 현대인의 디지털 디톡스를 위한 모바일 웹 서비스 <br/>
+
 <br/>
 <img src="https://github.com/user-attachments/assets/0347e4ec-7212-47ee-81ea-bcf16ca1462a">
-<br/>
 <br/>
 ## ProtoType
 <br/>
@@ -44,7 +43,8 @@
 <br/>
 
 ## 🍀 팀원 소개
-<img src="https://github.com/user-attachments/assets/fc9ccdec-23e4-4e08-b6e4-2fa8210b8a06">
+<br/>
+<img src="https://github.com/user-attachments/assets/6abcfcab-0b74-4700-b14c-f7db7ca5a427">
 <br/>
 <br/>
 
@@ -93,9 +93,8 @@
 <br/>
 <br/>
 
-## 💻 개발환경에서의 실행 방법
+## 💻 HUDY Link!
   ```
-  $ django-admin startproject 프로젝트명
-  $ python manage.py runserver
+[휴디 바로가기](http://43.200.57.121/)
   ```
   <hr/>
