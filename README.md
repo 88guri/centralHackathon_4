@@ -9,6 +9,7 @@
 <br/>
 <img src="https://github.com/user-attachments/assets/0347e4ec-7212-47ee-81ea-bcf16ca1462a">
 <br/>
+
 ## ProtoType
 <br/>
 <br/>
@@ -96,6 +97,6 @@
 
 ## 💻 HUDY Link!
  
-[휴디 바로가기](http://43.200.57.121/)
+[HUDY Link!](http://43.200.57.121/)
 
   <hr/>
