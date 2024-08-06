@@ -97,6 +97,6 @@
 
 ## 💻 HUDY Link!
  
-[HUDY Link!](http://43.200.57.121/)
+[HUDY here](http://43.200.57.121/)
 
   <hr/>
