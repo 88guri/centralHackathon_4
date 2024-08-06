@@ -10,8 +10,6 @@
 <img src="https://github.com/user-attachments/assets/0347e4ec-7212-47ee-81ea-bcf16ca1462a">
 <br/>
 
-## ProtoType
-<br/>
 <br/>
 
 
