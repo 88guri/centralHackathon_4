@@ -5,26 +5,24 @@
     <link rel="stylesheet" href="{% static 'css/history.css' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History02</title>
     <title>Detailed History</title>
     <script src="https://d3js.org/d3.v7.min.js" charset="utf-8"></script>
-
 </head>
 <body>
     <div class="container mt-5">
         <button class="bak-button" type="button" onClick="window.location.href='{% url 'history_page' %}'">
-            <img src={% static 'img/back-btn.svg' %}>
+            <img src="{% static 'img/back-btn.svg' %}">
         </button>
         <div class="history01-bal">
             <div class="char-bal">
-                <img class="balloon" src={% static 'img/balloon.svg' %}>
+                <img class="balloon" src="{% static 'img/balloon.svg' %}">
                 <div class="bal-text">
                     <p>오늘 난 얼마나 집중했을까?</p>
                     <p>"HUDY"가 알려드려요!</p>
                 </div>
             </div>
             <div class="char">
-                <img class="char01-img" src={% static 'img/main-char.svg' %}>  
+                <img class="char01-img" src="{% static 'img/main-char.svg' %}">  
                 <div class="shadow"></div>
             </div>
         </div>
@@ -61,29 +59,26 @@
                 <p>어제</p>
                 <p>오늘</p>
             </div>
-            <img class="ave" src={% static 'img/history-average.svg' %}>  
+            <img class="ave" src="{% static 'img/history-average.svg' %}">  
         </div>
     </div>
     <script>
-        console.log("Script execution started"); // 시작 부분에 로그 추가
+        console.log("Script execution started"); 
     
         var dataSet = [];
         var totalTime = 0;
         var count = 0;
     
-        // 첫 번째 루프: 총 시간 계산
         {% for date, time in logs.items %}
             temTime = ({{ time.hours }} * 3600 + {{ time.minutes }} * 60 + {{ time.seconds }});
             totalTime += temTime;
             count++;
             console.log({{ time.hours }} * 3600 + {{ time.minutes }} * 60 + {{ time.seconds }});
         {% endfor %}
-    
-        // 평균값 계산
+
         var averageTime = totalTime / count;
-        console.log("Average Time:", averageTime); // 평균값 로그 추가
+        console.log("Average Time:", averageTime); 
     
-        // 두 번째 루프: 데이터셋 생성 및 평균값에 따라 정규화
         {% for date, time in logs.items %}
             temTime = ({{ time.hours }} * 3600 + {{ time.minutes }} * 60 + {{ time.seconds }});
             temTime = temTime / averageTime;
@@ -91,56 +86,58 @@
         {% endfor %}
     
         dataSet.reverse();
-        console.log("DataSet:", dataSet); // 데이터셋 로그 추가
+        console.log("DataSet:", dataSet); 
     
-        // 기존 그래프 생성 코드에 추가
-        var svgHeight = 150; // SVG의 높이 설정
-        var barWidth = 30; // 각 막대의 너비 설정
-        var barSpacing = 60; // 각 막대 사이의 간격 설정
+        var svgHeight = 150; 
+        var barWidth = 30; 
+        var barSpacing = 60; 
     
-        var svgWidth = dataSet.length * (barWidth + barSpacing); // SVG의 너비 설정
-        var maxDataValue = d3.max(dataSet); // 데이터의 최대값 계산
+        var svgWidth = dataSet.length * (barWidth + barSpacing); 
+        var maxDataValue = d3.max(dataSet); 
         var yScale = d3.scaleLinear()
-            .domain([0, maxDataValue]) // 데이터 값 범위
-            .range([0, svgHeight]); // SVG 높이 범위
+            .domain([0, maxDataValue]) 
+            .range([0, svgHeight]); 
     
         var svg = d3.select("#myGraph")
             .attr("width", svgWidth)
             .attr("height", svgHeight);
     
-        svg.selectAll("rect")
+        var bars = svg.selectAll("rect")
             .data(dataSet)
             .enter()
             .append("rect")
             .attr("x", function(d, i) {
                 return i * (barWidth + barSpacing);
             })
-            .attr("y", function(d) {
-                return svgHeight - (d === 0 ? 0 : yScale(d)); // y 스케일 적용, 값이 0일 때 높이를 0으로 설정
-            })
+            .attr("y", svgHeight) 
             .attr("width", barWidth)
-            .attr("height", function(d) {
-                return d === 0 ? 0 : yScale(d); // y 스케일 적용, 값이 0일 때 높이를 0으로 설정
+            .attr("height", 0) 
+            .attr("fill", "#6CAADD") 
+            .attr("rx", 15) 
+            .attr("ry", 15)
+            .transition() 
+            .duration(1000) 
+            .attr("y", function(d) {
+                return svgHeight - yScale(d); 
             })
-            .attr("fill", "#6CAADD") // 막대 색상 설정
-            .attr("rx", 15) // 막대 끝을 둥글게 설정
-            .attr("ry", 15);
+            .attr("height", function(d) {
+                return yScale(d); 
+            });
 
-            // 이미지 변경 로직 추가
-            var percentageChange = "{{ percentage_change|slice:':-1' }}"; // 마지막 '%' 제거
-            var percentageValue = parseFloat(percentageChange); // 값을 숫자로 변환
+        var percentageChange = "{{ percentage_change|slice:':-1' }}";
+        var percentageValue = parseFloat(percentageChange); 
 
-            var comChangeElement = document.getElementById('com-change');
+        var comChangeElement = document.getElementById('com-change');
 
-            if (percentageValue > 0) {
-                comChangeElement.src = "{% static 'img/next-btn.svg' %}";
-                comChangeElement.className = ''; // 모든 클래스 제거
-                comChangeElement.classList.add('com-up');
-            } else {
-                comChangeElement.src = "{% static 'img/next-btn.svg' %}";
-                comChangeElement.className = ''; // 모든 클래스 제거
-                comChangeElement.classList.add('com-bottom');
-            }
+        if (percentageValue > 0) {
+            comChangeElement.src = "{% static 'img/next-btn.svg' %}";
+            comChangeElement.className = '';
+            comChangeElement.classList.add('com-up');
+        } else {
+            comChangeElement.src = "{% static 'img/next-btn.svg' %}";
+            comChangeElement.className = ''; 
+            comChangeElement.classList.add('com-bottom');
+        }
         console.log(percentageValue); 
     </script>
 </body>
