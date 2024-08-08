@@ -19,7 +19,7 @@ def signup(request):
             if request.session.get('verification_code') == request.POST.get('verification_code'):
                 user = form.save()
                 print(f"User saved: {user}")  # 디버깅: 저장된 사용자 정보 출력
-                return redirect('home')
+                return redirect('login')
             else:
                 form.add_error(None, '인증 코드가 잘못되었습니다.')
         else:
@@ -60,17 +60,6 @@ def send_verification_email(request):
             return JsonResponse({'error': '이메일 주소를 입력해주세요.'}, status=400)
     else:
         return JsonResponse({'error': '잘못된 요청입니다.'}, status=400)
-
-def verify_code(request):
-    if request.method == 'POST':
-        input_code = request.POST.get('verification_code')
-
-        if input_code and input_code == request.session.get('verification_code'):
-            return JsonResponse({'message': '인증 성공'}, status=200)
-
-        return JsonResponse({'error': '인증 코드가 잘못되었습니다.'}, status=400)
-
-    return JsonResponse({'error': '잘못된 요청입니다.'}, status=400)
 
 def verify_email(request):
     if request.method == 'POST':
