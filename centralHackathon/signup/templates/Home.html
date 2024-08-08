@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="{% static 'css/home.css' %}?v=1.0">
 </head>
 <body>
-    <div class="container">
+    <div class="container" data-current-experience="{{ current_experience }}" data-max-experience="{{ max_experience }}"
+         data-default-img="{% static 'images/default.png' %}" data-child-img="{% static 'images/child.png' %}" data-adult-img="{% static 'images/adult.png' %}">
         <div class="header">
             <div class="level-info">
                 <span class="character-name">{{ character.name }}</span>
@@ -21,7 +22,6 @@
             </div>
         </div>
         <div class="character-container">
-            <!-- Add the character image here -->
             <img id="character-image" src="{% static 'images/default.png' %}" alt="Character" class="character">
         </div>
         <div class="footer">
@@ -39,63 +39,6 @@
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function updateCharacter() {
-                var level = parseInt(document.getElementById('character-level').innerText, 10);
-                var currentExperience = {{ current_experience }};
-                var maxExperience = {{ max_experience }};
-                var progressBar = document.getElementById('progress-bar');
-                var characterImage = document.getElementById('character-image');
-                var charDiv = document.querySelector('.character-container');
-
-                // 진행 상황 바의 너비를 레벨에 따라 조정
-                var progressWidth = (currentExperience / maxExperience) * 100;
-                progressBar.style.width = progressWidth + '%';
-
-                // 캐릭터 진화 설정
-                var imageSrc;
-                if (level >= 30) {
-                    imageSrc = "{% static 'images/adult.png' %}";
-                } else if (level >= 5) {
-                    imageSrc = "{% static 'images/child.png' %}";
-                } else {
-                    imageSrc = "{% static 'images/default.png' %}";
-                }
-                characterImage.src = imageSrc;
-
-                // Set the class name based on the image source
-                var className = imageSrc.split('/').pop().split('.')[0];
-                characterImage.className = className;
-
-                // 로컬 저장소에서 캐릭터 아이템을 로드합니다
-                var charItems = JSON.parse(localStorage.getItem('charItems')) || {};
-
-                // 현재 캐릭터 컨테이너의 기존 아이템을 지웁니다
-                charDiv.querySelectorAll('img:not(#character-image)').forEach(function(img) {
-                    img.remove();
-                });
-
-                // 로컬 저장소에서 아이템을 적용합니다
-                for (var type in charItems) {
-                    if (charItems.hasOwnProperty(type)) {
-                        var img = document.createElement('img');
-                        img.src = charItems[type];
-                        img.className = `char-${type}`;
-                        charDiv.appendChild(img);
-                    }
-                }
-            }
-
-            updateCharacter(); // 처음 로드 시 데이터 업데이트
-
-            // 데이터가 변경되었을 때 로컬 저장소에서 강제로 업데이트
-            window.addEventListener('storage', function(event) {
-                if (event.key === 'charItems') {
-                    updateCharacter();
-                }
-            });
-        });
-    </script>
+    <script src="{% static 'js/Home.js' %}"></script>
 </body>
 </html>

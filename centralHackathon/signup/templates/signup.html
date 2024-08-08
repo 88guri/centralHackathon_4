@@ -35,57 +35,6 @@
             <button type="submit" id="signup-button">가입하기</button>
         </form>
     </div>
-
-    <script>
-        document.getElementById('send-verification').addEventListener('click', function() {
-            const email = document.querySelector('input[name="email"]').value;
-            
-            fetch('{% url "send_verification_email" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: new URLSearchParams({
-                    'email': email
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message || data.error);
-            });
-        });
-
-        document.getElementById('verify-code').addEventListener('click', function() {
-            const verificationCode = document.getElementById('verification_code').value;
-            
-            fetch('{% url "verify_code" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: new URLSearchParams({
-                    'verification_code': verificationCode
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message) {
-                    alert(data.message);
-                    document.getElementById('signup-button').disabled = false; // 인증 성공 시 회원가입 버튼 활성화
-                } else {
-                    alert(data.error);
-                }
-            });
-        });
-
-        document.getElementById('signup-form').addEventListener('submit', function(event) {
-            if (document.getElementById('signup-button').disabled) {
-                event.preventDefault(); // 인증이 완료되지 않은 경우 폼 제출 방지
-                alert('인증이 완료되지 않았습니다.');
-            }
-        });
-    </script>
+    <script src="{% static 'js/signup.js' %}"></script>
 </body>
 </html>
